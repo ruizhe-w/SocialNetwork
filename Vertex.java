@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
-public class PersonNode extends Pane{
+public class Vertex extends Pane{
 	
 	private int x, y, r;
 	private String name;
@@ -21,7 +21,7 @@ public class PersonNode extends Pane{
 	private Circle circle;
 
 	
-	public PersonNode(int x, int y, int r, String name) {
+	public Vertex(int x, int y, int r, String name) {
 		this.x = x;
 		this.y = y;
 		this.r = r;
