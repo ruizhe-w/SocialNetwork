@@ -7,7 +7,9 @@ import java.util.List;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -17,7 +19,7 @@ import javafx.stage.Stage;
 public class Main extends Application{
 	private List<String> args;
 
-	private static final int WINDOW_WIDTH = 1000;
+	private static final int WINDOW_WIDTH = 1050;
 	private static final int WINDOW_HEIGHT = 600;
 	private static final String APP_TITLE = "Social Network Visualizer";
 
@@ -25,8 +27,10 @@ public class Main extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		args = this.getParameters().getRaw();
 		primaryStage.setTitle(APP_TITLE);
+		VBox vBox = new VBox(new MenuPane(), new VisualPane());
+		BorderPane root = new BorderPane();
+		root.setCenter(vBox);
 		
-		HBox root = new HBox(new MenuPane(), new VisualPane());
 		Scene mainScene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 		
 		primaryStage.setScene(mainScene);
