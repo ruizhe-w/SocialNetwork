@@ -1,3 +1,13 @@
+/**
+ * CS400 final project 
+ * Team: ateam 166
+ * Member: 1. Yijun Cheng, lecture 001, cheng229@wisc.edu
+ *		   2. Yuedong Cui, lecture 001, cui54@wisc.edu
+ *		   3. Ruizhe Wang, lecture 001, rwang477@wisc.edu
+ *		   4. Yuzheng Zhang, lecture 001, yzhang975@wisc.edu
+ *		   5. Haolin Li, lecture 001, hli564@wisc.edu
+ * This class is used to create an vertex to visual pane
+ */
 package application;
 
 import java.util.HashMap;
@@ -15,20 +25,20 @@ import javafx.scene.shape.Line;
 
 public class VisualPane extends Pane {
 	
+	// field of visual pane
 	List<Vertex> circles;
 	Map<String, Integer> map;
 	List<Edge> edges;
 	
 	public VisualPane() {
+		// initialize the visual pane
 		this.setPrefSize(300, 1000);
 		
 		circles = new LinkedList<Vertex>();
 		map = new HashMap<String, Integer>();
 		edges = new LinkedList<Edge>();
 		
-		
-		// test
-		
+		// create vertexes and edges
 		this.addVertex("1");
 		this.addVertex("2");
 		this.addVertex("3");
@@ -57,7 +67,14 @@ public class VisualPane extends Pane {
 		
 	}
 	
+	/**
+	 * This method add edge to visual pane
+	 * @param name1 name of the first vertex
+	 * @param name2 name of the second vertex
+	 * @return true if successfully add edge
+	 */
 	public boolean addEdge (String name1, String name2) {
+		// both vertexes should already exist
 		if (!map.containsKey(name1) || !map.containsKey(name2)) {
 			return false;
 		}
@@ -78,27 +95,32 @@ public class VisualPane extends Pane {
 		return true;
 	}
 	
-	
+	/**
+	 * This method add vertex to the visual pane
+	 * @param name name of vertex
+	 * @return true if successfully add vertex
+	 */
 	public boolean addVertex (String name) {
 		Random rand = new Random();
 		int counter = 0;
 		while (true) { 
 			counter++;
+			// create a vertex at random location with a specific size
 			int x = rand.nextInt(900) + 50;
 			int y = rand.nextInt(200);
 			int r = 30;
+			
+			// check if the location has already been occupied
 			if (!checkCollision(x, y, r)) {
 				Vertex pn = new Vertex(x, y, r, name);
-				
 				this.getChildren().add(pn);
-				map.put(name, this.circles.size());
-				this.circles.add(pn);
+				map.put(name, this.circles.size()); // add to map
+				this.circles.add(pn); // add 
 				break;
 			}
 			
 			if (counter >= 50) {
 				Vertex pn = new Vertex(x, y, r, name);
-				
 				this.getChildren().add(pn);
 				map.put(name, this.circles.size());
 				this.circles.add(pn);
@@ -108,14 +130,22 @@ public class VisualPane extends Pane {
 		return true;
 	}
 	
-	
+	/**
+	 * This method check if new vertex is conflict with others
+	 * @param x x-coordinate of the vertex
+	 * @param y y-coordinate of the vertex
+	 * @param r size of the vertex
+	 * @return true if conflict
+	 */
 	private boolean checkCollision(int x, int y, int r) {
 		for (int i = 0; i < circles.size(); i++) {
 			int x_length = x - circles.get(i).getX();
 			int y_length = y - circles.get(i).getY();
 			int r_length = r + circles.get(i).getR();
 			
-			if (x_length * x_length + y_length * y_length < r_length * r_length) {
+			// compare new location with all other vertexes
+			if (x_length * x_length + y_length * y_length 
+					< r_length * r_length) {
 				return true;
 			}
 		}
