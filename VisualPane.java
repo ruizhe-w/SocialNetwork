@@ -84,8 +84,8 @@ public class VisualPane extends Pane {
 		int counter = 0;
 		while (true) { 
 			counter++;
-			int x = rand.nextInt(900) - 250;
-			int y = rand.nextInt(200) + 270;
+			int x = rand.nextInt(900) + 50;
+			int y = rand.nextInt(200);
 			int r = 30;
 			if (!checkCollision(x, y, r)) {
 				Vertex pn = new Vertex(x, y, r, name);
