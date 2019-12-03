@@ -17,9 +17,10 @@ NONE
 
 Other notes or comments to the grader:
 This is a a program that displays a GUI that shows the main view that the user
-will see for your program.  If the initial view is instructions or a login 
-screen be sure that your program works past that point for us to see the main 
-layout of your user interface. 
+will see for your program.  This is a initial view of this program, which shows
+all of the users in the screen and their relationship. Later, you can click each
+user to set him/her to the central user. But now, in the initial view, there is
+no central user.
 
 [place any comments or notes that will help the grader here]
 In this program, we have a search bar used to search user name. "add" function 
