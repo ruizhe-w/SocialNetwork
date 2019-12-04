@@ -6,12 +6,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+
+import javafx.scene.input.MouseEvent;
 
 public class VisualPane extends Pane {
 	
@@ -20,7 +23,7 @@ public class VisualPane extends Pane {
 	List<Edge> edges;
 	
 	public VisualPane() {
-		this.setPrefSize(300, 1000);
+		this.setPrefSize(400, 1050);
 		
 		circles = new LinkedList<Vertex>();
 		map = new HashMap<String, Integer>();
@@ -54,7 +57,6 @@ public class VisualPane extends Pane {
 		this.addEdge("4", "8");
 		this.addEdge("5", "6");
 		this.addEdge("8", "10");
-		
 	}
 	
 	public boolean addEdge (String name1, String name2) {
@@ -74,7 +76,9 @@ public class VisualPane extends Pane {
 				v2.getY(), v1.getName(), v2.getName());
 		
 		this.getChildren().add(edge);
+		edges.add(edge);
 		
+		updateVisual();
 		return true;
 	}
 	
@@ -84,11 +88,14 @@ public class VisualPane extends Pane {
 		int counter = 0;
 		while (true) { 
 			counter++;
-			int x = rand.nextInt(900) + 50;
-			int y = rand.nextInt(200);
+			int x = rand.nextInt(900) + 100;
+			int y = rand.nextInt(300) + 50;
 			int r = 30;
 			if (!checkCollision(x, y, r)) {
 				Vertex pn = new Vertex(x, y, r, name);
+				
+				pn.setLayoutX(x - 5 - r);
+				pn.setLayoutY(y - 5 - r);
 				
 				this.getChildren().add(pn);
 				map.put(name, this.circles.size());
@@ -105,6 +112,8 @@ public class VisualPane extends Pane {
 				break;
 			}
 		}
+		
+		updateVisual();
 		return true;
 	}
 	
@@ -121,4 +130,18 @@ public class VisualPane extends Pane {
 		}
 		return false;
 	}
+	
+	
+	private void updateVisual() {
+//		this.getChildren().clear();
+//		
+//		for (int i = 0; i < edges.size(); i++) {
+//			this.getChildren().add(edges.get(i));
+//		}
+//		
+//		for (int i = 0; i < circles.size(); i++) {
+//			this.getChildren().add(circles.get(i));
+//		}
+	}
+	
 }

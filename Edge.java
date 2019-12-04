@@ -10,5 +10,7 @@ public class Edge extends Line {
 		super(x1, y1, x2, y2);
 		this.s1 = s1;
 		this.s2 = s2;
+		
+		this.setMouseTransparent(true);
 	}
 }

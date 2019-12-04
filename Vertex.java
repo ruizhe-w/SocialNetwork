@@ -3,6 +3,7 @@ package application;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -12,7 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
-public class Vertex extends Pane{
+public class Vertex extends Pane {
 	
 	private int x, y, r;
 	private String name;
@@ -33,12 +34,34 @@ public class Vertex extends Pane{
 								CornerRadii.EMPTY, 
 								Insets.EMPTY)));
 		
-		this.label.setLayoutX(x);
-		this.label.setLayoutY(y);
+		this.label.setLayoutX(r + 5);
+		this.label.setLayoutY(r + 5);
+		this.label.setMouseTransparent(true);
 		
-		this.circle = new Circle(x, y, r);
+		this.circle = new Circle(r + 5, r + 5, r);
 		this.circle.setFill(Color.color(Math.random(), Math.random(), Math.random()));
 		this.circle.setStroke(Color.color(Math.random(), Math.random(), Math.random()));
+		
+		
+		this.circle.setOnMouseEntered(e -> {
+			this.circle.setRadius(r + 5);
+		});
+		
+		this.circle.setOnMouseExited(e -> {
+			this.circle.setRadius(r);
+		});
+		
+		
+		this.setOnMouseEntered(e -> {
+			this.circle.setRadius(r + 5);
+		});
+		
+		this.setOnMouseExited(e -> {
+			this.circle.setRadius(r);
+		});
+		
+		this.setMaxWidth(2 * r + 10);
+		this.setMaxHeight(2 * r + 10);
 		
 		this.getChildren().addAll(this.circle, this.label);
 	}
