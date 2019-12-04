@@ -90,12 +90,12 @@ public class MenuPane extends AnchorPane {
 		t1.setPromptText("Search Name");
 
 		// add
-		t2.setPromptText("Enter Name 1");
-		t3.setPromptText("Enter Name 2");
+		t2.setPromptText("This only for a new vertex");
+		t3.setPromptText("Enter for an new edge");
 
 		// remove
-		t4.setPromptText("Enter Name 1");
-		t5.setPromptText("Enter Name 2");
+		t4.setPromptText("This only to remove a vertex");
+		t5.setPromptText("Enter to remove an edge");
 
 		// mutual friends
 		t6.setPromptText("Enter Name 1");
