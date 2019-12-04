@@ -20,14 +20,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class MenuPane extends AnchorPane {
-<<<<<<< HEAD
-=======
-
-	
-	VBox v1 = new VBox();
-	VBox v2 = new VBox();
-
->>>>>>> e7251e1d9f520e8d4ec6bc761684275542ea64e5
 	VBox function = new VBox();
 	VBox input = new VBox();
 	VBox buttons = new VBox();
@@ -93,14 +85,8 @@ public class MenuPane extends AnchorPane {
 	Label empty8 = new Label("	");
 
 	public MenuPane() {
-<<<<<<< HEAD
-//		this.setPrefSize(200, 1050);
-//		this.setMaxSize(200, 1050);
-		
-=======
 		this.setPrefSize(300, 1000);
 
->>>>>>> e7251e1d9f520e8d4ec6bc761684275542ea64e5
 		t1.setPromptText("Search Name");
 
 		// add
@@ -156,17 +142,7 @@ public class MenuPane extends AnchorPane {
 
 		Menu.getChildren().addAll(leftMenu, rightMenu);
 
-<<<<<<< HEAD
 		this.getChildren().addAll(Menu);	
-=======
-		this.getChildren().addAll(Menu);
-
-		v1.setLayoutX(25);
-		v1.setLayoutY(25);
-
-		v2.setLayoutX(550);
-		v2.setLayoutY(25);
->>>>>>> e7251e1d9f520e8d4ec6bc761684275542ea64e5
 	}
 
 }

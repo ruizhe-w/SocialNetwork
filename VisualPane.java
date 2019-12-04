@@ -34,12 +34,7 @@ public class VisualPane extends Pane {
 	List<Edge> edges;
 	
 	public VisualPane() {
-<<<<<<< HEAD
 		this.setPrefSize(400, 1050);
-=======
-		// initialize the visual pane
-		this.setPrefSize(300, 1000);
->>>>>>> e7251e1d9f520e8d4ec6bc761684275542ea64e5
 		
 		circles = new LinkedList<Vertex>();
 		map = new HashMap<String, Integer>();
@@ -113,26 +108,17 @@ public class VisualPane extends Pane {
 		int counter = 0;
 		while (true) { 
 			counter++;
-<<<<<<< HEAD
 			int x = rand.nextInt(900) + 100;
 			int y = rand.nextInt(300) + 50;
-=======
-			// create a vertex at random location with a specific size
-			int x = rand.nextInt(900) + 50;
-			int y = rand.nextInt(200);
->>>>>>> e7251e1d9f520e8d4ec6bc761684275542ea64e5
 			int r = 30;
 			
 			// check if the location has already been occupied
 			if (!checkCollision(x, y, r)) {
 				Vertex pn = new Vertex(x, y, r, name);
-<<<<<<< HEAD
 				
 				pn.setLayoutX(x - 5 - r);
 				pn.setLayoutY(y - 5 - r);
 				
-=======
->>>>>>> e7251e1d9f520e8d4ec6bc761684275542ea64e5
 				this.getChildren().add(pn);
 				map.put(name, this.circles.size()); // add to map
 				this.circles.add(pn); // add 

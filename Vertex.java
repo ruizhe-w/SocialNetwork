@@ -24,12 +24,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
 public class Vertex extends Pane {
-<<<<<<< HEAD
-	
-=======
 
 	// private field of vertex
->>>>>>> e7251e1d9f520e8d4ec6bc761684275542ea64e5
 	private int x, y, r;
 	private String name;
 
@@ -52,7 +48,6 @@ public class Vertex extends Pane {
 
 		// create label and set background
 		this.label = new Label(name);
-<<<<<<< HEAD
 		this.label.setBackground(new Background(new BackgroundFill(
 								Color.WHITE, 
 								CornerRadii.EMPTY, 
@@ -87,22 +82,6 @@ public class Vertex extends Pane {
 		this.setMaxWidth(2 * r + 10);
 		this.setMaxHeight(2 * r + 10);
 		
-=======
-		this.label.setBackground(new Background(new BackgroundFill(Color.WHITE,
-				CornerRadii.EMPTY, Insets.EMPTY)));
-
-		this.label.setLayoutX(x);
-		this.label.setLayoutY(y);
-
-		// create vertex as a circle and color it
-		this.circle = new Circle(x, y, r);
-		this.circle.setFill(Color.color(Math.random(), Math.random(),
-				Math.random()));
-		this.circle.setStroke(Color.color(Math.random(), Math.random(),
-				Math.random()));
-
-		// add vertex to layout
->>>>>>> e7251e1d9f520e8d4ec6bc761684275542ea64e5
 		this.getChildren().addAll(this.circle, this.label);
 	}
 
