@@ -10,6 +10,7 @@
  */
 package application;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -85,7 +86,10 @@ public class MenuPane extends AnchorPane {
 	Label empty8 = new Label("	");
 
 	public MenuPane() {
-		this.setPrefSize(300, 1000);
+		this.setPrefSize(300, 1050);
+		
+		
+		
 
 		t1.setPromptText("Search Name");
 
@@ -120,8 +124,10 @@ public class MenuPane extends AnchorPane {
 				exitButton, empty3, saveButton);
 		textFields1.getChildren().addAll(t2, t3);
 		textFields2.getChildren().addAll(t4, t5);
-		function.getChildren().addAll(search_Bar, empty, addLabel, empty1, 
+		function.getChildren().addAll(search_Bar, addLabel, 
 				removeLabel);
+		function.setSpacing(11);
+		
 		input.getChildren().addAll(t1, textFields1, textFields2);
 		buttons.getChildren().addAll(searchButton, submitButton1, 
 				submitButton2);
@@ -132,8 +138,10 @@ public class MenuPane extends AnchorPane {
 		textFields4.getChildren().addAll(t8, t9);
 		info1.getChildren().addAll(numGroupsLabel, numGroupsText);
 		info2.getChildren().addAll(lastInstructionLabel, lastInstructionText);
-		function2.getChildren().addAll(mutualFriendsLabel, empty4, 
-				shortestPathLabel, empty5, loadLabel);
+		function2.getChildren().addAll(mutualFriendsLabel, 
+				shortestPathLabel, loadLabel);
+		function2.setSpacing(11);
+		
 		input2.getChildren().addAll(textFields3, textFields4, LoadText);
 		buttons2.getChildren().addAll(submitButton3, submitButton4, 
 				submitButton5);

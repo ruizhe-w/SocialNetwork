@@ -107,8 +107,8 @@ public class VisualPane extends Pane {
 		int counter = 0;
 		while (true) { 
 			counter++;
-			int x = rand.nextInt(900) + 100;
-			int y = rand.nextInt(300) + 50;
+			int x = rand.nextInt(900) + 60;
+			int y = rand.nextInt(280) - 40;
 			int r = 30;
 			
 			// check if the location has already been occupied
