@@ -87,10 +87,6 @@ public class MenuPane extends AnchorPane {
 
 	public MenuPane() {
 		this.setPrefSize(300, 1050);
-		
-		
-		
-
 		t1.setPromptText("Search Name");
 
 		// add
@@ -151,6 +147,36 @@ public class MenuPane extends AnchorPane {
 		Menu.getChildren().addAll(leftMenu, rightMenu);
 
 		this.getChildren().addAll(Menu);	
+		
+		addId();
+	}
+	
+	
+	private void addId() {
+		searchButton.setId("btn-search");
+		submitButton1.setId("btn-add");
+		submitButton2.setId("btn-remove");
+		submitButton3.setId("btn-mutual");
+		submitButton4.setId("btn-short");
+		submitButton5.setId("btn-load");
+		
+		t1.setId("txd-search");
+		t2.setId("txd-add-1");
+		t3.setId("txd-add-2");
+		t4.setId("txd-remove-1");
+		t5.setId("txd-remove-2");
+		t6.setId("txd-mutual-1");
+		t7.setId("txd-mutual-2");
+		t8.setId("txd-short-1");
+		t9.setId("txd-short-2");
+		LoadText.setId("txd-load");
+		
+		cleanButton.setId("btn-clean");
+		exitButton.setId("btn-exit");
+		saveButton.setId("btn-save");
+		
+		numGroupsText.setId("txt-group");
+		lastInstructionText.setId("txt-last");
 	}
 
 }

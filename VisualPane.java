@@ -20,6 +20,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -29,9 +30,10 @@ import javafx.scene.input.MouseEvent;
 public class VisualPane extends Pane {
 	
 	// field of visual pane
-	List<Vertex> circles;
-	Map<String, Integer> map;
-	List<Edge> edges;
+	private List<Vertex> circles;
+	private Map<String, Integer> map;
+	private List<Edge> edges;
+	private Scene scene;
 	
 	public VisualPane() {
 		this.setPrefSize(400, 1050);
@@ -72,12 +74,11 @@ public class VisualPane extends Pane {
 	 * This method add edge to visual pane
 	 * @param name1 name of the first vertex
 	 * @param name2 name of the second vertex
-	 * @return true if successfully add edge
 	 */
-	public boolean addEdge (String name1, String name2) {
+	private void addEdge (String name1, String name2) {
 		// both vertexes should already exist
 		if (!map.containsKey(name1) || !map.containsKey(name2)) {
-			return false;
+			return;
 		}
 		
 		int key_1 = map.get(name1);
@@ -93,16 +94,13 @@ public class VisualPane extends Pane {
 		
 		this.getChildren().add(edge);
 		edges.add(edge);
-		
-		return true;
 	}
 	
 	/**
 	 * This method add vertex to the visual pane
 	 * @param name name of vertex
-	 * @return true if successfully add vertex
 	 */
-	public boolean addVertex (String name) {
+	private void addVertex (String name) {
 		Random rand = new Random();
 		int counter = 0;
 		while (true) { 
@@ -132,9 +130,25 @@ public class VisualPane extends Pane {
 				break;
 			}
 		}
-		
-		return true;
 	}
+	
+	
+	private int getGroupNumber() {
+		return 0;
+	}
+	
+	
+	private void removeEdge(String s1, String s2) {
+		
+	}
+	
+	
+	private void removeVertex(String string) {
+		
+	}
+	
+	
+	
 	
 	/**
 	 * This method check if new vertex is conflict with others
@@ -158,4 +172,63 @@ public class VisualPane extends Pane {
 		return false;
 	}
 	
+	
+	public void funcAdd(String s1, String s2) {
+		
+	}
+	
+	
+	// TODO: 3. finish the function
+	public void funcSearch(String string) {
+		System.out.println(string);
+	}
+	
+	
+	public void funcRemove(String s1, String s2) {
+		
+	}
+	
+	
+	public void funcMutual(String s1, String s2) {
+		
+	}
+	
+	
+	public void funcLoad(String string) {
+		
+	}
+	
+	
+	private void updateGroupNumber() {
+		
+	}
+	
+	
+	private void updateInstrunction() {
+		
+	}
+	
+	// TODO: 2. bind the listener based on the model below
+	public void addListener(Scene scene) {
+		this.scene = scene;
+		
+		// Bind Model
+		scene.lookup("#btn-search").addEventHandler(
+				MouseEvent.MOUSE_CLICKED,
+				handlerSearch);
+	}
+	
+
+	// Listener Model
+	EventHandler<MouseEvent> handlerSearch = new EventHandler<MouseEvent>() { 
+			@Override 
+			public void handle(MouseEvent e) { 
+				funcSearch(
+					((TextField)scene.lookup("#txd-search")).getText());
+			}
+		};
+		
+	// TODO: 1. add listener based on the model above
 }
+
+
