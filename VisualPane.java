@@ -94,7 +94,6 @@ public class VisualPane extends Pane {
 		this.getChildren().add(edge);
 		edges.add(edge);
 		
-		updateVisual();
 		return true;
 	}
 	
@@ -134,7 +133,6 @@ public class VisualPane extends Pane {
 			}
 		}
 		
-		updateVisual();
 		return true;
 	}
 	
@@ -158,19 +156,6 @@ public class VisualPane extends Pane {
 			}
 		}
 		return false;
-	}
-	
-	
-	private void updateVisual() {
-//		this.getChildren().clear();
-//		
-//		for (int i = 0; i < edges.size(); i++) {
-//			this.getChildren().add(edges.get(i));
-//		}
-//		
-//		for (int i = 0; i < circles.size(); i++) {
-//			this.getChildren().add(circles.get(i));
-//		}
 	}
 	
 }
