@@ -133,21 +133,35 @@ public class VisualPane extends Pane {
 	}
 	
 	
+	/**
+	 * Get the number of the groups
+	 * @return the number of groups
+	 */
 	private int getGroupNumber() {
 		return 0;
 	}
 	
 	
+	/**
+	 * remove an edge between vertex s1 and vertex s2
+	 * if there is no edge between vertex s1 and s2, just simply return
+	 * @param s1 name of a vertex
+	 * @param s2 name of a vertex
+	 */
 	private void removeEdge(String s1, String s2) {
 		
 	}
 	
 	
+	
+	/**
+	 * remove the vertex specified by the vertex name
+	 * if there is no vertex specified, just return
+	 * @param string name of a vertex
+	 */
 	private void removeVertex(String string) {
 		
 	}
-	
-	
 	
 	
 	/**
@@ -173,62 +187,8 @@ public class VisualPane extends Pane {
 	}
 	
 	
-	public void funcAdd(String s1, String s2) {
-		
-	}
-	
-	
-	// TODO: 3. finish the function
-	public void funcSearch(String string) {
-		System.out.println(string);
-	}
-	
-	
-	public void funcRemove(String s1, String s2) {
-		
-	}
-	
-	
-	public void funcMutual(String s1, String s2) {
-		
-	}
-	
-	
-	public void funcLoad(String string) {
-		
-	}
-	
-	
-	private void updateGroupNumber() {
-		
-	}
-	
-	
-	private void updateInstrunction() {
-		
-	}
-	
-	// TODO: 2. bind the listener based on the model below
-	public void addListener(Scene scene) {
-		this.scene = scene;
-		
-		// Bind Model
-		scene.lookup("#btn-search").addEventHandler(
-				MouseEvent.MOUSE_CLICKED,
-				handlerSearch);
-	}
 	
 
-	// Listener Model
-	EventHandler<MouseEvent> handlerSearch = new EventHandler<MouseEvent>() { 
-			@Override 
-			public void handle(MouseEvent e) { 
-				funcSearch(
-					((TextField)scene.lookup("#txd-search")).getText());
-			}
-		};
-		
-	// TODO: 1. add listener based on the model above
 }
 
 

@@ -178,5 +178,58 @@ public class MenuPane extends AnchorPane {
 		numGroupsText.setId("txt-group");
 		lastInstructionText.setId("txt-last");
 	}
+	
+	
+	/**
+	 * bind to the listener, make different operations 
+	 * based on the number of non-null arguments
+	 * 
+	 * if s2 is none, add vertex s1
+	 * if s2 is non-null, add edge s1-s2
+	 * 
+	 * @param s1 a name of a vertex
+	 * @param s2 a name of a vertex
+	 */
+	public void funcAdd(String s1, String s2) {
+		
+	}
+	
+	// TODO: 3. finish the function\
+	// NOTE: I have not finished this function, but you can check 
+	// 		 whether you bind correctly or not
+	/**
+	 * a function to create a new stage based on the given string
+	 * 
+	 * @param string name to search for
+	 */
+	public void funcSearch(String string) {
+		System.out.println(string);
+	// TODO: 4. finish corresponded function in FileParse.java or VisualPane.java
+	}
+	
+	
+	public void funcRemove(String s1, String s2) {
+		
+	}
+	
+	
+	public void funcMutual(String s1, String s2) {
+		
+	}
+	
+	
+	public void funcLoad(String string) {
+		
+	}
+	
+	
+	private void updateGroupNumber() {
+		
+	}
+	
+	
+	private void updateInstrunction(String string) {
+		
+	}
 
 }

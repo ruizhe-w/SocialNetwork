@@ -46,7 +46,7 @@ public class Main extends Application{
 		root.setCenter(vBox);
 		
 		scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-		visualPane.addListener(scene);
+		(new BindHelper(menuPane, visualPane)).bindPane(scene);
 		
 		primaryStage.setScene(scene);
 		primaryStage.show();
