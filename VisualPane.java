@@ -40,6 +40,8 @@ public class VisualPane extends Pane {
 	private ArrayList<String> vertexList;
 	private ArrayList<ArrayList<Boolean>> edgeList;
 	private int numGroup;
+	private String centralUser;
+	private ArrayList<String> friends;
 	
 	public VisualPane() {
 		this.setPrefSize(400, 1050);
@@ -48,6 +50,8 @@ public class VisualPane extends Pane {
 		edges = new LinkedList<Edge>();
 		vertexList = new ArrayList<String>();
 		edgeList = new ArrayList<ArrayList<Boolean>>();
+		centralUser = "";
+		friends = new ArrayList<String>();
 	}
 	
 	/**
@@ -55,7 +59,7 @@ public class VisualPane extends Pane {
 	 * @param name1 name of the first vertex
 	 * @param name2 name of the second vertex
 	 */
-	private void addEdge (String name1, String name2) {
+	public void addEdge(String name1, String name2) {
 		// both vertexes should already exist
 		if (!map.containsKey(name1) || !map.containsKey(name2)) {
 			return;
@@ -82,7 +86,7 @@ public class VisualPane extends Pane {
 	 * This method add vertex to the visual pane
 	 * @param name name of vertex
 	 */
-	private void addVertex (String name) {
+	public void addVertex(String name) {
 		Random rand = new Random();
 		int counter = 0;
 		while (true) { 
@@ -131,7 +135,7 @@ public class VisualPane extends Pane {
 	 * Get the number of the groups
 	 * @return the number of groups
 	 */
-	private int getGroupNumber() {
+	public int getGroupNumber() {
 		numGroup = 0;
 		boolean[] visited = new boolean[numVertex];
 		for (int i = 0; i < numVertex; i++) {
@@ -159,7 +163,7 @@ public class VisualPane extends Pane {
 	 * @param s1 name of a vertex
 	 * @param s2 name of a vertex
 	 */
-	private void removeEdge(String s1, String s2) {
+	public void removeEdge(String s1, String s2) {
 		if (!vertexList.contains(s1) || !vertexList.contains(s2)) {
 			return;
 		}
@@ -174,7 +178,7 @@ public class VisualPane extends Pane {
 	 * if there is no vertex specified, just return
 	 * @param string name of a vertex
 	 */
-	private void removeVertex(String string) {
+	public void removeVertex(String string) {
 		if (!vertexList.contains(string)) {
 			return;
 		}
@@ -207,6 +211,17 @@ public class VisualPane extends Pane {
 			}
 		}
 		return false;
+	}
+	
+	public ArrayList<String> setCentralUser(String name) {
+		friends = new ArrayList<String>();
+		centralUser = name;
+		for (int i = 0; i < edgeList.get(vertexList.indexOf(name)).size(); i++) {
+			if (edgeList.get(vertexList.indexOf(name)).get(i)) {
+				friends.add(vertexList.get(i));
+			}
+		}
+		return friends;
 	}
 	
 }
