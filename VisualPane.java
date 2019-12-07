@@ -111,6 +111,9 @@ public class VisualPane extends Pane {
 					edgeList.get(i).add(false);
 				}
 				edgeList.add(new ArrayList<Boolean>());
+				for (int i = 0; i < numVertex; i++) {
+					edgeList.get(numVertex - 1).add(false);
+				}
 				break;
 			}
 			
@@ -125,6 +128,9 @@ public class VisualPane extends Pane {
 					edgeList.get(i).add(false);
 				}
 				edgeList.add(new ArrayList<Boolean>());
+				for (int i = 0; i < numVertex; i++) {
+					edgeList.get(numVertex - 1).add(false);
+				}
 				break;
 			}
 		}
