@@ -10,6 +10,7 @@
  */
 package application;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,39 +36,18 @@ public class VisualPane extends Pane {
 	private List<Edge> edges;
 	private Scene scene;
 	
+	private int numVertex;
+	private ArrayList<String> vertexList;
+	private ArrayList<ArrayList<Boolean>> edgeList;
+	private int numGroup;
+	
 	public VisualPane() {
 		this.setPrefSize(400, 1050);
-		
 		circles = new LinkedList<Vertex>();
 		map = new HashMap<String, Integer>();
 		edges = new LinkedList<Edge>();
-		
-		// create vertexes and edges
-		this.addVertex("1");
-		this.addVertex("2");
-		this.addVertex("3");
-		this.addVertex("4");
-		this.addVertex("5");
-		this.addVertex("6");
-		this.addVertex("7");
-		this.addVertex("8");
-		this.addVertex("9");
-		this.addVertex("10");
-		
-		this.addEdge("1", "2");
-		this.addEdge("1", "3");
-		this.addEdge("1", "4");
-		this.addEdge("1", "5");
-		this.addEdge("1", "6");
-		this.addEdge("1", "7");
-		this.addEdge("1", "8");
-		this.addEdge("1", "9");
-		this.addEdge("1", "10");
-		this.addEdge("2", "5");
-		this.addEdge("3", "7");
-		this.addEdge("4", "8");
-		this.addEdge("5", "6");
-		this.addEdge("8", "10");
+		vertexList = new ArrayList<String>();
+		edgeList = new ArrayList<ArrayList<Boolean>>();
 	}
 	
 	/**
@@ -94,6 +74,8 @@ public class VisualPane extends Pane {
 		
 		this.getChildren().add(edge);
 		edges.add(edge);
+		edgeList.get(vertexList.indexOf(name1)).set(vertexList.indexOf(name2), true);
+		edgeList.get(vertexList.indexOf(name2)).set(vertexList.indexOf(name1), true);
 	}
 	
 	/**
@@ -119,6 +101,12 @@ public class VisualPane extends Pane {
 				this.getChildren().add(pn);
 				map.put(name, this.circles.size()); // add to map
 				this.circles.add(pn); // add 
+				vertexList.add(name);
+				numVertex++;
+				for (int i = 0; i < numVertex - 1; i++) {
+					edgeList.get(i).add(false);
+				}
+				edgeList.add(new ArrayList<Boolean>());
 				break;
 			}
 			
@@ -127,6 +115,12 @@ public class VisualPane extends Pane {
 				this.getChildren().add(pn);
 				map.put(name, this.circles.size());
 				this.circles.add(pn);
+				vertexList.add(name);
+				numVertex++;
+				for (int i = 0; i < numVertex - 1; i++) {
+					edgeList.get(i).add(false);
+				}
+				edgeList.add(new ArrayList<Boolean>());
 				break;
 			}
 		}
@@ -138,7 +132,24 @@ public class VisualPane extends Pane {
 	 * @return the number of groups
 	 */
 	private int getGroupNumber() {
-		return 0;
+		numGroup = 0;
+		boolean[] visited = new boolean[numVertex];
+		for (int i = 0; i < numVertex; i++) {
+			if (!visited[i]) {
+				getGroupNumberHelper(i, visited, numGroup);
+				numGroup++;
+			}
+		}
+		return numGroup;
+	}
+	
+	private void getGroupNumberHelper(int i, boolean[] visited, int numGroup) {
+		visited[i] = true;
+		for (int j = 0; j < edgeList.get(i).size(); j++) {
+			if (edgeList.get(i).get(j) && !visited[j]) {
+				getGroupNumberHelper(j, visited, numGroup);
+			}
+		}
 	}
 	
 	
@@ -149,10 +160,14 @@ public class VisualPane extends Pane {
 	 * @param s2 name of a vertex
 	 */
 	private void removeEdge(String s1, String s2) {
-		
+		if (!vertexList.contains(s1) || !vertexList.contains(s2)) {
+			return;
+		}
+		edgeList.get(vertexList.indexOf(s1)).set(vertexList.indexOf(s2), false);
+		edgeList.get(vertexList.indexOf(s2)).set(vertexList.indexOf(s1), false);
 	}
 	
-	
+
 	
 	/**
 	 * remove the vertex specified by the vertex name
@@ -160,7 +175,15 @@ public class VisualPane extends Pane {
 	 * @param string name of a vertex
 	 */
 	private void removeVertex(String string) {
-		
+		if (!vertexList.contains(string)) {
+			return;
+		}
+		for (int i = 0; i < numVertex; i++) {
+			edgeList.get(i).remove(vertexList.indexOf(string));
+		}
+		edgeList.remove(vertexList.indexOf(string));
+		vertexList.remove(vertexList.indexOf(string));
+		numVertex--;
 	}
 	
 	
@@ -186,9 +209,5 @@ public class VisualPane extends Pane {
 		return false;
 	}
 	
-	
-	
-
 }
-
 
