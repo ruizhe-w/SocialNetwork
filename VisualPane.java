@@ -30,6 +30,16 @@ import javafx.scene.input.MouseEvent;
 
 public class VisualPane extends Pane {
 	
+	//last context
+	private List<LinkedList<Node>> curContext;
+	private List<List<Vertex>> tmpCircles;
+	private List<List<Edge>> tmpEdges;
+	private ArrayList<Integer> tmpNumVertex;
+	private ArrayList<ArrayList<String>> tmpVertexList;
+	private ArrayList<ArrayList<ArrayList<Boolean>>> tmpEdgeList;
+	private ArrayList<Integer> lastNumGroup;
+	int step;
+	
 	// field of visual pane
 	private MenuPane menuPane;
 	private List<Vertex> circles;
@@ -42,9 +52,16 @@ public class VisualPane extends Pane {
 	private ArrayList<ArrayList<Boolean>> edgeList;
 	private int numGroup;
 	//private String centralUser;
-	private List<Vertex> friends;
+	//private List<Vertex> friends;
 	
 	public VisualPane(MenuPane menuPane) {
+		lastNumGroup = new ArrayList<Integer>();
+		tmpCircles = new LinkedList<List<Vertex>>();
+		tmpEdges = new LinkedList<List<Edge>>();
+		tmpVertexList = new ArrayList<ArrayList<String>>();
+		tmpEdgeList = new ArrayList<ArrayList<ArrayList<Boolean>>>();
+		tmpNumVertex = new ArrayList<Integer>();
+		this.curContext = new LinkedList<LinkedList<Node>>();
 		this.setPrefSize(400, 1050);
 		circles = new LinkedList<Vertex>();
 		map = new HashMap<String, Integer>();
@@ -52,6 +69,7 @@ public class VisualPane extends Pane {
 		vertexList = new ArrayList<String>();
 		edgeList = new ArrayList<ArrayList<Boolean>>();
 		this.menuPane = menuPane;
+		step = -1;
 		//centralUser = "";
 	}
 	
@@ -274,9 +292,11 @@ public class VisualPane extends Pane {
 	}
 	
 	public void setCentralUser(String name) {
-		
+		if(!vertexList.contains(name)) {
+			return;
+		}
 		Vertex v1 = circles.get(vertexList.indexOf(name));
-		friends = new LinkedList<Vertex>();
+		//friends = new LinkedList<Vertex>();
 		this.getChildren().clear();
 		this.getChildren().add(v1);
 		
@@ -291,7 +311,7 @@ public class VisualPane extends Pane {
 				
 			}
 		}
-		menuPane.numGroupsText.setText("1");
+		menuPane.numGroupsText.setText("[1]");
 	}
 	
 	public void home() {
@@ -313,6 +333,73 @@ public class VisualPane extends Pane {
 		edges.clear();
 	}
 
+	public void search(String name) {
+		if(!vertexList.contains(name)) {
+			return;
+		}
+		setCentralUser(name);
+	}
+	
+	public void saveCurrent() {
+		step++;
+		tmpCircles.add(new LinkedList<Vertex>());
+		tmpEdges.add(new LinkedList<Edge>());
+		tmpVertexList.add(new ArrayList<String>());
+		tmpEdgeList.add(new ArrayList<ArrayList<Boolean>>());
+		curContext.add(new LinkedList<Node>());
+		
+		for(int i = 0; i < circles.size(); i++) {
+			tmpCircles.get(step).add(circles.get(i));
+			tmpVertexList.get(step).add(vertexList.get(i));
+			tmpEdgeList.get(step).add(new ArrayList<Boolean>());
+			for(int j = 0; j < edgeList.get(i).size(); j++) {
+				tmpEdgeList.get(step).get(i).add(edgeList.get(i).get(j));
+			}
+		}
+		for(int i = 0; i < edges.size(); i++) {
+			tmpEdges.get(step).add(edges.get(i));
+		}
+		String strGroup = menuPane.numGroupsText.getText();
+		lastNumGroup.add(Integer.parseInt(strGroup.substring(1, strGroup.length() - 1)));
+		tmpNumVertex.add(numVertex);
+		
+		for(int i = 0; i < this.getChildren().size(); i++) {
+			curContext.get(step).add(this.getChildren().get(i));
+		}
+	}
+	
+	public void undo() {
+		if(step == -1) {
+			return;
+		}
+		 this.getChildren().clear();
+		if (!curContext.get(step).isEmpty()) {
+			for (int i = 0; i < curContext.get(step).size(); i++) {
+				if (!this.getChildren().contains(curContext.get(step).get(i)))
+					this.getChildren().add(curContext.get(step).get(i));
+			}
+		}else {
+			this.getChildren().clear();
+		}
+		 circles = tmpCircles.get(step);
+		 edges = tmpEdges.get(step);
+		 numVertex = tmpNumVertex.get(step);
+		 vertexList = tmpVertexList.get(step);
+		 edgeList = tmpEdgeList.get(step);
+		 
+		 menuPane.numGroupsText.setText("[" + String.valueOf(lastNumGroup.get(step)) + "]");
+		 //lastNumGroup = Integer.parseInt(menuPane.numGroupsText.getText());
+		 
+		 lastNumGroup.remove(step);
+		 curContext.remove(step);
+		 tmpCircles.remove(step);
+		 tmpEdges.remove(step);
+		 tmpNumVertex.remove(step);
+		 tmpVertexList.remove(step);
+		 tmpEdgeList.remove(step);
+		 step--;
+	}
+	
 	private void updateVisual() {
 	}
 
