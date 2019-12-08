@@ -50,6 +50,7 @@ public class MenuPane extends AnchorPane {
 	Button submitButton3 = new Button("Submit");
 	Button submitButton4 = new Button("Submit");
 	Button submitButton5 = new Button("Submit");
+	Button homeButton = new Button("Home");
 	Button cleanButton = new Button("Clean");
 	Button exitButton = new Button("Exit");
 	Button saveButton = new Button("Save");
@@ -117,7 +118,7 @@ public class MenuPane extends AnchorPane {
 
 		LoadText.setPromptText("Load File Here");
 
-		menuButtons.getChildren().addAll(empty8, cleanButton, empty2, 
+		menuButtons.getChildren().addAll(empty8, homeButton, cleanButton, empty2, 
 				exitButton, empty3, saveButton);
 		textFields1.getChildren().addAll(t2, t3);
 		textFields2.getChildren().addAll(t4, t5);
