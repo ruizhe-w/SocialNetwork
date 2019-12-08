@@ -4,6 +4,7 @@
 package application;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.application.Application;
@@ -45,14 +46,22 @@ public class Main extends Application{
 		visualPane = new VisualPane(menuPane);
 		fileParser = new FileParser();
 		menuPane.submitButton1.setOnAction(e -> {
-			visualPane.saveCurrent();
+			//visualPane.saveCurrent();
 			String name1 = menuPane.t2.getText();
 			String name2 = menuPane.t3.getText();
 			if(!name1.equals("") && name2.equals("")) {
+				ArrayList<String> verticesList = visualPane.getVerticesList();
+				if(!verticesList.contains(name1)) {
+					visualPane.saveCurrent();
+				}
 				visualPane.home();
 				visualPane.addVertex(name1);
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 			}else if(!name1.equals("") && !name2.equals("")) {
+				ArrayList<String> verticesList = visualPane.getVerticesList();
+				if(!(verticesList.contains(name1) && verticesList.contains(name2))) {
+					visualPane.saveCurrent();
+				}
 				visualPane.home();
 				visualPane.addVertex(name1);
 				visualPane.addVertex(name2);
@@ -61,13 +70,23 @@ public class Main extends Application{
 			}
 		});
 		menuPane.submitButton2.setOnAction(e -> {
-			visualPane.saveCurrent();
+			//visualPane.saveCurrent();
 			String name1 = menuPane.t4.getText();
 			String name2 = menuPane.t5.getText();
 			if(!name1.equals("") && name2.equals("")) {
+				ArrayList<String> verticesList = visualPane.getVerticesList();
+				if(verticesList.contains(name1)) {
+					visualPane.saveCurrent();
+				}
+				visualPane.home();
 				visualPane.removeVertex(name1);
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 			}else if(!name1.equals("") && !name2.equals("")) {
+				ArrayList<String> verticesList = visualPane.getVerticesList();
+				if(verticesList.contains(name1) && verticesList.contains(name2)) {
+					visualPane.saveCurrent();
+				}
+				visualPane.home();
 				visualPane.removeEdge(name1, name2);
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 			}
