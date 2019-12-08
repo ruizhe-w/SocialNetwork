@@ -41,6 +41,33 @@ public class Main extends Application{
 		
 		menuPane = new MenuPane();
 		visualPane = new VisualPane();
+		menuPane.submitButton1.setOnAction(e -> {
+			String name1 = menuPane.t2.getText();
+			String name2 = menuPane.t3.getText();
+			if(!name1.equals("") && name2.equals("")) {
+				visualPane.addVertex(name1);
+				menuPane.numGroupsText.setText(String.valueOf(visualPane.getGroupNumber()));
+			}else if(!name1.equals("") && !name2.equals("")) {
+				visualPane.addVertex(name1);
+				visualPane.addVertex(name2);
+				visualPane.addEdge(name1, name2);
+				menuPane.numGroupsText.setText(String.valueOf(visualPane.getGroupNumber()));
+			}
+		});
+		menuPane.submitButton2.setOnAction(e -> {
+			String name1 = menuPane.t4.getText();
+			String name2 = menuPane.t5.getText();
+			if(!name1.equals("") && name2.equals("")) {
+				//System.out.println("666");
+				visualPane.removeVertex(name1);
+				menuPane.numGroupsText.setText(String.valueOf(visualPane.getGroupNumber()));
+			}else if(!name1.equals("") && !name2.equals("")) {
+				visualPane.removeEdge(name1, name2);
+				menuPane.numGroupsText.setText(String.valueOf(visualPane.getGroupNumber()));
+			}
+		});
+		
+		
 		VBox vBox = new VBox(menuPane, visualPane);
 		BorderPane root = new BorderPane();
 		root.setCenter(vBox);
