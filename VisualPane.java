@@ -51,7 +51,6 @@ public class VisualPane extends Pane {
 		vertexList = new ArrayList<String>();
 		edgeList = new ArrayList<ArrayList<Boolean>>();
 		centralUser = "";
-		friends = new ArrayList<String>();
 	}
 	
 	/**
@@ -62,8 +61,12 @@ public class VisualPane extends Pane {
 	public void addEdge(String name1, String name2) {
 		
 		// both vertexes should already exist
-		if (!map.containsKey(name1) || !map.containsKey(name2)) {
-			return;
+		if (!map.containsKey(name1)) {
+			this.addVertex(name1);
+		}
+
+		if (!map.containsKey(name2)) {
+			this.addVertex(name2);
 		}
 		
 		Vertex v1 = null;
@@ -196,14 +199,10 @@ public class VisualPane extends Pane {
 			}
 		}
 		for(int j = 0; j < edges.size(); j++) {
-			if((edges.get(j).getStartX() == pn.getX() && 
-					edges.get(j).getStartY() == pn.getY() &&
-					edges.get(j).getEndX() == pn2.getX() &&
-					edges.get(j).getEndY() == pn2.getY()) ||
-					(edges.get(j).getEndX() == pn.getX() && 
-					edges.get(j).getEndY() == pn.getY() &&
-					edges.get(j).getStartX() == pn2.getX() &&
-					edges.get(j).getStartY() == pn2.getY())) {
+			if(((edges.get(j).getS1().equals(s1) &&
+					edges.get(j).getS2().equals(s2))) ||
+					((edges.get(j).getS1().equals(s2) &&
+							edges.get(j).getS2().equals(s1)))) {
 				Edge edge = edges.get(j);
 				this.getChildren().remove(edge);
 				edges.remove(edge);
@@ -232,14 +231,8 @@ public class VisualPane extends Pane {
 			Vertex pn2 = circles.get(i);
 			
 			for(int j = 0; j < edges.size(); j++) {
-				if((edges.get(j).getStartX() == pn.getX() && 
-						edges.get(j).getStartY() == pn.getY() &&
-						edges.get(j).getEndX() == pn2.getX() &&
-						edges.get(j).getEndY() == pn2.getY()) ||
-						(edges.get(j).getEndX() == pn.getX() && 
-						edges.get(j).getEndY() == pn.getY() &&
-						edges.get(j).getStartX() == pn2.getX() &&
-						edges.get(j).getStartY() == pn2.getY())) {
+				if((edges.get(j).getS1().equals(string) ||
+						edges.get(j).getS2().equals(string))) {
 					Edge edge = edges.get(j);
 					this.getChildren().remove(edge);
 					edges.remove(edge);
@@ -283,6 +276,7 @@ public class VisualPane extends Pane {
 	public ArrayList<String> setCentralUser(String name) {
 		friends = new ArrayList<String>();
 		centralUser = name;
+
 		for (int i = 0; i < edgeList.get(vertexList.indexOf(name)).size(); i++) {
 			if (edgeList.get(vertexList.indexOf(name)).get(i)) {
 				friends.add(vertexList.get(i));
@@ -290,8 +284,10 @@ public class VisualPane extends Pane {
 		}
 		return friends;
 	}
-	
-	
+
+	private void updateVisual() {
+	}
+
 	
 	
 	

@@ -66,15 +66,19 @@ public class Main extends Application{
 				menuPane.numGroupsText.setText(String.valueOf(visualPane.getGroupNumber()));
 			}
 		});
-		
-		
+
 		VBox vBox = new VBox(menuPane, visualPane);
 		BorderPane root = new BorderPane();
 		root.setCenter(vBox);
 		
 		scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-		(new BindHelper(menuPane, visualPane)).bindPane(scene);
-		
+
+		scene.lookup("#btn-search").setOnMouseClicked(e -> {
+			menuPane.funcSearch(
+					((TextField)scene.lookup("#txd-search")).getText()
+			);
+		});
+
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

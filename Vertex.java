@@ -28,7 +28,7 @@ public class Vertex extends Pane {
 	// private field of vertex
 	private int x, y, r;
 	private String name;
-
+	private Boolean deleted;
 	private Label label;
 	private Circle circle;
 
@@ -45,6 +45,7 @@ public class Vertex extends Pane {
 		this.y = y;
 		this.r = r;
 		this.name = name;
+		this.deleted = false;
 
 		// create label and set background
 		this.label = new Label(name);
@@ -74,10 +75,19 @@ public class Vertex extends Pane {
 		this.setOnMouseEntered(e -> {
 			this.circle.setRadius(r + 5);
 		});
-		
+
 		this.setOnMouseExited(e -> {
 			this.circle.setRadius(r);
 		});
+
+		this.circle.setOnMouseClicked(e -> {
+			((VisualPane)this.getParent()).setCentralUser(this.name);
+		});
+
+		this.setOnMouseClicked(e -> {
+			((VisualPane)this.getParent()).setCentralUser(this.name);
+		});
+
 		
 		this.setMaxWidth(2 * r + 10);
 		this.setMaxHeight(2 * r + 10);
