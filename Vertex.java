@@ -82,11 +82,10 @@ public class Vertex extends Pane {
 
 		this.circle.setOnMouseClicked(e -> {
 			((VisualPane)this.getParent()).setCentralUser(this.name);
+			
 		});
 
-		this.setOnMouseClicked(e -> {
-			((VisualPane)this.getParent()).setCentralUser(this.name);
-		});
+		
 
 		
 		this.setMaxWidth(2 * r + 10);
