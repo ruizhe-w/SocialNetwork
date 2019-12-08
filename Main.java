@@ -3,6 +3,7 @@
  */
 package application;
 
+import java.io.IOException;
 import java.util.List;
 
 import javafx.application.Application;
@@ -32,6 +33,7 @@ public class Main extends Application{
 	
 	private static VisualPane visualPane;
 	private static MenuPane menuPane;
+	private static FileParser fileParser;
 	private static Scene scene;
 
 	@Override
@@ -41,40 +43,62 @@ public class Main extends Application{
 		
 		menuPane = new MenuPane();
 		visualPane = new VisualPane(menuPane);
+		fileParser = new FileParser();
 		menuPane.submitButton1.setOnAction(e -> {
+			visualPane.saveCurrent();
 			String name1 = menuPane.t2.getText();
 			String name2 = menuPane.t3.getText();
 			if(!name1.equals("") && name2.equals("")) {
 				visualPane.home();
 				visualPane.addVertex(name1);
-				menuPane.numGroupsText.setText(String.valueOf(visualPane.getGroupNumber()));
+				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 			}else if(!name1.equals("") && !name2.equals("")) {
 				visualPane.home();
 				visualPane.addVertex(name1);
 				visualPane.addVertex(name2);
 				visualPane.addEdge(name1, name2);
-				menuPane.numGroupsText.setText(String.valueOf(visualPane.getGroupNumber()));
+				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 			}
 		});
 		menuPane.submitButton2.setOnAction(e -> {
+			visualPane.saveCurrent();
 			String name1 = menuPane.t4.getText();
 			String name2 = menuPane.t5.getText();
 			if(!name1.equals("") && name2.equals("")) {
 				visualPane.removeVertex(name1);
-				menuPane.numGroupsText.setText(String.valueOf(visualPane.getGroupNumber()));
+				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 			}else if(!name1.equals("") && !name2.equals("")) {
 				visualPane.removeEdge(name1, name2);
-				menuPane.numGroupsText.setText(String.valueOf(visualPane.getGroupNumber()));
+				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 			}
 		});
 		menuPane.cleanButton.setOnAction(e -> {
+			visualPane.saveCurrent();
 			visualPane.clean();
-			menuPane.numGroupsText.setText(String.valueOf(visualPane.getGroupNumber()));
+			menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 		});
 		menuPane.homeButton.setOnAction(e -> {
+			visualPane.saveCurrent();
 			visualPane.home();
-			menuPane.numGroupsText.setText(String.valueOf(visualPane.getGroupNumber()));
+			menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 		});
+		menuPane.searchButton.setOnAction(e -> {
+			visualPane.saveCurrent();
+			String userName = menuPane.t1.getText();
+			visualPane.search(userName);
+		});
+		menuPane.undoButton.setOnAction(e -> {
+			//no need to save current
+			visualPane.undo();
+		});
+		menuPane.submitButton5.setOnAction(e -> {
+			visualPane.saveCurrent();
+			try {
+				fileParser.loadFromFile(visualPane, menuPane.LoadText.getText());
+			} catch (Exception e1) {
+			}
+		});
+		
 
 		VBox vBox = new VBox(menuPane, visualPane);
 		BorderPane root = new BorderPane();
@@ -82,11 +106,11 @@ public class Main extends Application{
 		
 		scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-		scene.lookup("#btn-search").setOnMouseClicked(e -> {
-			menuPane.funcSearch(
-					((TextField)scene.lookup("#txd-search")).getText()
-			);
-		});
+//		scene.lookup("#btn-search").setOnMouseClicked(e -> {
+//			menuPane.funcSearch(
+//					((TextField)scene.lookup("#txd-search")).getText()
+//			);
+//		});
 
 		primaryStage.setScene(scene);
 		primaryStage.show();
