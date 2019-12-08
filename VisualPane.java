@@ -60,16 +60,24 @@ public class VisualPane extends Pane {
 	 * @param name2 name of the second vertex
 	 */
 	public void addEdge(String name1, String name2) {
+		
 		// both vertexes should already exist
 		if (!map.containsKey(name1) || !map.containsKey(name2)) {
 			return;
 		}
 		
-		int key_1 = map.get(name1);
-		int key_2 = map.get(name2);
+		Vertex v1 = null;
+		Vertex v2 = null;
 		
-		Vertex v1 = circles.get(key_1);
-		Vertex v2 = circles.get(key_2);
+		for(int i = 0; i < circles.size(); i++) {
+			if(circles.get(i).getName().equals(name1)) {
+				v1 = circles.get(i);
+			}
+			if(circles.get(i).getName().equals(name2)) {
+				v2 = circles.get(i);
+			}
+		}
+		
 		
 		// TODO: add check contains or not
 		
@@ -78,6 +86,7 @@ public class VisualPane extends Pane {
 		
 		this.getChildren().add(edge);
 		edges.add(edge);
+		//System.out.println("777");
 		edgeList.get(vertexList.indexOf(name1)).set(vertexList.indexOf(name2), true);
 		edgeList.get(vertexList.indexOf(name2)).set(vertexList.indexOf(name1), true);
 	}
@@ -87,6 +96,10 @@ public class VisualPane extends Pane {
 	 * @param name name of vertex
 	 */
 	public void addVertex(String name) {
+		if(vertexList.contains(name)) {
+			return;
+		}
+		//System.out.println("888");
 		Random rand = new Random();
 		int counter = 0;
 		while (true) { 
@@ -98,10 +111,8 @@ public class VisualPane extends Pane {
 			// check if the location has already been occupied
 			if (!checkCollision(x, y, r)) {
 				Vertex pn = new Vertex(x, y, r, name);
-				
 				pn.setLayoutX(x - 5 - r);
 				pn.setLayoutY(y - 5 - r);
-				
 				this.getChildren().add(pn);
 				map.put(name, this.circles.size()); // add to map
 				this.circles.add(pn); // add 
@@ -188,12 +199,35 @@ public class VisualPane extends Pane {
 		if (!vertexList.contains(string)) {
 			return;
 		}
+		Vertex pn = circles.get(vertexList.indexOf(string));
+		map.remove(string);
 		for (int i = 0; i < numVertex; i++) {
+			Vertex pn2 = circles.get(i);
+			
+			for(int j = 0; j < edges.size(); j++) {
+				if((edges.get(j).getStartX() == pn.getX() && 
+						edges.get(j).getStartY() == pn.getY() &&
+						edges.get(j).getEndX() == pn2.getX() &&
+						edges.get(j).getEndY() == pn2.getY()) ||
+						(edges.get(j).getEndX() == pn.getX() && 
+						edges.get(j).getEndY() == pn.getY() &&
+						edges.get(j).getStartX() == pn2.getX() &&
+						edges.get(j).getStartY() == pn2.getY())) {
+					Edge edge = edges.get(j);
+					this.getChildren().remove(edge);
+					edges.remove(edge);
+				}
+			}
+			
 			edgeList.get(i).remove(vertexList.indexOf(string));
 		}
 		edgeList.remove(vertexList.indexOf(string));
+		this.getChildren().remove(circles.get(vertexList.indexOf(string)));
+		this.circles.remove(vertexList.indexOf(string));
 		vertexList.remove(vertexList.indexOf(string));
 		numVertex--;
+		
+		
 	}
 	
 	
@@ -230,5 +264,8 @@ public class VisualPane extends Pane {
 		return friends;
 	}
 	
+	
+	
+	
+	
 }
-
