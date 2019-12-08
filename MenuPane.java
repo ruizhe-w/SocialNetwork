@@ -52,6 +52,7 @@ public class MenuPane extends AnchorPane {
 	Button submitButton5 = new Button("Submit");
 	Button homeButton = new Button("Home");
 	Button cleanButton = new Button("Clean");
+	Button undoButton = new Button("Undo");
 	Button exitButton = new Button("Exit");
 	Button saveButton = new Button("Save");
 
@@ -67,7 +68,7 @@ public class MenuPane extends AnchorPane {
 	TextField LoadText = new TextField();
 
 	Label search_Bar = new Label("	search bar");
-	Label numGroupsText = new Label("1");
+	Label numGroupsText = new Label("[0]");
 	Label lastInstructionText = new Label("NONE");
 	Label addLabel = new Label("	Add");
 	Label removeLabel = new Label("	Remove");
@@ -118,7 +119,7 @@ public class MenuPane extends AnchorPane {
 
 		LoadText.setPromptText("Load File Here");
 
-		menuButtons.getChildren().addAll(empty8, homeButton, cleanButton, empty2, 
+		menuButtons.getChildren().addAll(empty8, homeButton, undoButton, cleanButton, empty2, 
 				exitButton, empty3, saveButton);
 		textFields1.getChildren().addAll(t2, t3);
 		textFields2.getChildren().addAll(t4, t5);
@@ -205,9 +206,8 @@ public class MenuPane extends AnchorPane {
 	 * @param string name to search for
 	 */
 	public void funcSearch(String string) {
-		System.out.println(string);
+		
 	// TODO: 4. finish corresponded function in FileParse.java or VisualPane.java
-
 
 	}
 	
