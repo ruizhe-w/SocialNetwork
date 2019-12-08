@@ -31,6 +31,7 @@ import javafx.scene.input.MouseEvent;
 public class VisualPane extends Pane {
 	
 	// field of visual pane
+	private MenuPane menuPane;
 	private List<Vertex> circles;
 	private Map<String, Integer> map;
 	private List<Edge> edges;
@@ -40,17 +41,18 @@ public class VisualPane extends Pane {
 	private ArrayList<String> vertexList;
 	private ArrayList<ArrayList<Boolean>> edgeList;
 	private int numGroup;
-	private String centralUser;
-	private ArrayList<String> friends;
+	//private String centralUser;
+	private List<Vertex> friends;
 	
-	public VisualPane() {
+	public VisualPane(MenuPane menuPane) {
 		this.setPrefSize(400, 1050);
 		circles = new LinkedList<Vertex>();
 		map = new HashMap<String, Integer>();
 		edges = new LinkedList<Edge>();
 		vertexList = new ArrayList<String>();
 		edgeList = new ArrayList<ArrayList<Boolean>>();
-		centralUser = "";
+		this.menuPane = menuPane;
+		//centralUser = "";
 	}
 	
 	/**
@@ -61,13 +63,7 @@ public class VisualPane extends Pane {
 	public void addEdge(String name1, String name2) {
 		
 		// both vertexes should already exist
-		if (!map.containsKey(name1)) {
-			this.addVertex(name1);
-		}
-
-		if (!map.containsKey(name2)) {
-			this.addVertex(name2);
-		}
+		
 		
 		Vertex v1 = null;
 		Vertex v2 = null;
@@ -81,6 +77,9 @@ public class VisualPane extends Pane {
 			}
 		}
 		
+		if(v2 == null || v2 == null) {
+			return;
+		}
 		
 		// TODO: add check contains or not
 		
@@ -102,7 +101,7 @@ public class VisualPane extends Pane {
 		if(vertexList.contains(name)) {
 			return;
 		}
-		//System.out.println("888");
+		
 		Random rand = new Random();
 		int counter = 0;
 		while (true) { 
@@ -121,6 +120,7 @@ public class VisualPane extends Pane {
 				this.circles.add(pn); // add 
 				vertexList.add(name);
 				numVertex++;
+				//System.out.println(numVertex + " " + edgeList.size()+" ADD");
 				for (int i = 0; i < numVertex - 1; i++) {
 					edgeList.get(i).add(false);
 				}
@@ -273,16 +273,44 @@ public class VisualPane extends Pane {
 		return false;
 	}
 	
-	public ArrayList<String> setCentralUser(String name) {
-		friends = new ArrayList<String>();
-		centralUser = name;
-
+	public void setCentralUser(String name) {
+		
+		Vertex v1 = circles.get(vertexList.indexOf(name));
+		friends = new LinkedList<Vertex>();
+		this.getChildren().clear();
+		this.getChildren().add(v1);
+		
 		for (int i = 0; i < edgeList.get(vertexList.indexOf(name)).size(); i++) {
 			if (edgeList.get(vertexList.indexOf(name)).get(i)) {
-				friends.add(vertexList.get(i));
+				
+				//friends.add(circles.get(vertexList.indexOf(name)));
+				Vertex v2 = circles.get(i);
+				this.getChildren().add(v2);
+				this.getChildren().add(new Edge(v1.getX(), v1.getY(), v2.getX(),
+						v2.getY(), v1.getName(), v2.getName()));
+				
 			}
 		}
-		return friends;
+		menuPane.numGroupsText.setText("1");
+	}
+	
+	public void home() {
+		this.getChildren().clear();
+		for(int i = 0; i < circles.size(); i++) {
+			this.getChildren().add(circles.get(i));
+		}
+		for(int i = 0; i < edges.size(); i++) {
+			this.getChildren().add(edges.get(i));
+		}
+	}
+	
+	public void clean() {
+		this.getChildren().clear();
+		circles.clear();
+		vertexList.clear();
+		numVertex = 0;
+		edgeList.clear();
+		edges.clear();
 	}
 
 	private void updateVisual() {
