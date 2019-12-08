@@ -44,12 +44,9 @@ public class FileParser {
 					visualPane.removeEdge(str[1], str[2]);
 				}
 			} else if (str[0].equals("s")) {
-				// TODO: clean first
-				ArrayList<String> friends = visualPane.setCentralUser(str[1]);
+				visualPane.setCentralUser(str[1]);
 				visualPane.addVertex(str[1]);
-				for (int i = 0; i < friends.size(); i++) {
-					visualPane.addEdge(str[1], friends.get(i));
-				}
+				
 			}
 		}
 		scnr.close();
