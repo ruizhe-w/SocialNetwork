@@ -45,7 +45,6 @@ public class VisualPane extends Pane {
 	private List<Vertex> circles;
 	private Map<String, Integer> map;
 	private List<Edge> edges;
-	private Scene scene;
 	
 	private int numVertex;
 	private ArrayList<String> vertexList;
@@ -335,9 +334,15 @@ public class VisualPane extends Pane {
 
 	public void search(String name) {
 		if(!vertexList.contains(name)) {
+			this.getParent().lookup("#txd-search").setStyle(
+					"-fx-border-color: RED;"
+			);
 			return;
 		}
 		setCentralUser(name);
+		this.getParent().lookup("#txd-search").setStyle(
+				"-fx-border-color: transparent;"
+		);
 	}
 	
 	public void saveCurrent() {
@@ -399,11 +404,4 @@ public class VisualPane extends Pane {
 		 tmpEdgeList.remove(step);
 		 step--;
 	}
-	
-	private void updateVisual() {
-	}
-
-	
-	
-	
 }
