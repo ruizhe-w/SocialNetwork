@@ -42,6 +42,11 @@ public class VisualPane extends Pane {
 	private List<Edge> edges;
 	
 	private int numVertex;
+
+	public ArrayList<String> getVerticesList() {
+		return vertexList;
+	}
+
 	private ArrayList<String> vertexList;
 	private ArrayList<ArrayList<Boolean>> edgeList;
 	private int numGroup;
