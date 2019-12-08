@@ -20,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * @author 95646
@@ -125,11 +126,27 @@ public class Main extends Application{
 		
 		scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-//		scene.lookup("#btn-search").setOnMouseClicked(e -> {
-//			menuPane.funcSearch(
-//					((TextField)scene.lookup("#txd-search")).getText()
-//			);
-//		});
+		// exit function
+		scene.lookup("#btn-exit").setOnMouseClicked(e -> {
+			primaryStage.fireEvent(new WindowEvent(
+					primaryStage,
+					WindowEvent.WINDOW_CLOSE_REQUEST));
+		});
+
+		scene.lookup("#btn-mutual").setOnMouseClicked(e -> {
+			visualPane.getMutualFriends(
+					((TextField)scene.lookup("#txd-mutual-1")).getText(),
+					((TextField)scene.lookup("#txd-mutual-2")).getText()
+			);
+		});
+
+		scene.lookup("#btn-short").setOnMouseClicked(e -> {
+			visualPane.getShortestPath(
+					((TextField)scene.lookup("#txd-short-1")).getText(),
+					((TextField)scene.lookup("#txd-short-2")).getText()
+			);
+		});
+
 
 		primaryStage.setScene(scene);
 		primaryStage.show();
