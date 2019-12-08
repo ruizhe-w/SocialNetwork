@@ -404,4 +404,8 @@ public class VisualPane extends Pane {
 		 tmpEdgeList.remove(step);
 		 step--;
 	}
+	
+	public ArrayList<String> getVerticesList(){
+		return vertexList;
+	}
 }
