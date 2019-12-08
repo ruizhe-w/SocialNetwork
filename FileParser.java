@@ -35,6 +35,8 @@ public class FileParser {
 				if (str.length == 2) {
 					visualPane.addVertex(str[1]);
 				} else if (str.length == 3){
+					visualPane.addVertex(str[1]);
+					visualPane.addVertex(str[2]);
 					visualPane.addEdge(str[1], str[2]);
 				}
 			} else if (str[0].equals("r")) {
@@ -45,7 +47,6 @@ public class FileParser {
 				}
 			} else if (str[0].equals("s")) {
 				visualPane.setCentralUser(str[1]);
-				visualPane.addVertex(str[1]);
 				
 			}
 		}
