@@ -10,12 +10,7 @@
  */
 package application;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -289,7 +284,132 @@ public class VisualPane extends Pane {
 		}
 		return false;
 	}
-	
+
+	public void getMutualFriends(String name1, String name2) {
+		if (!vertexList.contains(name1) || !vertexList.contains(name2)) {
+			return;
+		}
+
+		Vertex v1 = circles.get(vertexList.indexOf(name1));
+		Vertex v2 = circles.get(vertexList.indexOf(name2));
+
+		this.getChildren().clear();
+		this.getChildren().addAll(v1, v2);
+
+		List<String> mutualList = new ArrayList<String>();
+		for (int i = 0; i < edgeList.get(vertexList.indexOf(name1)).size(); i++) {
+			if (edgeList.get(vertexList.indexOf(name1)).get(i)) {
+				mutualList.add(circles.get(i).getName());
+			}
+		}
+
+		for (int i = 0; i < edgeList.get(vertexList.indexOf(name2)).size(); i++) {
+			if (edgeList.get(vertexList.indexOf(name1)).get(i)) {
+				if (mutualList.contains(circles.get(i).getName())) {
+
+					if (i == vertexList.indexOf(name1) ||
+						i == vertexList.indexOf(name2)) {
+						continue;
+					}
+
+					Vertex tmpVertex = circles.get(i);
+					this.getChildren().add(tmpVertex);
+
+					this.getChildren().add(new Edge(v2.getX(), v2.getY(), tmpVertex.getX(),
+							tmpVertex.getY(), v2.getName(), tmpVertex.getName()));
+					this.getChildren().add(new Edge(v1.getX(), v1.getY(), tmpVertex.getX(),
+							tmpVertex.getY(), v1.getName(), tmpVertex.getName()));
+				}
+			}
+		}
+	}
+
+	public void getShortestPath(String name1, String name2) {
+
+		if (!vertexList.contains(name1) || !vertexList.contains(name2)) {
+			return;
+		}
+
+		Vertex v1 = circles.get(vertexList.indexOf(name1));
+		Vertex v2 = circles.get(vertexList.indexOf(name2));
+		Vertex tmpVertex = null;
+
+		this.getChildren().clear();
+		this.getChildren().addAll(v1, v2);
+
+		List<String> list = dfs(name1, name2);
+		for (String s: list) {
+			tmpVertex = circles.get(vertexList.indexOf(s));
+			this.getChildren().add(tmpVertex);
+			this.getChildren().add(new Edge(v1.getX(), v1.getY(), tmpVertex.getX(),
+					tmpVertex.getY(), v1.getName(), tmpVertex.getName()));
+			v1 = tmpVertex;
+		}
+		if (tmpVertex == null) {
+			this.getChildren().add(new Edge(v2.getX(), v2.getY(), v1.getX(),
+					v1.getY(), v2.getName(), v1.getName()));
+			return;
+		}
+
+		this.getChildren().add(new Edge(v2.getX(), v2.getY(), tmpVertex.getX(),
+				tmpVertex.getY(), v2.getName(), tmpVertex.getName()));
+	}
+
+
+	private List<String> dfs(String name1, String name2) {
+		Queue<String> queue = new LinkedList<String>();
+		String[] prev = new String[numVertex];
+		Boolean[] visited = new Boolean[numVertex];
+
+		for (int i = 0; i < numVertex; i++) {
+			visited[i] = false;
+		}
+		int counter = 0;
+
+		queue.add(name1);
+		while (!queue.isEmpty()) {
+			String tmp = queue.peek();
+			queue.remove();
+
+			if (tmp.equals(name2)) {
+				break;
+			}
+
+			int index = vertexList.indexOf(tmp);
+			for (int i = 0; i < edgeList.get(index).size(); i++) {
+				if (edgeList.get(index).get(i)) {
+					String toString = circles.get(i).getName();
+					if (!visited[i]) {
+						visited[i] = true;
+						queue.add(toString);
+						prev[i] = tmp;
+					}
+				}
+			}
+		}
+
+		List<String> ans = new ArrayList<String>();
+		String nowName = name2;
+		int index =  vertexList.indexOf(nowName);
+		while (!nowName.equals(name1)) {
+			index = vertexList.indexOf(prev[index]);
+			nowName = circles.get(index).getName();
+			ans.add(nowName);
+		}
+		if (!ans.isEmpty()) {
+			ans.remove(ans.size() - 1);
+		}
+
+		List<String> returnList = new ArrayList<String>();
+		for (int i = ans.size() - 1; i >= 0; i--) {
+			returnList.add(ans.get(i));
+		}
+
+		System.out.println(returnList.toString());
+		return returnList;
+	}
+
+
 	public void setCentralUser(String name) {
 		if(!vertexList.contains(name)) {
 			return;
@@ -404,8 +524,7 @@ public class VisualPane extends Pane {
 		 tmpEdgeList.remove(step);
 		 step--;
 	}
-	
-	public ArrayList<String> getVerticesList(){
-		return vertexList;
-	}
+
+
+
 }
