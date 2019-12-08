@@ -184,6 +184,33 @@ public class VisualPane extends Pane {
 		if (!vertexList.contains(s1) || !vertexList.contains(s2)) {
 			return;
 		}
+		Vertex pn = null;
+		Vertex pn2 = null;
+		
+		for(int i = 0; i < circles.size(); i++) {
+			if(circles.get(i).getName().equals(s1)) {
+				pn = circles.get(i);
+			}
+			if(circles.get(i).getName().equals(s2)) {
+				pn2 = circles.get(i);
+			}
+		}
+		for(int j = 0; j < edges.size(); j++) {
+			if((edges.get(j).getStartX() == pn.getX() && 
+					edges.get(j).getStartY() == pn.getY() &&
+					edges.get(j).getEndX() == pn2.getX() &&
+					edges.get(j).getEndY() == pn2.getY()) ||
+					(edges.get(j).getEndX() == pn.getX() && 
+					edges.get(j).getEndY() == pn.getY() &&
+					edges.get(j).getStartX() == pn2.getX() &&
+					edges.get(j).getStartY() == pn2.getY())) {
+				Edge edge = edges.get(j);
+				this.getChildren().remove(edge);
+				edges.remove(edge);
+			}
+		}
+		
+		
 		edgeList.get(vertexList.indexOf(s1)).set(vertexList.indexOf(s2), false);
 		edgeList.get(vertexList.indexOf(s2)).set(vertexList.indexOf(s1), false);
 	}
