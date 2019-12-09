@@ -128,6 +128,7 @@ public class Main extends Application{
 
 		// exit function
 		scene.lookup("#btn-exit").setOnMouseClicked(e -> {
+			menuPane.exitPane();
 			primaryStage.fireEvent(new WindowEvent(
 					primaryStage,
 					WindowEvent.WINDOW_CLOSE_REQUEST));
