@@ -308,8 +308,10 @@ public class VisualPane extends Pane {
 			}
 		}
 
+		System.out.println(mutualList.toString());
+
 		for (int i = 0; i < edgeList.get(vertexList.indexOf(name2)).size(); i++) {
-			if (edgeList.get(vertexList.indexOf(name1)).get(i)) {
+			if (edgeList.get(vertexList.indexOf(name2)).get(i)) {
 				if (mutualList.contains(circles.get(i).getName())) {
 
 					if (i == vertexList.indexOf(name1) ||
