@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -145,6 +146,7 @@ public class Main extends Application{
 					((TextField)scene.lookup("#txd-mutual-1")).getText(),
 					((TextField)scene.lookup("#txd-mutual-2")).getText()
 			);
+			((Label)scene.lookup("#txt-group")).setText("[1]");
 		});
 
 		scene.lookup("#btn-short").setOnMouseClicked(e -> {
