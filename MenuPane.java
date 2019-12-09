@@ -210,6 +210,8 @@ public class MenuPane extends AnchorPane {
 			//add save function
 			dialog.fireEvent(new WindowEvent(dialog,
 					WindowEvent.WINDOW_CLOSE_REQUEST));
+			this.fireEvent(new WindowEvent(dialog,
+					WindowEvent.WINDOW_CLOSE_REQUEST));
 		});
 		no.setOnAction(e -> {
 			dialog.fireEvent(new WindowEvent(dialog,

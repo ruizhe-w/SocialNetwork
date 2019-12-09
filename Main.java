@@ -130,9 +130,9 @@ public class Main extends Application{
 		// exit function
 		scene.lookup("#btn-exit").setOnMouseClicked(e -> {
 			menuPane.exitPane();
-			primaryStage.fireEvent(new WindowEvent(
-					primaryStage,
-					WindowEvent.WINDOW_CLOSE_REQUEST));
+//			primaryStage.fireEvent(new WindowEvent(
+//					primaryStage,
+//					WindowEvent.WINDOW_CLOSE_REQUEST));
 		});
 
 		scene.lookup("#btn-mutual").setOnMouseClicked(e -> {
