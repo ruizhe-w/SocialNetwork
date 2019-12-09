@@ -134,6 +134,12 @@ public class Main extends Application{
 		});
 
 		scene.lookup("#btn-mutual").setOnMouseClicked(e -> {
+			ArrayList<String> verticesList = visualPane.getVerticesList();
+			String name1 = menuPane.t6.getText();
+			String name2 = menuPane.t7.getText();
+			if(verticesList.contains(name1) && verticesList.contains(name2)) {
+				visualPane.saveCurrent();
+			}
 			visualPane.getMutualFriends(
 					((TextField)scene.lookup("#txd-mutual-1")).getText(),
 					((TextField)scene.lookup("#txd-mutual-2")).getText()
@@ -141,6 +147,12 @@ public class Main extends Application{
 		});
 
 		scene.lookup("#btn-short").setOnMouseClicked(e -> {
+			ArrayList<String> verticesList = visualPane.getVerticesList();
+			String name1 = menuPane.t8.getText();
+			String name2 = menuPane.t9.getText();
+			if(verticesList.contains(name1) && verticesList.contains(name2)) {
+				visualPane.saveCurrent();
+			}
 			visualPane.getShortestPath(
 					((TextField)scene.lookup("#txd-short-1")).getText(),
 					((TextField)scene.lookup("#txd-short-2")).getText()
