@@ -17,9 +17,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class MenuPane extends AnchorPane {
 	VBox function = new VBox();
@@ -182,6 +185,38 @@ public class MenuPane extends AnchorPane {
 		lastInstructionText.setId("txt-last");
 	}
 	
+	public void exitPane() {
+		Label ifSave = new Label("Do you want to save your instructions?");
+		Button yes = new Button("Yes");
+		Button no = new Button("No");
+		HBox yOrn = new HBox();
+		yOrn.getChildren().addAll(new Label("	 "), yes, no);
+		yOrn.setSpacing(22);
+		VBox extiInfo = new VBox();
+		extiInfo.getChildren().addAll(ifSave, yOrn);
+		extiInfo.setSpacing(11);
+		BorderPane form = new BorderPane();
+		form.setLeft(new Label(" 		"));
+		form.setCenter(extiInfo);
+		form.setTop(new Label(" 		"));
+		Scene newScene = new Scene(form, 330, 150);
+		//create a new stage
+		final Stage dialog = new Stage();
+		//show the new scene
+		dialog.setTitle("Confirm Save");
+		dialog.setScene(newScene);
+		dialog.show();
+		yes.setOnAction(e -> {
+			//add save function
+			dialog.fireEvent(new WindowEvent(dialog,
+					WindowEvent.WINDOW_CLOSE_REQUEST));
+		});
+		no.setOnAction(e -> {
+			dialog.fireEvent(new WindowEvent(dialog,
+					WindowEvent.WINDOW_CLOSE_REQUEST));
+		});
+		
+	}
 	
 	/**
 	 * bind to the listener, make different operations 
