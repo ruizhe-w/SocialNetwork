@@ -26,7 +26,7 @@ public class FileParser {
 	 * @param fileName
 	 * @throws IOException 
 	 */
-	public static void loadFromFile(VisualPane visualPane, String fileName) throws IOException {
+	public void loadFromFile(VisualPane visualPane, String fileName) throws IOException {
 		File file = new File(fileName);
 		Scanner scnr = new Scanner(file);
 		while (scnr.hasNextLine()) {
@@ -59,9 +59,12 @@ public class FileParser {
 	 * @param visualPane
 	 * @throws IOException 
 	 */
-	public static void saveToFile(VisualPane visualPane, String filename) throws IOException {
+	public void saveToFile(VisualPane visualPane, String filename) throws IOException {
 		File file = new File(filename);
 		PrintWriter printer = new PrintWriter(file);
-		// TODO: click function
+		for (int i = 0; i < visualPane.instructionList().size(); i++) {
+			printer.println(visualPane.instructionList().get(i));
+		}
+		printer.close();
 	}
 }
