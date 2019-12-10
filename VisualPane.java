@@ -571,6 +571,27 @@ public class VisualPane extends Pane {
 		}
 	}
 	
+	public boolean checkPath(String name1, String name2) {
+		if(name1.equals(name2)) {
+			return true;
+		}
+		System.out.println(vertexList);
+		System.out.println(edgeList.get(0).get(0));
+		int index1 = vertexList.indexOf(name1);
+		int index2 = vertexList.indexOf(name2);
+		if(edgeList.get(index1).get(index2)) {
+			return true;
+		}
+		for(int i = 0; i < edgeList.get(index1).size(); i++) {
+			if(edgeList.get(index1).get(i) && edgeList.get(index2).get(i)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	
 	public ArrayList<String> instructionList(){
 		return instructions;
 	}
