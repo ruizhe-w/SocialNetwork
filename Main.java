@@ -148,11 +148,50 @@ public class Main extends Application{
 			}
 		});
 		menuPane.saveButton.setOnAction(e ->{
-			try {
-				fileParser.saveToFile(visualPane, "instructions.txt");
-			}catch(IOException e1) {
+			Button yes = new Button(" Yes ");
+			Button no = new Button("Cancel");
+			HBox yOrn = new HBox();
+			yOrn.getChildren().addAll(new Label("	 	"), yes, no);
+			yOrn.setSpacing(22);
+			VBox extiInfo = new VBox();
+			Label prompt = new Label("File name: ");
+			TextField fileNameText = new TextField();
+			fileNameText.setPromptText("Type your file name here");
+			HBox promptBox = new HBox();
+			promptBox.getChildren().addAll(prompt, fileNameText);
+			extiInfo.getChildren().addAll( promptBox, yOrn);
+			extiInfo.setSpacing(11);
+			BorderPane form = new BorderPane();
+			form.setLeft(new Label(" 		"));
+			form.setCenter(extiInfo);
+			form.setTop(new Label(" 		"));
+			form.setRight(new Label("	"));
+			Scene newScene = new Scene(form, 400, 150);
+			//create a new stage
+			final Stage dialog = new Stage();
+			//show the new scene
+			dialog.setTitle("File Name prompt");
+			dialog.setScene(newScene);
+			dialog.show();
+			yes.setOnAction(e2 -> {
+				if(fileNameText.getText().length() > 4 && fileNameText.getText().substring(fileNameText.getText().length() - 4).equals(".txt")) {
+					try {
+						fileParser.saveToFile(visualPane, fileNameText.getText());
+					}catch(IOException e1) {
+						
+					}
+					dialog.fireEvent(new WindowEvent(dialog,
+							WindowEvent.WINDOW_CLOSE_REQUEST));
+				}else {
+					form.setBottom(new Label("					invalid filename"));
+				}
+			});
+			no.setOnAction(e2 -> {
+				dialog.fireEvent(new WindowEvent(dialog,
+						WindowEvent.WINDOW_CLOSE_REQUEST));
 				
-			}
+			});
+			
 		});
 		
 		
@@ -168,17 +207,24 @@ public class Main extends Application{
 			Label ifSave = new Label("Do you want to save your instructions?");
 			Button yes = new Button("Yes");
 			Button no = new Button("No");
+			Button cancel = new Button("Cancel");
 			HBox yOrn = new HBox();
-			yOrn.getChildren().addAll(new Label("	 "), yes, no);
+			yOrn.getChildren().addAll(new Label("	 "), yes, no, cancel);
 			yOrn.setSpacing(22);
 			VBox extiInfo = new VBox();
-			extiInfo.getChildren().addAll(ifSave, yOrn);
+			Label prompt = new Label("File name: ");
+			TextField fileNameText = new TextField();
+			fileNameText.setPromptText("Type your file name here");
+			HBox promptBox = new HBox();
+			promptBox.getChildren().addAll(prompt, fileNameText);
+			extiInfo.getChildren().addAll(ifSave, promptBox, yOrn);
 			extiInfo.setSpacing(11);
 			BorderPane form = new BorderPane();
 			form.setLeft(new Label(" 		"));
 			form.setCenter(extiInfo);
 			form.setTop(new Label(" 		"));
-			Scene newScene = new Scene(form, 330, 150);
+			form.setRight(new Label("	"));
+			Scene newScene = new Scene(form, 400, 150);
 			//create a new stage
 			final Stage dialog = new Stage();
 			//show the new scene
@@ -186,20 +232,28 @@ public class Main extends Application{
 			dialog.setScene(newScene);
 			dialog.show();
 			yes.setOnAction(e2 -> {
-				try {
-					fileParser.saveToFile(visualPane, "instructions.txt");
-				}catch(IOException e1) {
-					
+				if(fileNameText.getText().length() > 4 && fileNameText.getText().substring(fileNameText.getText().length() - 4).equals(".txt")) {
+					try {
+						fileParser.saveToFile(visualPane, fileNameText.getText());
+					}catch(IOException e1) {
+						
+					}
+					dialog.fireEvent(new WindowEvent(dialog,
+							WindowEvent.WINDOW_CLOSE_REQUEST));
+					primaryStage.fireEvent(new WindowEvent(dialog,
+							WindowEvent.WINDOW_CLOSE_REQUEST));
+				}else {
+					form.setBottom(new Label("					invalid filename"));
 				}
-				dialog.fireEvent(new WindowEvent(dialog,
-						WindowEvent.WINDOW_CLOSE_REQUEST));
-				primaryStage.fireEvent(new WindowEvent(dialog,
-						WindowEvent.WINDOW_CLOSE_REQUEST));
 			});
 			no.setOnAction(e2 -> {
 				dialog.fireEvent(new WindowEvent(dialog,
 						WindowEvent.WINDOW_CLOSE_REQUEST));
 				primaryStage.fireEvent(new WindowEvent(dialog,
+						WindowEvent.WINDOW_CLOSE_REQUEST));
+			});
+			cancel.setOnAction(e2 -> {
+				dialog.fireEvent(new WindowEvent(dialog,
 						WindowEvent.WINDOW_CLOSE_REQUEST));
 			});
 			
