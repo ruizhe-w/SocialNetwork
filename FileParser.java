@@ -48,6 +48,14 @@ public class FileParser {
 			} else if (str[0].equals("s")) {
 				visualPane.setCentralUser(str[1]);
 				
+			} else if (str[0].equals("load")) {
+				if (str.length == 2) {
+					if (!str[1].equals(fileName)) {
+						loadFromFile(visualPane, str[1]);
+					} else {
+						continue;
+					}
+				}
 			}
 		}
 		scnr.close();
@@ -63,7 +71,10 @@ public class FileParser {
 		File file = new File(filename);
 		PrintWriter printer = new PrintWriter(file);
 		for (int i = 0; i < visualPane.instructionList().size(); i++) {
-			printer.println(visualPane.instructionList().get(i));
+			String[] arr = visualPane.instructionList().get(i).split(" ");
+			if (!arr[0].equals("home") && !arr[0].equals("mutual") && !arr[0].equals("path")) {
+				printer.println(visualPane.instructionList().get(i));
+			}
 		}
 		printer.close();
 	}
