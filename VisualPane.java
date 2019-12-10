@@ -575,8 +575,6 @@ public class VisualPane extends Pane {
 		if(name1.equals(name2)) {
 			return true;
 		}
-		System.out.println(vertexList);
-		System.out.println(edgeList.get(0).get(0));
 		int index1 = vertexList.indexOf(name1);
 		int index2 = vertexList.indexOf(name2);
 		if(edgeList.get(index1).get(index2)) {
