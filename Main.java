@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -47,22 +48,30 @@ public class Main extends Application{
 		menuPane = new MenuPane();
 		visualPane = new VisualPane(menuPane);
 		fileParser = new FileParser();
+		//add
 		menuPane.submitButton1.setOnAction(e -> {
 			//visualPane.saveCurrent();
 			String name1 = menuPane.t2.getText();
 			String name2 = menuPane.t3.getText();
-			if(!name1.equals("") && name2.equals("")) {
+			if((!name1.equals("") && name2.equals("")) || (name1.equals(name2))) {
 				ArrayList<String> verticesList = visualPane.getVerticesList();
 				if(!verticesList.contains(name1)) {
+					visualPane.saveInstructions("a", name1, null);
 					visualPane.saveCurrent();
+					int size = visualPane.instructionList().size();
+					menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 				}
 				visualPane.home();
 				visualPane.addVertex(name1);
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 			}else if(!name1.equals("") && !name2.equals("")) {
+				
 				ArrayList<String> verticesList = visualPane.getVerticesList();
 				if(!(verticesList.contains(name1) && verticesList.contains(name2))) {
+					visualPane.saveInstructions("a", name1, name2);
 					visualPane.saveCurrent();
+					int size = visualPane.instructionList().size();
+					menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 				}
 				visualPane.home();
 				visualPane.addVertex(name1);
@@ -71,6 +80,7 @@ public class Main extends Application{
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 			}
 		});
+		//remove
 		menuPane.submitButton2.setOnAction(e -> {
 			//visualPane.saveCurrent();
 			String name1 = menuPane.t4.getText();
@@ -78,7 +88,10 @@ public class Main extends Application{
 			if(!name1.equals("") && name2.equals("")) {
 				ArrayList<String> verticesList = visualPane.getVerticesList();
 				if(verticesList.contains(name1)) {
+					visualPane.saveInstructions("r", name1, null);
 					visualPane.saveCurrent();
+					int size = visualPane.instructionList().size();
+					menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 				}
 				visualPane.home();
 				visualPane.removeVertex(name1);
@@ -86,27 +99,38 @@ public class Main extends Application{
 			}else if(!name1.equals("") && !name2.equals("")) {
 				ArrayList<String> verticesList = visualPane.getVerticesList();
 				if(verticesList.contains(name1) && verticesList.contains(name2)) {
+					visualPane.saveInstructions("r", name1, name2);
 					visualPane.saveCurrent();
+					int size = visualPane.instructionList().size();
+					menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 				}
 				visualPane.home();
 				visualPane.removeEdge(name1, name2);
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 			}
 		});
+		//clean
 		menuPane.cleanButton.setOnAction(e -> {
 			visualPane.saveCurrent();
 			visualPane.clean();
 			menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
+			menuPane.lastInstructionText.setText("clean");
 		});
 		menuPane.homeButton.setOnAction(e -> {
 			visualPane.saveCurrent();
 			visualPane.home();
 			menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
+			visualPane.saveInstructions("home", null, null);
+			int size = visualPane.instructionList().size();
+			menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 		});
 		menuPane.searchButton.setOnAction(e -> {
 			visualPane.saveCurrent();
 			String userName = menuPane.t1.getText();
 			visualPane.search(userName);
+			visualPane.saveInstructions("s", userName, null);
+			int size = visualPane.instructionList().size();
+			menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 		});
 		menuPane.undoButton.setOnAction(e -> {
 			//no need to save current
@@ -114,11 +138,23 @@ public class Main extends Application{
 		});
 		menuPane.submitButton5.setOnAction(e -> {
 			visualPane.saveCurrent();
+			visualPane.saveInstructions("load", menuPane.LoadText.getText(), null);
+			int size = visualPane.instructionList().size();
+			menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 			try {
 				fileParser.loadFromFile(visualPane, menuPane.LoadText.getText());
+				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 			} catch (Exception e1) {
 			}
 		});
+		menuPane.saveButton.setOnAction(e ->{
+			try {
+				fileParser.saveToFile(visualPane, "instructions.txt");
+			}catch(IOException e1) {
+				
+			}
+		});
+		
 		
 
 		VBox vBox = new VBox(menuPane, visualPane);
@@ -129,17 +165,58 @@ public class Main extends Application{
 
 		// exit function
 		scene.lookup("#btn-exit").setOnMouseClicked(e -> {
-			menuPane.exitPane();
+			Label ifSave = new Label("Do you want to save your instructions?");
+			Button yes = new Button("Yes");
+			Button no = new Button("No");
+			HBox yOrn = new HBox();
+			yOrn.getChildren().addAll(new Label("	 "), yes, no);
+			yOrn.setSpacing(22);
+			VBox extiInfo = new VBox();
+			extiInfo.getChildren().addAll(ifSave, yOrn);
+			extiInfo.setSpacing(11);
+			BorderPane form = new BorderPane();
+			form.setLeft(new Label(" 		"));
+			form.setCenter(extiInfo);
+			form.setTop(new Label(" 		"));
+			Scene newScene = new Scene(form, 330, 150);
+			//create a new stage
+			final Stage dialog = new Stage();
+			//show the new scene
+			dialog.setTitle("Confirm Save");
+			dialog.setScene(newScene);
+			dialog.show();
+			yes.setOnAction(e2 -> {
+				try {
+					fileParser.saveToFile(visualPane, "instructions.txt");
+				}catch(IOException e1) {
+					
+				}
+				dialog.fireEvent(new WindowEvent(dialog,
+						WindowEvent.WINDOW_CLOSE_REQUEST));
+				primaryStage.fireEvent(new WindowEvent(dialog,
+						WindowEvent.WINDOW_CLOSE_REQUEST));
+			});
+			no.setOnAction(e2 -> {
+				dialog.fireEvent(new WindowEvent(dialog,
+						WindowEvent.WINDOW_CLOSE_REQUEST));
+				primaryStage.fireEvent(new WindowEvent(dialog,
+						WindowEvent.WINDOW_CLOSE_REQUEST));
+			});
+			
 //			primaryStage.fireEvent(new WindowEvent(
 //					primaryStage,
 //					WindowEvent.WINDOW_CLOSE_REQUEST));
 		});
 
 		scene.lookup("#btn-mutual").setOnMouseClicked(e -> {
+			
 			ArrayList<String> verticesList = visualPane.getVerticesList();
 			String name1 = menuPane.t6.getText();
 			String name2 = menuPane.t7.getText();
 			if(verticesList.contains(name1) && verticesList.contains(name2)) {
+				visualPane.saveInstructions("mutual", name1, name1);
+				int size = visualPane.instructionList().size();
+				menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 				visualPane.saveCurrent();
 			}
 			visualPane.getMutualFriends(
@@ -154,6 +231,9 @@ public class Main extends Application{
 			String name1 = menuPane.t8.getText();
 			String name2 = menuPane.t9.getText();
 			if(verticesList.contains(name1) && verticesList.contains(name2)) {
+				visualPane.saveInstructions("path", name1, name2);
+				int size = visualPane.instructionList().size();
+				menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 				visualPane.saveCurrent();
 			}
 			visualPane.getShortestPath(
