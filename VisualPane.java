@@ -25,6 +25,8 @@ import javafx.scene.input.MouseEvent;
 
 public class VisualPane extends Pane {
 	
+	//
+	private ArrayList<String> instructions;
 	//last context
 	private List<LinkedList<Node>> curContext;
 	private List<List<Vertex>> tmpCircles;
@@ -54,6 +56,7 @@ public class VisualPane extends Pane {
 	//private List<Vertex> friends;
 	
 	public VisualPane(MenuPane menuPane) {
+		instructions = new ArrayList<String>();
 		lastNumGroup = new ArrayList<Integer>();
 		tmpCircles = new LinkedList<List<Vertex>>();
 		tmpEdges = new LinkedList<List<Edge>>();
@@ -80,6 +83,8 @@ public class VisualPane extends Pane {
 	public void addEdge(String name1, String name2) {
 		
 		// both vertexes should already exist
+		
+		
 		Vertex v1 = null;
 		Vertex v2 = null;
 		
@@ -459,6 +464,7 @@ public class VisualPane extends Pane {
 		numVertex = 0;
 		edgeList.clear();
 		edges.clear();
+		instructions.clear();
 	}
 
 	public void search(String name) {
@@ -521,6 +527,7 @@ public class VisualPane extends Pane {
 		 vertexList = tmpVertexList.get(step);
 		 edgeList = tmpEdgeList.get(step);
 		 
+		 
 		 menuPane.numGroupsText.setText("[" + String.valueOf(lastNumGroup.get(step)) + "]");
 		 //lastNumGroup = Integer.parseInt(menuPane.numGroupsText.getText());
 		 
@@ -532,8 +539,45 @@ public class VisualPane extends Pane {
 		 tmpVertexList.remove(step);
 		 tmpEdgeList.remove(step);
 		 step--;
+		 if(instructions.size() != 0) {
+			 instructions.remove(instructions.size() - 1);
+		 }
+		 if(instructions.size() != 0) {
+			 menuPane.lastInstructionText.setText(instructions.get(instructions.size() - 1));
+		 }else {
+			 menuPane.lastInstructionText.setText("NONE");
+		 }
 	}
 
-
-
+	public void saveInstructions(String command, String name1, String name2){
+		if(command.equals("a") && name1 != null && name2 == null) {
+			instructions.add("a " + name1);
+		}else if(command.equals("a") && name1 != null && name2 != null) {
+			instructions.add("a " + name1 + " " + name2);
+		}else if(command.equals("r") && name1 != null && name2 == null) {
+			instructions.add("r " + name1);
+		}else if(command.equals("r") && name1 != null && name2 != null) {
+			instructions.add("r " + name1 + " " + name2);
+		}else if(command.equals("s") && name1 != null && name2 == null) {
+			instructions.add("s " + name1);
+		}else if(command.equals("home") && name1 == null && name2 == null) {
+			instructions.add("home");
+		}else if(command.equals("mutual") && name1 != null && name2 != null) {
+			instructions.add("mutual " + name1 + name2);
+		}else if(command.equals("path") && name1 != null && name2 != null) {
+			instructions.add("path " + name1 + " " + name2);
+		}else if(command.equals("load") && name1 != null && name2 == null) {
+			instructions.add("load " + name1);
+		}
+	}
+	
+	public ArrayList<String> instructionList(){
+		return instructions;
+	}
+	
+	public MenuPane getmenuPane() {
+		return menuPane;
+	}
+	
 }
+
