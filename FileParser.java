@@ -48,14 +48,6 @@ public class FileParser {
 			} else if (str[0].equals("s")) {
 				visualPane.setCentralUser(str[1]);
 				
-			} else if (str[0].equals("load")) {
-				if (str.length == 2) {
-					if (!str[1].equals(fileName)) {
-						loadFromFile(visualPane, str[1]);
-					} else {
-						continue;
-					}
-				}
 			}
 		}
 		scnr.close();
@@ -74,6 +66,16 @@ public class FileParser {
 			String[] arr = visualPane.instructionList().get(i).split(" ");
 			if (!arr[0].equals("home") && !arr[0].equals("mutual") && !arr[0].equals("path")) {
 				printer.println(visualPane.instructionList().get(i));
+			} else if (arr[0].equals("load")) {
+				if (arr.length == 2) {
+					String name = arr[1];
+					File file1 = new File(name);
+					Scanner scnr = new Scanner(file1);
+					while (scnr.hasNextLine()) {
+						printer.println(scnr.nextLine());
+					}
+					scnr.close();
+				}
 			}
 		}
 		printer.close();
