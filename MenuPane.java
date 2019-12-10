@@ -189,8 +189,9 @@ public class MenuPane extends AnchorPane {
 		Label ifSave = new Label("Do you want to save your instructions?");
 		Button yes = new Button("Yes");
 		Button no = new Button("No");
+		Button cancel = new Button("Cancel");
 		HBox yOrn = new HBox();
-		yOrn.getChildren().addAll(new Label("	 "), yes, no);
+		yOrn.getChildren().addAll(new Label(" "), yes, no, cancel);
 		yOrn.setSpacing(22);
 		VBox extiInfo = new VBox();
 		extiInfo.getChildren().addAll(ifSave, yOrn);
@@ -207,13 +208,22 @@ public class MenuPane extends AnchorPane {
 		dialog.setScene(newScene);
 		dialog.show();
 		yes.setOnAction(e -> {
-			//add save function
+			// TODO: add save function
+			dialog.fireEvent(new WindowEvent(dialog,
+					WindowEvent.WINDOW_CLOSE_REQUEST));
+			this.fireEvent(new WindowEvent(dialog,
+					WindowEvent.WINDOW_CLOSE_REQUEST));
+
+		});
+
+		no.setOnAction(e -> {
 			dialog.fireEvent(new WindowEvent(dialog,
 					WindowEvent.WINDOW_CLOSE_REQUEST));
 			this.fireEvent(new WindowEvent(dialog,
 					WindowEvent.WINDOW_CLOSE_REQUEST));
 		});
-		no.setOnAction(e -> {
+
+		cancel.setOnMouseClicked(e -> {
 			dialog.fireEvent(new WindowEvent(dialog,
 					WindowEvent.WINDOW_CLOSE_REQUEST));
 		});

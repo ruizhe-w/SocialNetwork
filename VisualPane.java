@@ -80,8 +80,6 @@ public class VisualPane extends Pane {
 	public void addEdge(String name1, String name2) {
 		
 		// both vertexes should already exist
-		
-		
 		Vertex v1 = null;
 		Vertex v2 = null;
 		

@@ -59,12 +59,12 @@ public class FileParser {
 	 * @param visualPane
 	 * @throws IOException 
 	 */
-	public void saveToFile(VisualPane visualPane, String filename) throws IOException {
-		File file = new File(filename);
-		PrintWriter printer = new PrintWriter(file);
-		for (int i = 0; i < visualPane.instructionList().size(); i++) {
-			printer.println(visualPane.instructionList().get(i));
-		}
-		printer.close();
-	}
+//	public void saveToFile(VisualPane visualPane, String filename) throws IOException {
+//		File file = new File(filename);
+//		PrintWriter printer = new PrintWriter(file);
+//		for (int i = 0; i < visualPane.instructionList().size(); i++) {
+//			printer.println(visualPane.instructionList().get(i));
+//		}
+//		printer.close();
+//	}
 }
