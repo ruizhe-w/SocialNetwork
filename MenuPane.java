@@ -10,6 +10,8 @@
  */
 package application;
 
+import java.io.IOException;
+
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,6 +27,8 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class MenuPane extends AnchorPane {
+	private static FileParser fileParser;
+	
 	VBox function = new VBox();
 	VBox input = new VBox();
 	VBox buttons = new VBox();
@@ -92,6 +96,8 @@ public class MenuPane extends AnchorPane {
 	Label empty8 = new Label("	");
 
 	public MenuPane() {
+		fileParser = new FileParser();
+
 		this.setPrefSize(300, 1050);
 		t1.setPromptText("Search Name");
 
@@ -186,47 +192,6 @@ public class MenuPane extends AnchorPane {
 	}
 	
 	public void exitPane() {
-		Label ifSave = new Label("Do you want to save your instructions?");
-		Button yes = new Button("Yes");
-		Button no = new Button("No");
-		Button cancel = new Button("Cancel");
-		HBox yOrn = new HBox();
-		yOrn.getChildren().addAll(new Label(" "), yes, no, cancel);
-		yOrn.setSpacing(22);
-		VBox extiInfo = new VBox();
-		extiInfo.getChildren().addAll(ifSave, yOrn);
-		extiInfo.setSpacing(11);
-		BorderPane form = new BorderPane();
-		form.setLeft(new Label(" 		"));
-		form.setCenter(extiInfo);
-		form.setTop(new Label(" 		"));
-		Scene newScene = new Scene(form, 330, 150);
-		//create a new stage
-		final Stage dialog = new Stage();
-		//show the new scene
-		dialog.setTitle("Confirm Save");
-		dialog.setScene(newScene);
-		dialog.show();
-		yes.setOnAction(e -> {
-			// TODO: add save function
-			dialog.fireEvent(new WindowEvent(dialog,
-					WindowEvent.WINDOW_CLOSE_REQUEST));
-			this.fireEvent(new WindowEvent(dialog,
-					WindowEvent.WINDOW_CLOSE_REQUEST));
-
-		});
-
-		no.setOnAction(e -> {
-			dialog.fireEvent(new WindowEvent(dialog,
-					WindowEvent.WINDOW_CLOSE_REQUEST));
-			this.fireEvent(new WindowEvent(dialog,
-					WindowEvent.WINDOW_CLOSE_REQUEST));
-		});
-
-		cancel.setOnMouseClicked(e -> {
-			dialog.fireEvent(new WindowEvent(dialog,
-					WindowEvent.WINDOW_CLOSE_REQUEST));
-		});
 		
 	}
 	
