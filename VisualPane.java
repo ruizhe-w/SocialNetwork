@@ -563,7 +563,7 @@ public class VisualPane extends Pane {
 		}else if(command.equals("home") && name1 == null && name2 == null) {
 			instructions.add("home");
 		}else if(command.equals("mutual") && name1 != null && name2 != null) {
-			instructions.add("mutual " + name1 + name2);
+			instructions.add("mutual " + name1 + " " + name2);
 		}else if(command.equals("path") && name1 != null && name2 != null) {
 			instructions.add("path " + name1 + " " + name2);
 		}else if(command.equals("load") && name1 != null && name2 == null) {
@@ -580,4 +580,3 @@ public class VisualPane extends Pane {
 	}
 	
 }
-
