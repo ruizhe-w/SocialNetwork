@@ -268,7 +268,7 @@ public class Main extends Application{
 			String name1 = menuPane.t6.getText();
 			String name2 = menuPane.t7.getText();
 			if(verticesList.contains(name1) && verticesList.contains(name2)) {
-				visualPane.saveInstructions("mutual", name1, name1);
+				visualPane.saveInstructions("mutual", name1, name2);
 				int size = visualPane.instructionList().size();
 				menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 				visualPane.saveCurrent();
