@@ -257,9 +257,6 @@ public class Main extends Application{
 						WindowEvent.WINDOW_CLOSE_REQUEST));
 			});
 			
-//			primaryStage.fireEvent(new WindowEvent(
-//					primaryStage,
-//					WindowEvent.WINDOW_CLOSE_REQUEST));
 		});
 
 		scene.lookup("#btn-mutual").setOnMouseClicked(e -> {
@@ -277,7 +274,16 @@ public class Main extends Application{
 					((TextField)scene.lookup("#txd-mutual-1")).getText(),
 					((TextField)scene.lookup("#txd-mutual-2")).getText()
 			);
-			((Label)scene.lookup("#txt-group")).setText("[1]");
+			if(verticesList.contains(name1) && verticesList.contains(name2)) {
+			
+			 if(!visualPane.checkPath(name1, name2)) {
+				((Label)scene.lookup("#txt-group")).setText("[2]");
+			}else {
+				((Label)scene.lookup("#txt-group")).setText("[1]");
+			}
+			}
+				
+			
 		});
 
 		scene.lookup("#btn-short").setOnMouseClicked(e -> {
