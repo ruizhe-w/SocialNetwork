@@ -64,7 +64,7 @@ public class FileParser {
 		PrintWriter printer = new PrintWriter(file);
 		for (int i = 0; i < visualPane.instructionList().size(); i++) {
 			String[] arr = visualPane.instructionList().get(i).split(" ");
-			if (!arr[0].equals("home") && !arr[0].equals("mutual") && !arr[0].equals("path")) {
+			if (!arr[0].equals("home") && !arr[0].equals("mutual") && !arr[0].equals("path") && !arr[0].equals("load")) {
 				printer.println(visualPane.instructionList().get(i));
 			} else if (arr[0].equals("load")) {
 				if (arr.length == 2) {
