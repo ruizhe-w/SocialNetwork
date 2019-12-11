@@ -9,21 +9,16 @@
  * This class is used to create an vertex to visual pane
  */
 package application;
-
 import java.util.*;
-
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-
 import javafx.scene.input.MouseEvent;
-
 public class VisualPane extends Pane {
 	
 	//
@@ -45,11 +40,9 @@ public class VisualPane extends Pane {
 	private List<Edge> edges;
 	
 	private int numVertex;
-
 	public ArrayList<String> getVerticesList() {
 		return vertexList;
 	}
-
 	private ArrayList<String> vertexList;
 	private ArrayList<ArrayList<Boolean>> edgeList;
 	private int numGroup;
@@ -76,6 +69,11 @@ public class VisualPane extends Pane {
 		//centralUser = "";
 	}
 	
+	/**
+	 * This method add edge to visual pane
+	 * @param name1 name of the first vertex
+	 * @param name2 name of the second vertex
+	 */
 	/**
 	 * This method add edge to visual pane
 	 * @param name1 name of the first vertex
@@ -170,7 +168,6 @@ public class VisualPane extends Pane {
 				break;
 			}
 		}
-//		updateInstruction();
 	}
 	
 	
@@ -235,10 +232,8 @@ public class VisualPane extends Pane {
 		
 		edgeList.get(vertexList.indexOf(s1)).set(vertexList.indexOf(s2), false);
 		edgeList.get(vertexList.indexOf(s2)).set(vertexList.indexOf(s1), false);
-		updateInstruction();
 	}
 	
-
 	
 	/**
 	 * remove the vertex specified by the vertex name
@@ -270,7 +265,8 @@ public class VisualPane extends Pane {
 		this.circles.remove(vertexList.indexOf(string));
 		vertexList.remove(vertexList.indexOf(string));
 		numVertex--;
-		updateInstruction();
+		
+		
 	}
 	
 	
@@ -295,38 +291,30 @@ public class VisualPane extends Pane {
 		}
 		return false;
 	}
-
 	public void getMutualFriends(String name1, String name2) {
 		if (!vertexList.contains(name1) || !vertexList.contains(name2)) {
 			return;
 		}
-
 		Vertex v1 = circles.get(vertexList.indexOf(name1));
 		Vertex v2 = circles.get(vertexList.indexOf(name2));
-
 		this.getChildren().clear();
 		this.getChildren().addAll(v1, v2);
-
 		List<String> mutualList = new ArrayList<String>();
 		for (int i = 0; i < edgeList.get(vertexList.indexOf(name1)).size(); i++) {
 			if (edgeList.get(vertexList.indexOf(name1)).get(i)) {
 				mutualList.add(circles.get(i).getName());
 			}
 		}
-
 //		System.out.println(mutualList.toString());
 		for (int i = 0; i < edgeList.get(vertexList.indexOf(name2)).size(); i++) {
 			if (edgeList.get(vertexList.indexOf(name2)).get(i)) {
 				if (mutualList.contains(circles.get(i).getName())) {
-
 					if (i == vertexList.indexOf(name1) ||
 						i == vertexList.indexOf(name2)) {
 						continue;
 					}
-
 					Vertex tmpVertex = circles.get(i);
 					this.getChildren().add(tmpVertex);
-
 					this.getChildren().add(new Edge(v2.getX(), v2.getY(), tmpVertex.getX(),
 							tmpVertex.getY(), v2.getName(), tmpVertex.getName()));
 					this.getChildren().add(new Edge(v1.getX(), v1.getY(), tmpVertex.getX(),
@@ -334,28 +322,19 @@ public class VisualPane extends Pane {
 				}
 			}
 		}
-
 		if (edgeList.get(vertexList.indexOf(name1)).get(vertexList.indexOf(name2))) {
 			this.getChildren().add(new Edge(v1.getX(), v1.getY(), v2.getX(), v2.getY(), v1.getName(), v2.getName()));
 		}
-		if(!name1.equals(name2)) {
-			updateInstruction();
-		}
 	}
-
 	public void getShortestPath(String name1, String name2) {
-
 		if (!vertexList.contains(name1) || !vertexList.contains(name2)) {
 			return;
 		}
-
 		Vertex v1 = circles.get(vertexList.indexOf(name1));
 		Vertex v2 = circles.get(vertexList.indexOf(name2));
 		Vertex tmpVertex = null;
-
 		this.getChildren().clear();
 		this.getChildren().addAll(v1, v2);
-
 		List<String> list = dfs(name1, name2);
 		for (String s: list) {
 			tmpVertex = circles.get(vertexList.indexOf(s));
@@ -369,34 +348,24 @@ public class VisualPane extends Pane {
 					v1.getY(), v2.getName(), v1.getName()));
 			return;
 		}
-
 		this.getChildren().add(new Edge(v2.getX(), v2.getY(), tmpVertex.getX(),
 				tmpVertex.getY(), v2.getName(), tmpVertex.getName()));
-		if(!name1.equals(name2)) {
-			updateInstruction();
-			}
 	}
-
-
 	private List<String> dfs(String name1, String name2) {
 		Queue<String> queue = new LinkedList<String>();
 		String[] prev = new String[numVertex];
 		Boolean[] visited = new Boolean[numVertex];
-
 		for (int i = 0; i < numVertex; i++) {
 			visited[i] = false;
 		}
 		int counter = 0;
-
 		queue.add(name1);
 		while (!queue.isEmpty()) {
 			String tmp = queue.peek();
 			queue.remove();
-
 			if (tmp.equals(name2)) {
 				break;
 			}
-
 			int index = vertexList.indexOf(tmp);
 			for (int i = 0; i < edgeList.get(index).size(); i++) {
 				if (edgeList.get(index).get(i)) {
@@ -409,7 +378,6 @@ public class VisualPane extends Pane {
 				}
 			}
 		}
-
 		List<String> ans = new ArrayList<String>();
 		String nowName = name2;
 		int index =  vertexList.indexOf(nowName);
@@ -421,17 +389,13 @@ public class VisualPane extends Pane {
 		if (!ans.isEmpty()) {
 			ans.remove(ans.size() - 1);
 		}
-
 		List<String> returnList = new ArrayList<String>();
 		for (int i = ans.size() - 1; i >= 0; i--) {
 			returnList.add(ans.get(i));
 		}
-
-		//System.out.println(returnList.toString());
+		System.out.println(returnList.toString());
 		return returnList;
 	}
-
-
 	public void setCentralUser(String name) {
 		if(!vertexList.contains(name)) {
 			return;
@@ -453,7 +417,14 @@ public class VisualPane extends Pane {
 			}
 		}
 		menuPane.numGroupsText.setText("[1]");
-		updateInstruction();
+		int index = vertexList.indexOf(name);
+		int num = 0;
+		for(int i = 0; i < edgeList.get(index).size(); i++) {
+			if(edgeList.get(index).get(i)) {
+				num++;
+			}
+		}
+		menuPane.numFriends.setText("" + num);
 	}
 	
 	public void home() {
@@ -474,9 +445,7 @@ public class VisualPane extends Pane {
 		edgeList.clear();
 		edges.clear();
 		instructions.clear();
-		((Label)menuPane.lookup("#txt-last")).setText("NONE");
 	}
-
 	public void search(String name) {
 		if(!vertexList.contains(name)) {
 			this.getParent().lookup("#txd-search").setStyle(
@@ -558,7 +527,6 @@ public class VisualPane extends Pane {
 			 menuPane.lastInstructionText.setText("NONE");
 		 }
 	}
-
 	public void saveInstructions(String command, String name1, String name2){
 		if(command.equals("a") && name1 != null && name2 == null) {
 			instructions.add("a " + name1);
@@ -585,6 +553,8 @@ public class VisualPane extends Pane {
 		if(name1.equals(name2)) {
 			return true;
 		}
+		System.out.println(vertexList);
+		System.out.println(edgeList.get(0).get(0));
 		int index1 = vertexList.indexOf(name1);
 		int index2 = vertexList.indexOf(name2);
 		if(edgeList.get(index1).get(index2)) {
@@ -603,18 +573,8 @@ public class VisualPane extends Pane {
 	public ArrayList<String> instructionList(){
 		return instructions;
 	}
-
-	private void updateInstruction() {
-		((Label)menuPane.lookup("#txt-last")).setText(getLastInstruction());
-	}
-
-
-	public String getLastInstruction() {
-		return instructions.get(instructions.size() - 1);
-	}
 	
 	public MenuPane getmenuPane() {
 		return menuPane;
 	}
-	
 }
