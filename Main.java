@@ -200,9 +200,11 @@ public class Main extends Application{
 			visualPane.saveCurrent();
 			String userName = menuPane.t1.getText();
 			visualPane.search(userName);
-			visualPane.saveInstructions("s", userName, null);
-			int size = visualPane.instructionList().size();
-			menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
+			if(visualPane.getVerticesList().contains(userName)) {
+				visualPane.saveInstructions("s", userName, null);
+				int size = visualPane.instructionList().size();
+				menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
+			}
 		});
 		menuPane.undoButton.setOnAction(e -> {
 			//no need to save current
@@ -312,7 +314,7 @@ public class Main extends Application{
 					}
 					dialog.fireEvent(new WindowEvent(dialog,
 							WindowEvent.WINDOW_CLOSE_REQUEST));
-					primaryStage.fireEvent(new WindowEvent(dialog,
+					primaryStage.fireEvent(new WindowEvent(primaryStage,
 							WindowEvent.WINDOW_CLOSE_REQUEST));
 				}else {
 					form.setBottom(new Label("					invalid filename"));
@@ -321,7 +323,7 @@ public class Main extends Application{
 			no.setOnAction(e2 -> {
 				dialog.fireEvent(new WindowEvent(dialog,
 						WindowEvent.WINDOW_CLOSE_REQUEST));
-				primaryStage.fireEvent(new WindowEvent(dialog,
+				primaryStage.fireEvent(new WindowEvent(primaryStage,
 						WindowEvent.WINDOW_CLOSE_REQUEST));
 			});
 			cancel.setOnAction(e2 -> {
@@ -336,7 +338,7 @@ public class Main extends Application{
 			ArrayList<String> verticesList = visualPane.getVerticesList();
 			String name1 = menuPane.t6.getText();
 			String name2 = menuPane.t7.getText();
-			if(verticesList.contains(name1) && verticesList.contains(name2)) {
+			if(verticesList.contains(name1) && verticesList.contains(name2) && !name1.equals(name2)) {
 				visualPane.saveInstructions("mutual", name1, name2);
 				int size = visualPane.instructionList().size();
 				menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
@@ -368,14 +370,14 @@ public class Main extends Application{
 							"-fx-border-color: transparent;"
 					);
 				}
+				
 				return;
 			}
-
-			visualPane.getMutualFriends(
-					((TextField)scene.lookup("#txd-mutual-1")).getText(),
-					((TextField)scene.lookup("#txd-mutual-2")).getText()
-			);
-			if(verticesList.contains(name1) && verticesList.contains(name2)) {
+			if (!name1.equals(name2)) {
+				visualPane.getMutualFriends(((TextField) scene.lookup("#txd-mutual-1")).getText(),
+						((TextField) scene.lookup("#txd-mutual-2")).getText());
+			}
+			if(verticesList.contains(name1) && verticesList.contains(name2) && !name1.equals(name2)) {
 			 	if(!visualPane.checkPath(name1, name2)) {
 					((Label)scene.lookup("#txt-group")).setText("[2]");
 				}else {
@@ -389,7 +391,7 @@ public class Main extends Application{
 			ArrayList<String> verticesList = visualPane.getVerticesList();
 			String name1 = menuPane.t8.getText();
 			String name2 = menuPane.t9.getText();
-			if(verticesList.contains(name1) && verticesList.contains(name2)) {
+			if(verticesList.contains(name1) && verticesList.contains(name2) && !name1.equals(name2)) {
 				visualPane.saveInstructions("path", name1, name2);
 				int size = visualPane.instructionList().size();
 				menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
@@ -414,12 +416,15 @@ public class Main extends Application{
 							"-fx-border-color: transparent;"
 					);
 				}
+				
 				return;
 			}
+			if(!name1.equals(name2)) {
 			visualPane.getShortestPath(
 					((TextField)scene.lookup("#txd-short-1")).getText(),
 					((TextField)scene.lookup("#txd-short-2")).getText()
 			);
+			}
 		});
 
 
