@@ -31,8 +31,8 @@ import javafx.stage.WindowEvent;
 public class Main extends Application{
 	private List<String> args;
 
-	private static final int WINDOW_WIDTH = 1050;
-	private static final int WINDOW_HEIGHT = 600;
+	private static final int WINDOW_WIDTH = 1100;
+	private static final int WINDOW_HEIGHT = 700;
 	private static final String APP_TITLE = "Social Network Visualizer";
 	
 	private static VisualPane visualPane;
@@ -77,12 +77,12 @@ public class Main extends Application{
 				visualPane.home();
 				visualPane.addVertex(name1);
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
+				menuPane.totalUser.setText(""+visualPane.getVerticesList().size());
 			}else if(!name1.equals("") && !name2.equals("")) {
 				visualPane.home();
 //				visualPane.saveInstructions("a", name1, name2);
 				visualPane.addVertex(name1);
 				visualPane.addVertex(name2);
-				System.out.println("df");
 
 				if (visualPane.addEdge(name1, name2)) {
 					visualPane.saveInstructions("a", name1, name2);
@@ -108,6 +108,7 @@ public class Main extends Application{
 				}
 
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
+				menuPane.totalUser.setText(""+visualPane.getVerticesList().size());
 			} else {
 
 				scene.lookup("#txd-add-1").setStyle(
@@ -148,6 +149,7 @@ public class Main extends Application{
 				visualPane.home();
 				visualPane.removeVertex(name1);
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
+				menuPane.totalUser.setText(""+visualPane.getVerticesList().size());
 			}else if(!name1.equals("") && !name2.equals("")) {
 				ArrayList<String> verticesList = visualPane.getVerticesList();
 				if(verticesList.contains(name1) && verticesList.contains(name2)) {
@@ -173,6 +175,7 @@ public class Main extends Application{
 				visualPane.home();
 				visualPane.removeEdge(name1, name2);
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
+				menuPane.totalUser.setText(""+visualPane.getVerticesList().size());
 			} else {
 				scene.lookup("#txd-remove-1").setStyle(
 						"-fx-border-color: RED;"
@@ -188,6 +191,7 @@ public class Main extends Application{
 			visualPane.clean();
 			menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 			menuPane.lastInstructionText.setText("clean");
+			menuPane.totalUser.setText(""+visualPane.getVerticesList().size());
 		});
 		menuPane.homeButton.setOnAction(e -> {
 			visualPane.saveCurrent();
@@ -196,6 +200,7 @@ public class Main extends Application{
 			visualPane.saveInstructions("home", null, null);
 			int size = visualPane.instructionList().size();
 			menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
+			menuPane.numFriends.setText("Need a central user");
 		});
 		menuPane.searchButton.setOnAction(e -> {
 			visualPane.saveCurrent();
@@ -267,6 +272,49 @@ public class Main extends Application{
 				
 			});
 			
+		});
+		menuPane.helpButton.setOnAction(e ->{
+			BorderPane form = new BorderPane();
+			Button no = new Button("Cancel");
+			
+			form.setCenter(no);
+			
+			Label introduction1 = new Label("Search bar: You can serch a user in the social network and set this user as a central user.");
+			Label introduction2 = new Label("Add: You can add a user by input user name in the first textfield, add an edge between two users by inputing 2 user names in the two text fields.");
+			Label introduction3 = new Label("Remove: You can remove a user by input user name in the first textfield, remove an edge between two users by inputing 2 user names in the two text fields.");
+			Label introduction4 = new Label("Home: return to the home page which shows all of the users.");
+			Label introduction5 = new Label("Undo: undo the last operation.");
+			Label introduction6 = new Label("Clean: clean the social network.");
+			Label introduction7 = new Label("Exit: exit the program.");
+			Label introduction8 = new Label("Save: save the instructions to a file.");
+			Label introduction9 = new Label("Mutual Friends: input two user names and see their mutual friends.");
+			Label introduction10 = new Label("Shortest path: input two user names and see the Shortest path between them.");
+			Label introduction11 = new Label("Load: laod a file of instructions.");
+			VBox instructions = new VBox();
+			instructions.getChildren().addAll(introduction1,
+					introduction2,
+					introduction3,
+					introduction4,
+					introduction5,
+					introduction6,
+					introduction7,
+					introduction8,
+					introduction9,
+					introduction10,
+					introduction11);
+			form.setTop(instructions);
+			Scene newScene = new Scene(form, 1000, 300);
+			//create a new stage
+			final Stage dialog = new Stage();
+			//show the new scene
+			dialog.setTitle("File Name prompt");
+			dialog.setScene(newScene);
+			dialog.show();
+			no.setOnAction(e2 -> {
+				dialog.fireEvent(new WindowEvent(dialog,
+						WindowEvent.WINDOW_CLOSE_REQUEST));
+				
+			});
 		});
 		
 		
