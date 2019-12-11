@@ -224,6 +224,7 @@ public class Main extends Application{
 			try {
 				fileParser.loadFromFile(visualPane, menuPane.LoadText.getText());
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
+				menuPane.totalUser.setText(""+visualPane.getVerticesList().size());
 			} catch (Exception e1) {
 			}
 		});
