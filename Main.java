@@ -420,10 +420,12 @@ public class Main extends Application{
 				return;
 			}
 			if(!name1.equals(name2)) {
-			visualPane.getShortestPath(
-					((TextField)scene.lookup("#txd-short-1")).getText(),
-					((TextField)scene.lookup("#txd-short-2")).getText()
-			);
+				if(visualPane.checkPath(name1, name2)) {
+					visualPane.getShortestPath(
+							((TextField)scene.lookup("#txd-short-1")).getText(),
+							((TextField)scene.lookup("#txd-short-2")).getText()
+					);
+			}
 			}
 		});
 
