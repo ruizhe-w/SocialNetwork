@@ -328,7 +328,6 @@ public class VisualPane extends Pane {
 	}
 	public void getShortestPath(String name1, String name2) {
 		if (!vertexList.contains(name1) || !vertexList.contains(name2)) {
-			System.out.println("check");
 			return;
 		}
 
@@ -337,7 +336,6 @@ public class VisualPane extends Pane {
 		Vertex tmpVertex = null;
 		this.getChildren().clear();
 		this.getChildren().addAll(v1, v2);
-		System.out.println("in");
 		List<String> list = dfs(name1, name2);
 		if (list.size() == 0) {
 			this.getParent().lookup("#txd-short-1").setStyle(
@@ -354,7 +352,6 @@ public class VisualPane extends Pane {
 		this.getParent().lookup("#txd-short-2").setStyle(
 				"-fx-border-color: transparent;"
 		);
-		System.out.println(list.toString());
 		if (list.size() == 1 && list.get(0).equals(name1)) {
 			this.getChildren().add(new Edge(v1.getX(), v1.getY(), v2.getX(),
 					v2.getY(), v1.getName(), v2.getName()));
@@ -386,18 +383,15 @@ public class VisualPane extends Pane {
 		for (int i = 0; i < numVertex; i++) {
 			visited[i] = false;
 		}
-		System.out.println("in-dfs");
 		int counter = 0;
 		queue.add(name1);
 		while (!queue.isEmpty()) {
-			System.out.println(queue.toString());
 			String tmp = queue.peek();
 			queue.remove();
 			if (tmp.equals(name2)) {
 				find = true;
 				break;
 			}
-			System.out.println(queue.toString());
 
 			int index = vertexList.indexOf(tmp);
 			for (int i = 0; i < edgeList.get(index).size(); i++) {
@@ -407,13 +401,12 @@ public class VisualPane extends Pane {
 						visited[i] = true;
 						queue.add(toString);
 						prev[i] = tmp;
-						System.out.println("new");
+						
 					}
 				}
 			}
 		}
 		if (!find) {
-			System.out.println("No Find");
 			return new ArrayList<String>();
 		}
 
@@ -432,7 +425,6 @@ public class VisualPane extends Pane {
 		for (int i = ans.size() - 1; i >= 0; i--) {
 			returnList.add(ans.get(i));
 		}
-		System.out.println(returnList.toString());
 		return returnList;
 	}
 
@@ -593,8 +585,6 @@ public class VisualPane extends Pane {
 		if(name1.equals(name2)) {
 			return true;
 		}
-		System.out.println(vertexList);
-		System.out.println(edgeList.get(0).get(0));
 		int index1 = vertexList.indexOf(name1);
 		int index2 = vertexList.indexOf(name2);
 		if(edgeList.get(index1).get(index2)) {
