@@ -60,7 +60,7 @@ public class MenuPane extends AnchorPane {
 	Button submitButton5 = new Button("Submit");
 	Button homeButton = new Button("Home");
 	Button cleanButton = new Button("Clean");
-	Button undoButton = new Button("Undo");
+	//Button undoButton = new Button("Undo");
 	Button exitButton = new Button("Exit");
 	Button saveButton = new Button("Save");
 	Button helpButton = new Button("Help");
@@ -142,7 +142,7 @@ public class MenuPane extends AnchorPane {
 
 		LoadText.setPromptText("Load File Here");
 
-		menuButtons.getChildren().addAll(empty8, homeButton, undoButton, cleanButton, empty2, 
+		menuButtons.getChildren().addAll(empty8, homeButton, cleanButton, empty2, 
 				exitButton, empty3, saveButton, helpButton);
 		textFields1.getChildren().addAll(t2, t3);
 		textFields2.getChildren().addAll(t4, t5);
@@ -206,61 +206,5 @@ public class MenuPane extends AnchorPane {
 		lastInstructionText.setId("txt-last");
 	}
 	
-	public void exitPane() {
-		
-	}
-	
-	/**
-	 * bind to the listener, make different operations 
-	 * based on the number of non-null arguments
-	 * 
-	 * if s2 is none, add vertex s1
-	 * if s2 is non-null, add edge s1-s2
-	 * 
-	 * @param s1 a name of a vertex
-	 * @param s2 a name of a vertex
-	 */
-	public void funcAdd(String s1, String s2) {
-		
-	}
-	
-	// TODO: 3. finish the function\
-	// NOTE: I have not finished this function, but you can check 
-	// 		 whether you bind correctly or not
-	/**
-	 * a function to create a new stage based on the given string
-	 * 
-	 * @param string name to search for
-	 */
-	public void funcSearch(String string) {
-		
-	// TODO: 4. finish corresponded function in FileParse.java or VisualPane.java
-
-	}
-	
-	
-	public void funcRemove(String s1, String s2) {
-		
-	}
-	
-	
-	public void funcMutual(String s1, String s2) {
-		
-	}
-	
-	
-	public void funcLoad(String string) {
-		
-	}
-	
-	
-	private void updateGroupNumber() {
-		
-	}
-	
-	
-	private void updateInstrunction(String string) {
-		
-	}
 
 }
