@@ -428,7 +428,7 @@ public class VisualPane extends Pane {
 			returnList.add(ans.get(i));
 		}
 
-		System.out.println(returnList.toString());
+		//System.out.println(returnList.toString());
 		return returnList;
 	}
 
