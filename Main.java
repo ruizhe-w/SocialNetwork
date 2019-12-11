@@ -212,10 +212,10 @@ public class Main extends Application{
 				menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 			}
 		});
-		menuPane.undoButton.setOnAction(e -> {
-			//no need to save current
-			visualPane.undo();
-		});
+//		menuPane.undoButton.setOnAction(e -> {
+//			//no need to save current
+//			visualPane.undo();
+//		});
 		menuPane.submitButton5.setOnAction(e -> {
 			visualPane.saveCurrent();
 			visualPane.saveInstructions("load", menuPane.LoadText.getText(), null);
@@ -284,7 +284,7 @@ public class Main extends Application{
 			Label introduction2 = new Label("Add: You can add a user by input user name in the first textfield, add an edge between two users by inputing 2 user names in the two text fields.");
 			Label introduction3 = new Label("Remove: You can remove a user by input user name in the first textfield, remove an edge between two users by inputing 2 user names in the two text fields.");
 			Label introduction4 = new Label("Home: return to the home page which shows all of the users.");
-			Label introduction5 = new Label("Undo: undo the last operation.");
+			//Label introduction5 = new Label("Undo: undo the last operation.");
 			Label introduction6 = new Label("Clean: clean the social network.");
 			Label introduction7 = new Label("Exit: exit the program.");
 			Label introduction8 = new Label("Save: save the instructions to a file.");
@@ -296,7 +296,7 @@ public class Main extends Application{
 					introduction2,
 					introduction3,
 					introduction4,
-					introduction5,
+					//introduction5,
 					introduction6,
 					introduction7,
 					introduction8,
