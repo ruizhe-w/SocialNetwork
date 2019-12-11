@@ -446,6 +446,34 @@ public class Main extends Application{
 				int size = visualPane.instructionList().size();
 				menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 				visualPane.saveCurrent();
+//				scene.lookup("#txd-short-1").setStyle(
+//						"-fx-border-color: transparent;"
+//				);
+//				scene.lookup("#txd-short-2").setStyle(
+//						"-fx-border-color: transparent;"
+//				if(visualPane.checkPath(name1, name2)) {
+//					visualPane.getShortestPath(
+//							((TextField)scene.lookup("#txd-short-1")).getText(),
+//							((TextField)scene.lookup("#txd-short-2")).getText()
+//					);
+//					((Label)scene.lookup("#txt-group")).setText("[1]");
+//				}else {
+//					((Label)scene.lookup("#txt-group")).setText("[2]");
+//				}
+
+				visualPane.getShortestPath(
+							((TextField)scene.lookup("#txd-short-1")).getText(),
+							((TextField)scene.lookup("#txd-short-2")).getText()
+					);
+
+				if (visualPane.getChildren().size() > 2) {
+					((Label)scene.lookup("#txt-group")).setText("[1]");
+				} else {
+					((Label)scene.lookup("#txt-group")).setText("[2]");
+				}
+//
+
+//				);
 			} else {
 				if (!verticesList.contains(name1)) {
 					scene.lookup("#txd-short-1").setStyle(
@@ -466,19 +494,17 @@ public class Main extends Application{
 							"-fx-border-color: transparent;"
 					);
 				}
+
+				if (name1.equals(name2)) {
+					scene.lookup("#txd-short-2").setStyle(
+							"-fx-border-color: RED;"
+					);
+					scene.lookup("#txd-short-1").setStyle(
+							"-fx-border-color: RED;"
+					);
+				}
 				
 				return;
-			}
-			if(!name1.equals(name2)) {
-				if(visualPane.checkPath(name1, name2)) {
-					visualPane.getShortestPath(
-							((TextField)scene.lookup("#txd-short-1")).getText(),
-							((TextField)scene.lookup("#txd-short-2")).getText()
-					);
-					((Label)scene.lookup("#txt-group")).setText("[1]");
-			}else {
-				((Label)scene.lookup("#txt-group")).setText("[2]");
-			}
 			}
 		});
 

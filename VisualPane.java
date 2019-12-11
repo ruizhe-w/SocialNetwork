@@ -328,14 +328,39 @@ public class VisualPane extends Pane {
 	}
 	public void getShortestPath(String name1, String name2) {
 		if (!vertexList.contains(name1) || !vertexList.contains(name2)) {
+			System.out.println("check");
 			return;
 		}
+
 		Vertex v1 = circles.get(vertexList.indexOf(name1));
 		Vertex v2 = circles.get(vertexList.indexOf(name2));
 		Vertex tmpVertex = null;
 		this.getChildren().clear();
 		this.getChildren().addAll(v1, v2);
+		System.out.println("in");
 		List<String> list = dfs(name1, name2);
+		if (list.size() == 0) {
+			this.getParent().lookup("#txd-short-1").setStyle(
+					"-fx-border-color: RED;"
+			);
+			this.getParent().lookup("#txd-short-2").setStyle(
+					"-fx-border-color: RED;"
+			);
+			return;
+		}
+		this.getParent().lookup("#txd-short-1").setStyle(
+				"-fx-border-color: transparent;"
+		);
+		this.getParent().lookup("#txd-short-2").setStyle(
+				"-fx-border-color: transparent;"
+		);
+		System.out.println(list.toString());
+		if (list.size() == 1 && list.get(0).equals(name1)) {
+			this.getChildren().add(new Edge(v1.getX(), v1.getY(), v2.getX(),
+					v2.getY(), v1.getName(), v2.getName()));
+			return;
+		}
+
 		for (String s: list) {
 			tmpVertex = circles.get(vertexList.indexOf(s));
 			this.getChildren().add(tmpVertex);
@@ -351,21 +376,29 @@ public class VisualPane extends Pane {
 		this.getChildren().add(new Edge(v2.getX(), v2.getY(), tmpVertex.getX(),
 				tmpVertex.getY(), v2.getName(), tmpVertex.getName()));
 	}
+
+
 	private List<String> dfs(String name1, String name2) {
 		Queue<String> queue = new LinkedList<String>();
+		boolean find = false;
 		String[] prev = new String[numVertex];
 		Boolean[] visited = new Boolean[numVertex];
 		for (int i = 0; i < numVertex; i++) {
 			visited[i] = false;
 		}
+		System.out.println("in-dfs");
 		int counter = 0;
 		queue.add(name1);
 		while (!queue.isEmpty()) {
+			System.out.println(queue.toString());
 			String tmp = queue.peek();
 			queue.remove();
 			if (tmp.equals(name2)) {
+				find = true;
 				break;
 			}
+			System.out.println(queue.toString());
+
 			int index = vertexList.indexOf(tmp);
 			for (int i = 0; i < edgeList.get(index).size(); i++) {
 				if (edgeList.get(index).get(i)) {
@@ -374,10 +407,16 @@ public class VisualPane extends Pane {
 						visited[i] = true;
 						queue.add(toString);
 						prev[i] = tmp;
+						System.out.println("new");
 					}
 				}
 			}
 		}
+		if (!find) {
+			System.out.println("No Find");
+			return new ArrayList<String>();
+		}
+
 		List<String> ans = new ArrayList<String>();
 		String nowName = name2;
 		int index =  vertexList.indexOf(nowName);
@@ -386,7 +425,7 @@ public class VisualPane extends Pane {
 			nowName = circles.get(index).getName();
 			ans.add(nowName);
 		}
-		if (!ans.isEmpty()) {
+		if (!ans.isEmpty() && ans.size() > 1) {
 			ans.remove(ans.size() - 1);
 		}
 		List<String> returnList = new ArrayList<String>();
@@ -396,6 +435,7 @@ public class VisualPane extends Pane {
 		System.out.println(returnList.toString());
 		return returnList;
 	}
+
 	public void setCentralUser(String name) {
 		if(!vertexList.contains(name)) {
 			return;
