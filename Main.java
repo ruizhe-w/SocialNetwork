@@ -425,6 +425,9 @@ public class Main extends Application{
 							((TextField)scene.lookup("#txd-short-1")).getText(),
 							((TextField)scene.lookup("#txd-short-2")).getText()
 					);
+					((Label)scene.lookup("#txt-group")).setText("[1]");
+			}else {
+				((Label)scene.lookup("#txt-group")).setText("[2]");
 			}
 			}
 		});
