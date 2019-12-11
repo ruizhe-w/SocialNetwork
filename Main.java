@@ -53,13 +53,26 @@ public class Main extends Application{
 			//visualPane.saveCurrent();
 			String name1 = menuPane.t2.getText();
 			String name2 = menuPane.t3.getText();
-			if((!name1.equals("") && name2.equals("")) || (name1.equals(name2))) {
+			if((!name1.equals("") && name2.equals("")) || (name1.equals(name2) && !name1.equals(""))) {
 				ArrayList<String> verticesList = visualPane.getVerticesList();
 				if(!verticesList.contains(name1)) {
 					visualPane.saveInstructions("a", name1, null);
 					visualPane.saveCurrent();
 					int size = visualPane.instructionList().size();
 					menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
+					scene.lookup("#txd-add-1").setStyle(
+							"-fx-border-color: transparent;"
+					);
+					scene.lookup("#txd-add-2").setStyle(
+							"-fx-border-color: transparent;"
+					);
+				} else {
+					scene.lookup("#txd-add-1").setStyle(
+							"-fx-border-color: RED;"
+					);
+					scene.lookup("#txd-add-2").setStyle(
+							"-fx-border-color: transparent;"
+					);
 				}
 				visualPane.home();
 				visualPane.addVertex(name1);
@@ -72,13 +85,39 @@ public class Main extends Application{
 					visualPane.saveCurrent();
 					int size = visualPane.instructionList().size();
 					menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
+
+					scene.lookup("#txd-add-1").setStyle(
+							"-fx-border-color: transparent;"
+					);
+
+					scene.lookup("#txd-add-2").setStyle(
+							"-fx-border-color: transparent;"
+					);
+				} else {
+					scene.lookup("#txd-add-1").setStyle(
+							"-fx-border-color: RED;"
+					);
+
+					scene.lookup("#txd-add-2").setStyle(
+							"-fx-border-color: RED;"
+					);
 				}
 				visualPane.home();
 				visualPane.addVertex(name1);
 				visualPane.addVertex(name2);
 				visualPane.addEdge(name1, name2);
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
+			} else {
+
+				scene.lookup("#txd-add-1").setStyle(
+						"-fx-border-color: RED;"
+				);
+
+				scene.lookup("#txd-add-2").setStyle(
+						"-fx-border-color: RED;"
+				);
 			}
+
 		});
 		//remove
 		menuPane.submitButton2.setOnAction(e -> {
@@ -92,6 +131,18 @@ public class Main extends Application{
 					visualPane.saveCurrent();
 					int size = visualPane.instructionList().size();
 					menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
+
+					scene.lookup("#txd-remove-1").setStyle(
+							"-fx-border-color: transparent;"
+					);
+
+					scene.lookup("#txd-remove-2").setStyle(
+							"-fx-border-color: transparent;"
+					);
+				} else {
+					scene.lookup("#txd-remove-1").setStyle(
+							"-fx-border-color: RED;"
+					);
 				}
 				visualPane.home();
 				visualPane.removeVertex(name1);
@@ -103,10 +154,31 @@ public class Main extends Application{
 					visualPane.saveCurrent();
 					int size = visualPane.instructionList().size();
 					menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
+
+					scene.lookup("#txd-remove-1").setStyle(
+							"-fx-border-color: transparent;"
+					);
+					scene.lookup("#txd-remove-2").setStyle(
+							"-fx-border-color: transparent;"
+					);
+				} else {
+					scene.lookup("#txd-remove-1").setStyle(
+							"-fx-border-color: RED;"
+					);
+					scene.lookup("#txd-remove-2").setStyle(
+							"-fx-border-color: RED;"
+					);
 				}
 				visualPane.home();
 				visualPane.removeEdge(name1, name2);
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
+			} else {
+				scene.lookup("#txd-remove-1").setStyle(
+						"-fx-border-color: RED;"
+				);
+				scene.lookup("#txd-remove-2").setStyle(
+						"-fx-border-color: RED;"
+				);
 			}
 		});
 		//clean
@@ -269,21 +341,48 @@ public class Main extends Application{
 				int size = visualPane.instructionList().size();
 				menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 				visualPane.saveCurrent();
+
+				scene.lookup("#txd-mutual-1").setStyle(
+						"-fx-border-color: transparent;"
+				);
+				scene.lookup("#txd-mutual-2").setStyle(
+						"-fx-border-color: transparent;"
+				);
+			} else {
+				if (!verticesList.contains(name1)) {
+					scene.lookup("#txd-mutual-1").setStyle(
+							"-fx-border-color: RED;"
+					);
+				} else {
+					scene.lookup("#txd-mutual-1").setStyle(
+							"-fx-border-color: transparent;"
+					);
+				}
+
+				if (!verticesList.contains(name2)) {
+					scene.lookup("#txd-mutual-2").setStyle(
+							"-fx-border-color: RED;"
+					);
+				} else {
+					scene.lookup("#txd-mutual-2").setStyle(
+							"-fx-border-color: transparent;"
+					);
+				}
+				return;
 			}
+
 			visualPane.getMutualFriends(
 					((TextField)scene.lookup("#txd-mutual-1")).getText(),
 					((TextField)scene.lookup("#txd-mutual-2")).getText()
 			);
 			if(verticesList.contains(name1) && verticesList.contains(name2)) {
-			
-			 if(!visualPane.checkPath(name1, name2)) {
-				((Label)scene.lookup("#txt-group")).setText("[2]");
-			}else {
-				((Label)scene.lookup("#txt-group")).setText("[1]");
+			 	if(!visualPane.checkPath(name1, name2)) {
+					((Label)scene.lookup("#txt-group")).setText("[2]");
+				}else {
+					((Label)scene.lookup("#txt-group")).setText("[1]");
+				}
 			}
-			}
-				
-			
+
 		});
 
 		scene.lookup("#btn-short").setOnMouseClicked(e -> {
@@ -295,6 +394,27 @@ public class Main extends Application{
 				int size = visualPane.instructionList().size();
 				menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 				visualPane.saveCurrent();
+			} else {
+				if (!verticesList.contains(name1)) {
+					scene.lookup("#txd-short-1").setStyle(
+							"-fx-border-color: RED;"
+					);
+				} else {
+					scene.lookup("#txd-short-1").setStyle(
+							"-fx-border-color: transparent;"
+					);
+				}
+
+				if (!verticesList.contains(name2)) {
+					scene.lookup("#txd-short-2").setStyle(
+							"-fx-border-color: RED;"
+					);
+				} else {
+					scene.lookup("#txd-short-2").setStyle(
+							"-fx-border-color: transparent;"
+					);
+				}
+				return;
 			}
 			visualPane.getShortestPath(
 					((TextField)scene.lookup("#txd-short-1")).getText(),

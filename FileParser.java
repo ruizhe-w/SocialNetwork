@@ -26,31 +26,41 @@ public class FileParser {
 	 * @param fileName
 	 * @throws IOException 
 	 */
-	public void loadFromFile(VisualPane visualPane, String fileName) throws IOException {
-		File file = new File(fileName);
-		Scanner scnr = new Scanner(file);
-		while (scnr.hasNextLine()) {
-			String[] str = scnr.nextLine().split(" ");
-			if (str[0].equals("a")) {
-				if (str.length == 2) {
-					visualPane.addVertex(str[1]);
-				} else if (str.length == 3){
-					visualPane.addVertex(str[1]);
-					visualPane.addVertex(str[2]);
-					visualPane.addEdge(str[1], str[2]);
+	public void loadFromFile(VisualPane visualPane, String fileName){
+		try {
+			File file = new File(fileName);
+			Scanner scnr = new Scanner(file);
+			while (scnr.hasNextLine()) {
+				String[] str = scnr.nextLine().split(" ");
+				if (str[0].equals("a")) {
+					if (str.length == 2) {
+						visualPane.addVertex(str[1]);
+					} else if (str.length == 3){
+						visualPane.addVertex(str[1]);
+						visualPane.addVertex(str[2]);
+						visualPane.addEdge(str[1], str[2]);
+					}
+				} else if (str[0].equals("r")) {
+					if (str.length == 2) {
+						visualPane.removeVertex(str[1]);
+					} else if (str.length == 3){
+						visualPane.removeEdge(str[1], str[2]);
+					}
+				} else if (str[0].equals("s")) {
+					visualPane.setCentralUser(str[1]);
+
 				}
-			} else if (str[0].equals("r")) {
-				if (str.length == 2) {
-					visualPane.removeVertex(str[1]);
-				} else if (str.length == 3){
-					visualPane.removeEdge(str[1], str[2]);
-				}
-			} else if (str[0].equals("s")) {
-				visualPane.setCentralUser(str[1]);
-				
 			}
+			scnr.close();
+			visualPane.getParent().lookup("#txd-load").setStyle(
+					"-fx-border-color: transparent;"
+			);
+		} catch(Exception e) {
+			visualPane.getParent().lookup("#txd-load").setStyle(
+					"-fx-border-color: red;"
+			);
 		}
-		scnr.close();
+
 	}
 	
 	

@@ -98,7 +98,8 @@ public class VisualPane extends Pane {
 			}
 		}
 		
-		if(v2 == null || v2 == null) {
+		if(v1 == null ||v2 == null) {
+
 			return;
 		}
 		
