@@ -47,6 +47,7 @@ public class MenuPane extends AnchorPane {
 	HBox MenuContent2 = new HBox();
 	HBox info1 = new HBox();
 	HBox info2 = new HBox();
+	HBox info3 = new HBox();
 	VBox rightMenu = new VBox();
 
 	HBox Menu = new HBox();
@@ -87,7 +88,7 @@ public class MenuPane extends AnchorPane {
 	Label loadLabel = new Label("		Load");
 	Label totalUserLabel = new Label("	Total users: ");
 	Label totalUser = new Label("0");
-	Label numFriendsLabel = new Label("	 Number of friends for current user: ");
+	Label numFriendsLabel = new Label("	 	Number of friends for current user: ");
 	Label numFriends = new Label("Need a central user");
 	
 	Label empty = new Label("");
@@ -158,7 +159,8 @@ public class MenuPane extends AnchorPane {
 		textFields3.getChildren().addAll(t6, t7);
 		textFields4.getChildren().addAll(t8, t9);
 		info1.getChildren().addAll(numGroupsLabel, numGroupsText, totalUserLabel, totalUser);
-		info2.getChildren().addAll(lastInstructionLabel, lastInstructionText,  numFriendsLabel, numFriends);
+		info2.getChildren().addAll(lastInstructionLabel, lastInstructionText);
+		info3.getChildren().addAll( numFriendsLabel, numFriends);
 		function2.getChildren().addAll(mutualFriendsLabel, 
 				shortestPathLabel, loadLabel);
 		function2.setSpacing(11);
@@ -167,7 +169,7 @@ public class MenuPane extends AnchorPane {
 		buttons2.getChildren().addAll(submitButton3, submitButton4, 
 				submitButton5);
 		MenuContent2.getChildren().addAll(function2, input2, buttons2);
-		rightMenu.getChildren().addAll(empty7, MenuContent2, info1, info2);
+		rightMenu.getChildren().addAll(empty7, MenuContent2, info1, info2, info3);
 
 		Menu.getChildren().addAll(leftMenu, rightMenu);
 
