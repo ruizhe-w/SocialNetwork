@@ -16,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
@@ -111,6 +112,7 @@ public class VisualPane extends Pane {
 		//System.out.println("777");
 		edgeList.get(vertexList.indexOf(name1)).set(vertexList.indexOf(name2), true);
 		edgeList.get(vertexList.indexOf(name2)).set(vertexList.indexOf(name1), true);
+		updateInstruction();
 	}
 	
 	/**
@@ -168,6 +170,7 @@ public class VisualPane extends Pane {
 				break;
 			}
 		}
+		updateInstruction();
 	}
 	
 	
@@ -232,6 +235,7 @@ public class VisualPane extends Pane {
 		
 		edgeList.get(vertexList.indexOf(s1)).set(vertexList.indexOf(s2), false);
 		edgeList.get(vertexList.indexOf(s2)).set(vertexList.indexOf(s1), false);
+		updateInstruction();
 	}
 	
 
@@ -266,8 +270,7 @@ public class VisualPane extends Pane {
 		this.circles.remove(vertexList.indexOf(string));
 		vertexList.remove(vertexList.indexOf(string));
 		numVertex--;
-		
-		
+		updateInstruction();
 	}
 	
 	
@@ -335,7 +338,7 @@ public class VisualPane extends Pane {
 		if (edgeList.get(vertexList.indexOf(name1)).get(vertexList.indexOf(name2))) {
 			this.getChildren().add(new Edge(v1.getX(), v1.getY(), v2.getX(), v2.getY(), v1.getName(), v2.getName()));
 		}
-
+		updateInstruction();
 	}
 
 	public void getShortestPath(String name1, String name2) {
@@ -367,6 +370,7 @@ public class VisualPane extends Pane {
 
 		this.getChildren().add(new Edge(v2.getX(), v2.getY(), tmpVertex.getX(),
 				tmpVertex.getY(), v2.getName(), tmpVertex.getName()));
+		updateInstruction();
 	}
 
 
@@ -445,6 +449,7 @@ public class VisualPane extends Pane {
 			}
 		}
 		menuPane.numGroupsText.setText("[1]");
+		updateInstruction();
 	}
 	
 	public void home() {
@@ -465,6 +470,7 @@ public class VisualPane extends Pane {
 		edgeList.clear();
 		edges.clear();
 		instructions.clear();
+		((Label)menuPane.lookup("#txt-last")).setText("NONE");
 	}
 
 	public void search(String name) {
@@ -592,6 +598,15 @@ public class VisualPane extends Pane {
 	
 	public ArrayList<String> instructionList(){
 		return instructions;
+	}
+
+	private void updateInstruction() {
+		((Label)menuPane.lookup("#txt-last")).setText(getLastInstruction());
+	}
+
+
+	public String getLastInstruction() {
+		return instructions.get(instructions.size() - 1);
 	}
 	
 	public MenuPane getmenuPane() {
