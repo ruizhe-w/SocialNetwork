@@ -339,7 +339,9 @@ public class VisualPane extends Pane {
 		if (edgeList.get(vertexList.indexOf(name1)).get(vertexList.indexOf(name2))) {
 			this.getChildren().add(new Edge(v1.getX(), v1.getY(), v2.getX(), v2.getY(), v1.getName(), v2.getName()));
 		}
-		updateInstruction();
+		if(!name1.equals(name2)) {
+			updateInstruction();
+		}
 	}
 
 	public void getShortestPath(String name1, String name2) {
@@ -371,7 +373,9 @@ public class VisualPane extends Pane {
 
 		this.getChildren().add(new Edge(v2.getX(), v2.getY(), tmpVertex.getX(),
 				tmpVertex.getY(), v2.getName(), tmpVertex.getName()));
-		updateInstruction();
+		if(!name1.equals(name2)) {
+			updateInstruction();
+			}
 	}
 
 
