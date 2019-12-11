@@ -62,6 +62,7 @@ public class MenuPane extends AnchorPane {
 	Button undoButton = new Button("Undo");
 	Button exitButton = new Button("Exit");
 	Button saveButton = new Button("Save");
+	Button helpButton = new Button("Help");
 
 	TextField t1 = new TextField();
 	TextField t2 = new TextField();
@@ -84,7 +85,11 @@ public class MenuPane extends AnchorPane {
 	Label numGroupsLabel = new Label("		Number of Groups: ");
 	Label lastInstructionLabel = new Label("		Last Instruction: ");
 	Label loadLabel = new Label("		Load");
-
+	Label totalUserLabel = new Label("	Total users: ");
+	Label totalUser = new Label("0");
+	Label numFriendsLabel = new Label("	 Number of friends for current user: ");
+	Label numFriends = new Label("NONE");
+	
 	Label empty = new Label("");
 	Label empty1 = new Label("");
 	Label empty2 = new Label("");
@@ -125,11 +130,19 @@ public class MenuPane extends AnchorPane {
 				setStyle("-fx-font-size:20pt;"));
 		lastInstructionText.setOnMouseExited(e -> lastInstructionText.
 				setStyle("-fx-font-size:10pt;"));
+		totalUser.setOnMouseEntered(e -> totalUser.
+				setStyle("-fx-font-size:20pt;"));
+		totalUser.setOnMouseExited(e -> totalUser.
+				setStyle("-fx-font-size:10pt;"));
+		numFriends.setOnMouseEntered(e -> numFriends.
+				setStyle("-fx-font-size:20pt;"));
+		numFriends.setOnMouseExited(e -> numFriends.
+				setStyle("-fx-font-size:10pt;"));
 
 		LoadText.setPromptText("Load File Here");
 
 		menuButtons.getChildren().addAll(empty8, homeButton, undoButton, cleanButton, empty2, 
-				exitButton, empty3, saveButton);
+				exitButton, empty3, saveButton, helpButton);
 		textFields1.getChildren().addAll(t2, t3);
 		textFields2.getChildren().addAll(t4, t5);
 		function.getChildren().addAll(search_Bar, addLabel, 
@@ -144,8 +157,8 @@ public class MenuPane extends AnchorPane {
 
 		textFields3.getChildren().addAll(t6, t7);
 		textFields4.getChildren().addAll(t8, t9);
-		info1.getChildren().addAll(numGroupsLabel, numGroupsText);
-		info2.getChildren().addAll(lastInstructionLabel, lastInstructionText);
+		info1.getChildren().addAll(numGroupsLabel, numGroupsText, totalUserLabel, totalUser);
+		info2.getChildren().addAll(lastInstructionLabel, lastInstructionText,  numFriendsLabel, numFriends);
 		function2.getChildren().addAll(mutualFriendsLabel, 
 				shortestPathLabel, loadLabel);
 		function2.setSpacing(11);
