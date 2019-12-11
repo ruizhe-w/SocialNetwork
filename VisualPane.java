@@ -81,11 +81,9 @@ public class VisualPane extends Pane {
 	 * @param name1 name of the first vertex
 	 * @param name2 name of the second vertex
 	 */
-	public void addEdge(String name1, String name2) {
+	public boolean addEdge(String name1, String name2) {
 		
 		// both vertexes should already exist
-		
-		
 		Vertex v1 = null;
 		Vertex v2 = null;
 		
@@ -99,21 +97,22 @@ public class VisualPane extends Pane {
 		}
 		
 		if(v1 == null ||v2 == null) {
-
-			return;
+			return false;
 		}
-		
-		// TODO: add check contains or not
-		
+
+		if (edgeList.get(vertexList.indexOf(name1)).get(vertexList.indexOf(name2))) {
+			return false;
+		}
+
 		Edge edge = new Edge(v1.getX(), v1.getY(), v2.getX(),
 				v2.getY(), v1.getName(), v2.getName());
 		
 		this.getChildren().add(edge);
 		edges.add(edge);
-		//System.out.println("777");
 		edgeList.get(vertexList.indexOf(name1)).set(vertexList.indexOf(name2), true);
 		edgeList.get(vertexList.indexOf(name2)).set(vertexList.indexOf(name1), true);
-		updateInstruction();
+//		updateInstruction();
+		return true;
 	}
 	
 	/**
@@ -171,7 +170,7 @@ public class VisualPane extends Pane {
 				break;
 			}
 		}
-		updateInstruction();
+//		updateInstruction();
 	}
 	
 	

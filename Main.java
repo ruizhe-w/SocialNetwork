@@ -78,9 +78,13 @@ public class Main extends Application{
 				visualPane.addVertex(name1);
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 			}else if(!name1.equals("") && !name2.equals("")) {
-				
-				ArrayList<String> verticesList = visualPane.getVerticesList();
-				if(!(verticesList.contains(name1) && verticesList.contains(name2))) {
+				visualPane.home();
+//				visualPane.saveInstructions("a", name1, name2);
+				visualPane.addVertex(name1);
+				visualPane.addVertex(name2);
+				System.out.println("df");
+
+				if (visualPane.addEdge(name1, name2)) {
 					visualPane.saveInstructions("a", name1, name2);
 					visualPane.saveCurrent();
 					int size = visualPane.instructionList().size();
@@ -102,10 +106,7 @@ public class Main extends Application{
 							"-fx-border-color: RED;"
 					);
 				}
-				visualPane.home();
-				visualPane.addVertex(name1);
-				visualPane.addVertex(name2);
-				visualPane.addEdge(name1, name2);
+
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 			} else {
 
