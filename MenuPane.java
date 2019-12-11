@@ -88,7 +88,7 @@ public class MenuPane extends AnchorPane {
 	Label totalUserLabel = new Label("	Total users: ");
 	Label totalUser = new Label("0");
 	Label numFriendsLabel = new Label("	 Number of friends for current user: ");
-	Label numFriends = new Label("NONE");
+	Label numFriends = new Label("Need a central user");
 	
 	Label empty = new Label("");
 	Label empty1 = new Label("");
