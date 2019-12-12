@@ -59,25 +59,31 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		args = this.getParameters().getRaw();
 		primaryStage.setTitle(APP_TITLE);
-
+		//create MenuPane instance
 		menuPane = new MenuPane();
+		//create visualpaNE instance
 		visualPane = new VisualPane(menuPane);
 		fileParser = new FileParser();
-		// add
+		//add EVENT
 		menuPane.submitButton1.setOnAction(e -> {
 			// visualPane.saveCurrent();
+			//get the name from user
 			String name1 = menuPane.t2.getText();
 			String name2 = menuPane.t3.getText();
+			//add user
 			if ((!name1.equals("") && name2.equals("")) || (name1.equals(name2) && !name1.equals(""))) {
 				ArrayList<String> verticesList = visualPane.getVerticesList();
+				//check if the name is already existed
 				if (!verticesList.contains(name1)) {
+					//save instruction
 					visualPane.saveInstructions("a", name1, null);
 					visualPane.saveCurrent();
+					//save last instruction
 					int size = visualPane.instructionList().size();
 					menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 					scene.lookup("#txd-add-1").setStyle("-fx-border-color: transparent;");
 					scene.lookup("#txd-add-2").setStyle("-fx-border-color: transparent;");
-				} else {
+				} else {//invalid input
 					scene.lookup("#txd-add-1").setStyle("-fx-border-color: RED;");
 					scene.lookup("#txd-add-2").setStyle("-fx-border-color: transparent;");
 				}
@@ -85,11 +91,12 @@ public class Main extends Application {
 				visualPane.addVertex(name1);
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 				menuPane.totalUser.setText("" + visualPane.getVerticesList().size());
-			} else if (!name1.equals("") && !name2.equals("")) {
+			} else if (!name1.equals("") && !name2.equals("")) {//add edge
+				//return to home page first
 				visualPane.home();
 				visualPane.addVertex(name1);
 				visualPane.addVertex(name2);
-
+				
 				if (visualPane.addEdge(name1, name2)) {
 					visualPane.saveInstructions("a", name1, name2);
 					visualPane.saveCurrent();
@@ -104,7 +111,8 @@ public class Main extends Application {
 
 					scene.lookup("#txd-add-2").setStyle("-fx-border-color: RED;");
 				}
-
+				
+				//update the group number and total user
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 				menuPane.totalUser.setText("" + visualPane.getVerticesList().size());
 			} else {
@@ -120,6 +128,8 @@ public class Main extends Application {
 			// visualPane.saveCurrent();
 			String name1 = menuPane.t4.getText();
 			String name2 = menuPane.t5.getText();
+			//check the users in the graph
+			//remove a user
 			if (!name1.equals("") && name2.equals("")) {
 				ArrayList<String> verticesList = visualPane.getVerticesList();
 				if (verticesList.contains(name1)) {
@@ -134,25 +144,31 @@ public class Main extends Application {
 				} else {
 					scene.lookup("#txd-remove-1").setStyle("-fx-border-color: RED;");
 				}
+				//return to home page first
 				visualPane.home();
+				//remove the user
 				visualPane.removeVertex(name1);
+				//update group number and total users
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 				menuPane.totalUser.setText("" + visualPane.getVerticesList().size());
 			} else if (!name1.equals("") && !name2.equals("")) {
+				//remove an edge between two users
 				ArrayList<String> verticesList = visualPane.getVerticesList();
 				if (verticesList.contains(name1) && verticesList.contains(name2)) {
 					visualPane.saveInstructions("r", name1, name2);
 					visualPane.saveCurrent();
 					int size = visualPane.instructionList().size();
 					menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
-
+					
 					scene.lookup("#txd-remove-1").setStyle("-fx-border-color: transparent;");
 					scene.lookup("#txd-remove-2").setStyle("-fx-border-color: transparent;");
 				} else {
 					scene.lookup("#txd-remove-1").setStyle("-fx-border-color: RED;");
 					scene.lookup("#txd-remove-2").setStyle("-fx-border-color: RED;");
 				}
+				//return to home page first
 				visualPane.home();
+				//remove the edge
 				visualPane.removeEdge(name1, name2);
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 				menuPane.totalUser.setText("" + visualPane.getVerticesList().size());
@@ -163,24 +179,31 @@ public class Main extends Application {
 		});
 		// clean
 		menuPane.cleanButton.setOnAction(e -> {
+			//clean the social network
 			visualPane.saveCurrent();
 			visualPane.clean();
 			menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 			menuPane.lastInstructionText.setText("clean");
 			menuPane.totalUser.setText("" + visualPane.getVerticesList().size());
 		});
+		//return to home event
 		menuPane.homeButton.setOnAction(e -> {
 			visualPane.saveCurrent();
+			//update visualPane
 			visualPane.home();
+			//update the memuPane
 			menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 			visualPane.saveInstructions("home", null, null);
 			int size = visualPane.instructionList().size();
 			menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 			menuPane.numFriends.setText("Need a central user");
 		});
+		//search bar event
 		menuPane.searchButton.setOnAction(e -> {
 			visualPane.saveCurrent();
+			//get the name from user
 			String userName = menuPane.t1.getText();
+			//search the user and set it as a central user
 			visualPane.search(userName);
 			if (visualPane.getVerticesList().contains(userName)) {
 				visualPane.saveInstructions("s", userName, null);
@@ -188,23 +211,27 @@ public class Main extends Application {
 				menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 			}
 		});
-//		menuPane.undoButton.setOnAction(e -> {
-//			//no need to save current
-//			visualPane.undo();
-//		});
+		//		menuPane.undoButton.setOnAction(e -> {
+		//			//no need to save current
+		//			visualPane.undo();
+		//		});
+		//load file even
 		menuPane.submitButton5.setOnAction(e -> {
 			visualPane.saveCurrent();
 			visualPane.saveInstructions("load", menuPane.LoadText.getText(), null);
 			int size = visualPane.instructionList().size();
 			menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
-			try {
+			try {//try to read a file of instructions
 				fileParser.loadFromFile(visualPane, menuPane.LoadText.getText());
 				menuPane.numGroupsText.setText("[" + String.valueOf(visualPane.getGroupNumber()) + "]");
 				menuPane.totalUser.setText("" + visualPane.getVerticesList().size());
 			} catch (Exception e1) {
 			}
 		});
+		//save event. 
+		//save instructions to a file
 		menuPane.saveButton.setOnAction(e -> {
+			//propmt user a file name
 			Button yes = new Button(" Yes ");
 			Button no = new Button("Cancel");
 			HBox yOrn = new HBox();
@@ -230,7 +257,9 @@ public class Main extends Application {
 			dialog.setTitle("File Name prompt");
 			dialog.setScene(newScene);
 			dialog.show();
+			//if user want to save
 			yes.setOnAction(e2 -> {
+				//check file name validity
 				if (fileNameText.getText().length() > 4
 						&& fileNameText.getText().substring(fileNameText.getText().length() - 4).equals(".txt")) {
 					try {
@@ -249,12 +278,15 @@ public class Main extends Application {
 			});
 
 		});
+		//help page event
+		//display the introduction to this program
 		menuPane.helpButton.setOnAction(e -> {
 			BorderPane form = new BorderPane();
 			Button no = new Button("Cancel");
-
+			
 			form.setCenter(no);
-
+			
+			//add instructions(introductions)
 			Label introduction1 = new Label(
 					"Search bar: You can serch a user in the social network and set this user as a central user.");
 			Label introduction2 = new Label(
@@ -287,15 +319,16 @@ public class Main extends Application {
 
 			});
 		});
-
+		
+		//add Panes into a scene
 		VBox vBox = new VBox(menuPane, visualPane);
 		BorderPane root = new BorderPane();
 		root.setCenter(vBox);
-
 		scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		// exit function
 		scene.lookup("#btn-exit").setOnMouseClicked(e -> {
+			//ask user if to save the instructions
 			Label ifSave = new Label("Do you want to save your instructions?");
 			Button yes = new Button("Yes");
 			Button no = new Button("No");
@@ -306,6 +339,7 @@ public class Main extends Application {
 			VBox extiInfo = new VBox();
 			Label prompt = new Label("File name: ");
 			TextField fileNameText = new TextField();
+			//prompt user a filename
 			fileNameText.setPromptText("Type your file name here");
 			HBox promptBox = new HBox();
 			promptBox.getChildren().addAll(prompt, fileNameText);
@@ -323,7 +357,9 @@ public class Main extends Application {
 			dialog.setTitle("Confirm Save");
 			dialog.setScene(newScene);
 			dialog.show();
+			//save instructions
 			yes.setOnAction(e2 -> {
+				//check file name
 				if (fileNameText.getText().length() > 4
 						&& fileNameText.getText().substring(fileNameText.getText().length() - 4).equals(".txt")) {
 					try {
@@ -337,21 +373,26 @@ public class Main extends Application {
 					form.setBottom(new Label("					invalid filename"));
 				}
 			});
+			//do not save and exit
 			no.setOnAction(e2 -> {
 				dialog.fireEvent(new WindowEvent(dialog, WindowEvent.WINDOW_CLOSE_REQUEST));
 				primaryStage.fireEvent(new WindowEvent(primaryStage, WindowEvent.WINDOW_CLOSE_REQUEST));
 			});
+			//cancel the exit page
 			cancel.setOnAction(e2 -> {
 				dialog.fireEvent(new WindowEvent(dialog, WindowEvent.WINDOW_CLOSE_REQUEST));
 			});
 
 		});
-
+		
+		//find mutual friends between two friends 
 		scene.lookup("#btn-mutual").setOnMouseClicked(e -> {
-
+			
+			//get user names from user
 			ArrayList<String> verticesList = visualPane.getVerticesList();
 			String name1 = menuPane.t6.getText();
 			String name2 = menuPane.t7.getText();
+			//check the input validity
 			if (verticesList.contains(name1) && verticesList.contains(name2) && !name1.equals(name2)) {
 				visualPane.saveInstructions("mutual", name1, name2);
 				int size = visualPane.instructionList().size();
@@ -360,7 +401,7 @@ public class Main extends Application {
 
 				scene.lookup("#txd-mutual-1").setStyle("-fx-border-color: transparent;");
 				scene.lookup("#txd-mutual-2").setStyle("-fx-border-color: transparent;");
-			} else {
+			} else {//invalid input
 				if (!verticesList.contains(name1)) {
 					scene.lookup("#txd-mutual-1").setStyle("-fx-border-color: RED;");
 				} else {
@@ -375,10 +416,12 @@ public class Main extends Application {
 
 				return;
 			}
+			//valid input, find mutual friends
 			if (!name1.equals(name2)) {
 				visualPane.getMutualFriends(((TextField) scene.lookup("#txd-mutual-1")).getText(),
 						((TextField) scene.lookup("#txd-mutual-2")).getText());
 			}
+			//update the menuPane infomation
 			if (verticesList.contains(name1) && verticesList.contains(name2) && !name1.equals(name2)) {
 				if (!visualPane.checkPath(name1, name2)) {
 					((Label) scene.lookup("#txt-group")).setText("[2]");
@@ -388,43 +431,32 @@ public class Main extends Application {
 			}
 
 		});
-
+		
+		//find shortest path between two users
 		scene.lookup("#btn-short").setOnMouseClicked(e -> {
+			//get user names from user
 			ArrayList<String> verticesList = visualPane.getVerticesList();
 			String name1 = menuPane.t8.getText();
 			String name2 = menuPane.t9.getText();
+			//check the input validity
 			if (verticesList.contains(name1) && verticesList.contains(name2) && !name1.equals(name2)) {
 				visualPane.saveInstructions("path", name1, name2);
 				int size = visualPane.instructionList().size();
 				menuPane.lastInstructionText.setText(visualPane.instructionList().get(size - 1));
 				visualPane.saveCurrent();
-//				scene.lookup("#txd-short-1").setStyle(
-//						"-fx-border-color: transparent;"
-//				);
-//				scene.lookup("#txd-short-2").setStyle(
-//						"-fx-border-color: transparent;"
-//				if(visualPane.checkPath(name1, name2)) {
-//					visualPane.getShortestPath(
-//							((TextField)scene.lookup("#txd-short-1")).getText(),
-//							((TextField)scene.lookup("#txd-short-2")).getText()
-//					);
-//					((Label)scene.lookup("#txt-group")).setText("[1]");
-//				}else {
-//					((Label)scene.lookup("#txt-group")).setText("[2]");
-//				}
-
+				
+				//find the shortest path
 				visualPane.getShortestPath(((TextField) scene.lookup("#txd-short-1")).getText(),
 						((TextField) scene.lookup("#txd-short-2")).getText());
-
+				
+				//update the menu pane information
 				if (visualPane.getChildren().size() > 2) {
 					((Label) scene.lookup("#txt-group")).setText("[1]");
 				} else {
 					((Label) scene.lookup("#txt-group")).setText("[2]");
 				}
-//
-
-//				);
-			} else {
+				
+			} else {//update the corresponding text fields to input validity
 				if (!verticesList.contains(name1)) {
 					scene.lookup("#txd-short-1").setStyle("-fx-border-color: RED;");
 				} else {
@@ -445,7 +477,8 @@ public class Main extends Application {
 				return;
 			}
 		});
-
+		
+		//add scene to stage and display
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
@@ -454,7 +487,7 @@ public class Main extends Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		launch(args);
+		launch(args);//launch the user interface
 
 	}
 
