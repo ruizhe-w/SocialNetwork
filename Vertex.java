@@ -89,6 +89,7 @@ public class Vertex extends Pane {
 			((VisualPane) this.getParent()).setCentralUser(this.name);// set the clicked vertex the central user
 			//update last instruction
 			((VisualPane) this.getParent()).getmenuPane().lastInstructionText.setText("s " + this.name);
+			((VisualPane) this.getParent()).instructionList().add("s " + this.name);
 		});
 
 		this.setMaxWidth(2 * r + 10);
