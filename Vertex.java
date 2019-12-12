@@ -87,7 +87,8 @@ public class Vertex extends Pane {
 		this.circle.setOnMouseClicked(e -> {
 			((VisualPane) this.getParent()).saveCurrent();// save the current scene
 			((VisualPane) this.getParent()).setCentralUser(this.name);// set the clicked vertex the central user
-
+			//update last instruction
+			((VisualPane) this.getParent()).getmenuPane().lastInstructionText.setText("s " + this.name);
 		});
 
 		this.setMaxWidth(2 * r + 10);
