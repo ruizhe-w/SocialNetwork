@@ -1,11 +1,20 @@
+////////////////////ALL ASSIGNMENTS INCLUDE THIS SECTION /////////////////////
+//
+//Title: VisualPane
+//Files: VisualPane.java
+//
+//Course: CS 400, Fall 2019
+//
+//Team:     ateam 166
+//Members: 1. Yijun Cheng, lecture 001, cheng229@wisc.edu
+//		   2. Yuedong Cui, lecture 001, cui54@wisc.edu
+//		   3. Ruizhe Wang, lecture 001, rwang477@wisc.edu
+//		   4. Yuzheng Zhang, lecture 001, yzhang975@wisc.edu
+//		   5. Haolin Li, lecture 001, hli564@wisc.edu
+//Lecturer's Name: Debra Deppeler
+//
 /**
  * CS400 final project 
- * Team: ateam 166
- * Member: 1. Yijun Cheng, lecture 001, cheng229@wisc.edu
- *		   2. Yuedong Cui, lecture 001, cui54@wisc.edu
- *		   3. Ruizhe Wang, lecture 001, rwang477@wisc.edu
- *		   4. Yuzheng Zhang, lecture 001, yzhang975@wisc.edu
- *		   5. Haolin Li, lecture 001, hli564@wisc.edu
  * This class is used to create an vertex to visual pane
  */
 package application;
@@ -49,6 +58,10 @@ public class VisualPane extends Pane {
 	//private String centralUser;
 	//private List<Vertex> friends;
 	
+	/**
+	 * Overloaded constructor for this class
+	 * @param menuPane
+	 */
 	public VisualPane(MenuPane menuPane) {
 		instructions = new ArrayList<String>();
 		lastNumGroup = new ArrayList<Integer>();
@@ -187,6 +200,12 @@ public class VisualPane extends Pane {
 		return numGroup;
 	}
 	
+	/**
+	 * Private helper method for getGroupNumber
+	 * @param i
+	 * @param visited
+	 * @param numGroup
+	 */
 	private void getGroupNumberHelper(int i, boolean[] visited, int numGroup) {
 		visited[i] = true;
 		for (int j = 0; j < edgeList.get(i).size(); j++) {
@@ -218,7 +237,7 @@ public class VisualPane extends Pane {
 				pn2 = circles.get(i);
 			}
 		}
-		for(int j = 0; j < edges.size(); j++) {
+		for(int j = 0; j < edges.size(); j++) {//find the intended edge and remove
 			if(((edges.get(j).getS1().equals(s1) &&
 					edges.get(j).getS2().equals(s2))) ||
 					((edges.get(j).getS1().equals(s2) &&
@@ -244,12 +263,12 @@ public class VisualPane extends Pane {
 		if (!vertexList.contains(string)) {
 			return;
 		}
-		Vertex pn = circles.get(vertexList.indexOf(string));
+		Vertex pn = circles.get(vertexList.indexOf(string));//get index
 		map.remove(string);
 		for (int i = 0; i < numVertex; i++) {
 			Vertex pn2 = circles.get(i);
 			
-			for(int j = 0; j < edges.size(); j++) {
+			for(int j = 0; j < edges.size(); j++) {//find the vertex and remove
 				if((edges.get(j).getS1().equals(string) ||
 						edges.get(j).getS2().equals(string))) {
 					Edge edge = edges.get(j);
@@ -264,7 +283,7 @@ public class VisualPane extends Pane {
 		this.getChildren().remove(circles.get(vertexList.indexOf(string)));
 		this.circles.remove(vertexList.indexOf(string));
 		vertexList.remove(vertexList.indexOf(string));
-		numVertex--;
+		numVertex--;//decrement numVertex
 		
 		
 	}
@@ -291,10 +310,15 @@ public class VisualPane extends Pane {
 		}
 		return false;
 	}
+	/**
+	 * Get mutual friends of two nodes
+	 * @param name1
+	 * @param name2
+	 */
 	public void getMutualFriends(String name1, String name2) {
 		if (!vertexList.contains(name1) || !vertexList.contains(name2)) {
 			return;
-		}
+		}//when not found, return
 		Vertex v1 = circles.get(vertexList.indexOf(name1));
 		Vertex v2 = circles.get(vertexList.indexOf(name2));
 		this.getChildren().clear();
@@ -314,7 +338,7 @@ public class VisualPane extends Pane {
 						continue;
 					}
 					Vertex tmpVertex = circles.get(i);
-					this.getChildren().add(tmpVertex);
+					this.getChildren().add(tmpVertex);//when mutual friends found, add to pane
 					this.getChildren().add(new Edge(v2.getX(), v2.getY(), tmpVertex.getX(),
 							tmpVertex.getY(), v2.getName(), tmpVertex.getName()));
 					this.getChildren().add(new Edge(v1.getX(), v1.getY(), tmpVertex.getX(),
@@ -326,6 +350,11 @@ public class VisualPane extends Pane {
 			this.getChildren().add(new Edge(v1.getX(), v1.getY(), v2.getX(), v2.getY(), v1.getName(), v2.getName()));
 		}
 	}
+	/**
+	 * Find the shortest path between two nodes
+	 * @param name1
+	 * @param name2
+	 */
 	public void getShortestPath(String name1, String name2) {
 		if (!vertexList.contains(name1) || !vertexList.contains(name2)) {
 			return;
@@ -337,7 +366,7 @@ public class VisualPane extends Pane {
 		this.getChildren().clear();
 		this.getChildren().addAll(v1, v2);
 		List<String> list = dfs(name1, name2);
-		if (list.size() == 0) {
+		if (list.size() == 0) {//warn the user
 			this.getParent().lookup("#txd-short-1").setStyle(
 					"-fx-border-color: RED;"
 			);
@@ -347,7 +376,7 @@ public class VisualPane extends Pane {
 			return;
 		}
 		this.getParent().lookup("#txd-short-1").setStyle(
-				"-fx-border-color: transparent;"
+				"-fx-border-color: transparent;"//set color to transparent
 		);
 		this.getParent().lookup("#txd-short-2").setStyle(
 				"-fx-border-color: transparent;"
@@ -375,6 +404,12 @@ public class VisualPane extends Pane {
 	}
 
 
+	/**
+	 * Depth first search to find the shortest path
+	 ** @param name1
+	 * @param name2
+	 * @return
+	 */
 	private List<String> dfs(String name1, String name2) {
 		Queue<String> queue = new LinkedList<String>();
 		boolean find = false;
@@ -428,6 +463,10 @@ public class VisualPane extends Pane {
 		return returnList;
 	}
 
+	/**
+	 * Set a specific vertex to be the central user
+	 * @param name
+	 */
 	public void setCentralUser(String name) {
 		if(!vertexList.contains(name)) {
 			return;
@@ -459,16 +498,22 @@ public class VisualPane extends Pane {
 		menuPane.numFriends.setText("" + num);
 	}
 	
+	/**
+	 * Go back to home scene
+	 */
 	public void home() {
-		this.getChildren().clear();
+		this.getChildren().clear();//clear the currene scene
 		for(int i = 0; i < circles.size(); i++) {
 			this.getChildren().add(circles.get(i));
 		}
 		for(int i = 0; i < edges.size(); i++) {
 			this.getChildren().add(edges.get(i));
-		}
+		}//restore cuurent existing vertices and edges
 	}
 	
+	/**
+	 * Clear the board
+	 */
 	public void clean() {
 		this.getChildren().clear();
 		circles.clear();
@@ -476,21 +521,28 @@ public class VisualPane extends Pane {
 		numVertex = 0;
 		edgeList.clear();
 		edges.clear();
-		instructions.clear();
+		instructions.clear();//clear every list
 	}
+	/**
+	 * Search a specific name
+	 * @param name
+	 */
 	public void search(String name) {
 		if(!vertexList.contains(name)) {
 			this.getParent().lookup("#txd-search").setStyle(
 					"-fx-border-color: RED;"
-			);
+			);//if not found, return
 			return;
 		}
 		setCentralUser(name);
 		this.getParent().lookup("#txd-search").setStyle(
 				"-fx-border-color: transparent;"
-		);
+		);//when found, set it to be the central user
 	}
 	
+	/**
+	 * Save the current progress
+	 */
 	public void saveCurrent() {
 		step++;
 		tmpCircles.add(new LinkedList<Vertex>());
@@ -506,7 +558,7 @@ public class VisualPane extends Pane {
 			for(int j = 0; j < edgeList.get(i).size(); j++) {
 				tmpEdgeList.get(step).get(i).add(edgeList.get(i).get(j));
 			}
-		}
+		}//add existing pane to temp
 		for(int i = 0; i < edges.size(); i++) {
 			tmpEdges.get(step).add(edges.get(i));
 		}
@@ -519,6 +571,9 @@ public class VisualPane extends Pane {
 		}
 	}
 	
+	/**
+	 * Undo the last step
+	 */
 	public void undo() {
 		if(step == -1) {
 			return;
@@ -528,7 +583,7 @@ public class VisualPane extends Pane {
 			for (int i = 0; i < curContext.get(step).size(); i++) {
 				if (!this.getChildren().contains(curContext.get(step).get(i)))
 					this.getChildren().add(curContext.get(step).get(i));
-			}
+			}//save the current step
 		}else {
 			this.getChildren().clear();
 		}
@@ -548,7 +603,7 @@ public class VisualPane extends Pane {
 		 tmpEdges.remove(step);
 		 tmpNumVertex.remove(step);
 		 tmpVertexList.remove(step);
-		 tmpEdgeList.remove(step);
+		 tmpEdgeList.remove(step);// remove the current action
 		 step--;
 		 if(instructions.size() != 0) {
 			 instructions.remove(instructions.size() - 1);
@@ -559,6 +614,12 @@ public class VisualPane extends Pane {
 			 menuPane.lastInstructionText.setText("NONE");
 		 }
 	}
+	/**
+	 * Save the instructions
+	 * @param command
+	 * @param name1
+	 * @param name2
+	 */
 	public void saveInstructions(String command, String name1, String name2){
 		if(command.equals("a") && name1 != null && name2 == null) {
 			instructions.add("a " + name1);
@@ -578,17 +639,23 @@ public class VisualPane extends Pane {
 			instructions.add("path " + name1 + " " + name2);
 		}else if(command.equals("load") && name1 != null && name2 == null) {
 			instructions.add("load " + name1);
-		}
+		}// save the command to instructions list
 	}
 	
+	/**
+	 * Check if there is a path between two vertices
+	 * @param name1
+	 * @param name2
+	 * @return
+	 */
 	public boolean checkPath(String name1, String name2) {
 		if(name1.equals(name2)) {
-			return true;
+			return true;//there is path to itself
 		}
 		int index1 = vertexList.indexOf(name1);
 		int index2 = vertexList.indexOf(name2);
 		if(edgeList.get(index1).get(index2)) {
-			return true;
+			return true;//if path existed, return true
 		}
 		for(int i = 0; i < edgeList.get(index1).size(); i++) {
 			if(edgeList.get(index1).get(i) && edgeList.get(index2).get(i)) {
@@ -600,10 +667,18 @@ public class VisualPane extends Pane {
 	
 	
 	
+	/**
+	 *  
+	 * @return the Instruction list
+	 */
 	public ArrayList<String> instructionList(){
 		return instructions;
 	}
 	
+	/**
+	 * getter method for the menuPane
+	 * @return
+	 */
 	public MenuPane getmenuPane() {
 		return menuPane;
 	}

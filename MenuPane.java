@@ -1,11 +1,20 @@
+////////////////////ALL ASSIGNMENTS INCLUDE THIS SECTION /////////////////////
+//
+//Title: MenuPane
+//Files: MenuPane.java
+//
+//Course: CS 400, Fall 2019
+//
+//Team:     ateam 166
+//Members: 1. Yijun Cheng, lecture 001, cheng229@wisc.edu
+//		   2. Yuedong Cui, lecture 001, cui54@wisc.edu
+//		   3. Ruizhe Wang, lecture 001, rwang477@wisc.edu
+//		   4. Yuzheng Zhang, lecture 001, yzhang975@wisc.edu
+//		   5. Haolin Li, lecture 001, hli564@wisc.edu
+//Lecturer's Name: Debra Deppeler
+//
 /**
  * CS400 final project 
- * Team: ateam 166
- * Member: 1. Yijun Cheng, lecture 001, cheng229@wisc.edu
- *		   2. Yuedong Cui, lecture 001, cui54@wisc.edu
- *		   3. Ruizhe Wang, lecture 001, rwang477@wisc.edu
- *		   4. Yuzheng Zhang, lecture 001, yzhang975@wisc.edu
- *		   5. Haolin Li, lecture 001, hli564@wisc.edu
  * This class is used to create menu pane
  */
 package application;
@@ -28,7 +37,7 @@ import javafx.stage.WindowEvent;
 
 public class MenuPane extends AnchorPane {
 	private static FileParser fileParser;
-	
+
 	VBox function = new VBox();
 	VBox input = new VBox();
 	VBox buttons = new VBox();
@@ -50,7 +59,7 @@ public class MenuPane extends AnchorPane {
 	HBox info3 = new HBox();
 	VBox rightMenu = new VBox();
 
-	HBox Menu = new HBox();
+	HBox Menu = new HBox();//HBox and VBox needed to implement the menuPane
 
 	Button searchButton = new Button("Search");
 	Button submitButton1 = new Button("Submit");
@@ -60,10 +69,9 @@ public class MenuPane extends AnchorPane {
 	Button submitButton5 = new Button("Submit");
 	Button homeButton = new Button("Home");
 	Button cleanButton = new Button("Clean");
-	//Button undoButton = new Button("Undo");
 	Button exitButton = new Button("Exit");
 	Button saveButton = new Button("Save");
-	Button helpButton = new Button("Help");
+	Button helpButton = new Button("Help");//Buttons
 
 	TextField t1 = new TextField();
 	TextField t2 = new TextField();
@@ -74,7 +82,7 @@ public class MenuPane extends AnchorPane {
 	TextField t7 = new TextField();
 	TextField t8 = new TextField();
 	TextField t9 = new TextField();
-	TextField LoadText = new TextField();
+	TextField LoadText = new TextField();//All textFields needed
 
 	Label search_Bar = new Label("	search bar");
 	Label numGroupsText = new Label("[0]");
@@ -90,7 +98,7 @@ public class MenuPane extends AnchorPane {
 	Label totalUser = new Label("0");
 	Label numFriendsLabel = new Label("	 	Number of friends for current user: ");
 	Label numFriends = new Label("Need a central user");
-	
+
 	Label empty = new Label("");
 	Label empty1 = new Label("");
 	Label empty2 = new Label("");
@@ -99,7 +107,7 @@ public class MenuPane extends AnchorPane {
 	Label empty5 = new Label("");
 	Label empty6 = new Label("");
 	Label empty7 = new Label("");
-	Label empty8 = new Label("	");
+	Label empty8 = new Label("	");//all labels needed
 
 	public MenuPane() {
 		fileParser = new FileParser();
@@ -123,70 +131,60 @@ public class MenuPane extends AnchorPane {
 		t8.setPromptText("Enter Name 1");
 		t9.setPromptText("Enter Name 2");
 
-		numGroupsText.setOnMouseEntered(e -> numGroupsText.
-				setStyle("-fx-font-size:20pt;"));
-		numGroupsText.setOnMouseExited(e -> numGroupsText.
-				setStyle("-fx-font-size:10pt;"));
-		lastInstructionText.setOnMouseEntered(e -> lastInstructionText.
-				setStyle("-fx-font-size:20pt;"));
-		lastInstructionText.setOnMouseExited(e -> lastInstructionText.
-				setStyle("-fx-font-size:10pt;"));
-		totalUser.setOnMouseEntered(e -> totalUser.
-				setStyle("-fx-font-size:20pt;"));
-		totalUser.setOnMouseExited(e -> totalUser.
-				setStyle("-fx-font-size:10pt;"));
-		numFriends.setOnMouseEntered(e -> numFriends.
-				setStyle("-fx-font-size:20pt;"));
-		numFriends.setOnMouseExited(e -> numFriends.
-				setStyle("-fx-font-size:10pt;"));
+		numGroupsText.setOnMouseEntered(e -> numGroupsText.setStyle("-fx-font-size:20pt;"));
+		numGroupsText.setOnMouseExited(e -> numGroupsText.setStyle("-fx-font-size:10pt;"));//increase the font size
+		lastInstructionText.setOnMouseEntered(e -> lastInstructionText.setStyle("-fx-font-size:20pt;"));
+		lastInstructionText.setOnMouseExited(e -> lastInstructionText.setStyle("-fx-font-size:10pt;"));//increase the font size
+		totalUser.setOnMouseEntered(e -> totalUser.setStyle("-fx-font-size:20pt;"));
+		totalUser.setOnMouseExited(e -> totalUser.setStyle("-fx-font-size:10pt;"));//increase the font size
+		numFriends.setOnMouseEntered(e -> numFriends.setStyle("-fx-font-size:20pt;"));
+		numFriends.setOnMouseExited(e -> numFriends.setStyle("-fx-font-size:10pt;"));//increase the font size
 
 		LoadText.setPromptText("Load File Here");
 
-		menuButtons.getChildren().addAll(empty8, homeButton, cleanButton, empty2, 
-				exitButton, empty3, saveButton, helpButton);
+		menuButtons.getChildren().addAll(empty8, homeButton, cleanButton, empty2, exitButton, empty3, saveButton,
+				helpButton);
 		textFields1.getChildren().addAll(t2, t3);
 		textFields2.getChildren().addAll(t4, t5);
-		function.getChildren().addAll(search_Bar, addLabel, 
-				removeLabel);
-		function.setSpacing(11);
-		
+		function.getChildren().addAll(search_Bar, addLabel, removeLabel);
+		function.setSpacing(11);//arrange the layout of menuPane
+
 		input.getChildren().addAll(t1, textFields1, textFields2);
-		buttons.getChildren().addAll(searchButton, submitButton1, 
-				submitButton2);
+		buttons.getChildren().addAll(searchButton, submitButton1, submitButton2);
 		MenuContent.getChildren().addAll(function, input, buttons);
-		leftMenu.getChildren().addAll(empty6, MenuContent, menuButtons);
+		leftMenu.getChildren().addAll(empty6, MenuContent, menuButtons);//arrange the layout of menuPane
 
 		textFields3.getChildren().addAll(t6, t7);
 		textFields4.getChildren().addAll(t8, t9);
 		info1.getChildren().addAll(numGroupsLabel, numGroupsText, totalUserLabel, totalUser);
 		info2.getChildren().addAll(lastInstructionLabel, lastInstructionText);
-		info3.getChildren().addAll( numFriendsLabel, numFriends);
-		function2.getChildren().addAll(mutualFriendsLabel, 
-				shortestPathLabel, loadLabel);
-		function2.setSpacing(11);
-		
+		info3.getChildren().addAll(numFriendsLabel, numFriends);
+		function2.getChildren().addAll(mutualFriendsLabel, shortestPathLabel, loadLabel);
+		function2.setSpacing(11);//arrange the layout of menuPane
+
 		input2.getChildren().addAll(textFields3, textFields4, LoadText);
-		buttons2.getChildren().addAll(submitButton3, submitButton4, 
-				submitButton5);
+		buttons2.getChildren().addAll(submitButton3, submitButton4, submitButton5);
 		MenuContent2.getChildren().addAll(function2, input2, buttons2);
-		rightMenu.getChildren().addAll(empty7, MenuContent2, info1, info2, info3);
+		rightMenu.getChildren().addAll(empty7, MenuContent2, info1, info2, info3);//arrange the layout of menuPane
 
 		Menu.getChildren().addAll(leftMenu, rightMenu);
 
-		this.getChildren().addAll(Menu);	
-		
+		this.getChildren().addAll(Menu);
+
 		addId();
 	}
-	
-	
+
+	/**
+	 * Set ID for each button
+	 */
 	private void addId() {
 		searchButton.setId("btn-search");
 		submitButton1.setId("btn-add");
 		submitButton2.setId("btn-remove");
 		submitButton3.setId("btn-mutual");
 		submitButton4.setId("btn-short");
-		submitButton5.setId("btn-load");
-		
+		submitButton5.setId("btn-load");//Set ID for submit buttons
+
 		t1.setId("txd-search");
 		t2.setId("txd-add-1");
 		t3.setId("txd-add-2");
@@ -197,14 +195,13 @@ public class MenuPane extends AnchorPane {
 		t8.setId("txd-short-1");
 		t9.setId("txd-short-2");
 		LoadText.setId("txd-load");
-		
+
 		cleanButton.setId("btn-clean");
 		exitButton.setId("btn-exit");
 		saveButton.setId("btn-save");
-		
+
 		numGroupsText.setId("txt-group");
 		lastInstructionText.setId("txt-last");
 	}
-	
 
 }

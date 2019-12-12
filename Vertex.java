@@ -1,13 +1,19 @@
-/**
- * CS400 final project 
- * Team: ateam 166
- * Member: 1. Yijun Cheng, lecture 001, cheng229@wisc.edu
- *		   2. Yuedong Cui, lecture 001, cui54@wisc.edu
- *		   3. Ruizhe Wang, lecture 001, rwang477@wisc.edu
- *		   4. Yuzheng Zhang, lecture 001, yzhang975@wisc.edu
- *		   5. Haolin Li, lecture 001, hli564@wisc.edu
- * This class is used to create an vertex to visual pane
- */
+////////////////////ALL ASSIGNMENTS INCLUDE THIS SECTION /////////////////////
+//
+//Title: Vertex
+//Files: Vertex.java
+//
+//Course: CS 400, Fall 2019
+//
+//Team:     ateam 166
+//Members: 1. Yijun Cheng, lecture 001, cheng229@wisc.edu
+//		   2. Yuedong Cui, lecture 001, cui54@wisc.edu
+//		   3. Ruizhe Wang, lecture 001, rwang477@wisc.edu
+//		   4. Yuzheng Zhang, lecture 001, yzhang975@wisc.edu
+//		   5. Haolin Li, lecture 001, hli564@wisc.edu
+//Lecturer's Name: Debra Deppeler
+//
+
 package application;
 
 import javafx.geometry.Insets;
@@ -23,6 +29,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
+/**
+ * CS400 final project This class is used to create an vertex to visual pane
+ */
 public class Vertex extends Pane {
 
 	// private field of vertex
@@ -49,29 +58,24 @@ public class Vertex extends Pane {
 
 		// create label and set background
 		this.label = new Label(name);
-		this.label.setBackground(new Background(new BackgroundFill(
-								Color.WHITE, 
-								CornerRadii.EMPTY, 
-								Insets.EMPTY)));
-		
+		this.label.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+
 		this.label.setLayoutX(r + 5);
 		this.label.setLayoutY(r + 5);
 		this.label.setMouseTransparent(true);
-		
+
 		this.circle = new Circle(r + 5, r + 5, r);
 		this.circle.setFill(Color.color(Math.random(), Math.random(), Math.random()));
-		this.circle.setStroke(Color.color(Math.random(), Math.random(), Math.random()));
-		
-		
+		this.circle.setStroke(Color.color(Math.random(), Math.random(), Math.random()));// create circle for each vertex
+
 		this.circle.setOnMouseEntered(e -> {
 			this.circle.setRadius(r + 5);
-		});
-		
+		});// highlight the vertex when user hover through the circle
+
 		this.circle.setOnMouseExited(e -> {
 			this.circle.setRadius(r);
 		});
-		
-		
+
 		this.setOnMouseEntered(e -> {
 			this.circle.setRadius(r + 5);
 		});
@@ -81,17 +85,14 @@ public class Vertex extends Pane {
 		});
 
 		this.circle.setOnMouseClicked(e -> {
-			((VisualPane)this.getParent()).saveCurrent();
-			((VisualPane)this.getParent()).setCentralUser(this.name);
-			
+			((VisualPane) this.getParent()).saveCurrent();// save the current scene
+			((VisualPane) this.getParent()).setCentralUser(this.name);// set the clicked vertex the central user
+
 		});
 
-		
-
-		
 		this.setMaxWidth(2 * r + 10);
 		this.setMaxHeight(2 * r + 10);
-		
+
 		this.getChildren().addAll(this.circle, this.label);
 	}
 
