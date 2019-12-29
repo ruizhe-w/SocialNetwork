@@ -40,7 +40,8 @@ public class VisualPane extends Pane {
 	private ArrayList<ArrayList<String>> tmpVertexList;
 	private ArrayList<ArrayList<ArrayList<Boolean>>> tmpEdgeList;
 	private ArrayList<Integer> lastNumGroup;
-	int step;
+	private int step;
+	private ArrayList<Integer> totalUser;
 	
 	// field of visual pane
 	private MenuPane menuPane;
@@ -49,14 +50,10 @@ public class VisualPane extends Pane {
 	private List<Edge> edges;
 	
 	private int numVertex;
-	public ArrayList<String> getVerticesList() {
-		return vertexList;
-	}
+		
 	private ArrayList<String> vertexList;
 	private ArrayList<ArrayList<Boolean>> edgeList;
 	private int numGroup;
-	//private String centralUser;
-	//private List<Vertex> friends;
 	
 	/**
 	 * Overloaded constructor for this class
@@ -79,14 +76,13 @@ public class VisualPane extends Pane {
 		edgeList = new ArrayList<ArrayList<Boolean>>();
 		this.menuPane = menuPane;
 		step = -1;
-		//centralUser = "";
+		totalUser = new ArrayList<Integer>();
 	}
 	
-	/**
-	 * This method add edge to visual pane
-	 * @param name1 name of the first vertex
-	 * @param name2 name of the second vertex
-	 */
+	public ArrayList<String> getVerticesList() {
+		return vertexList;
+	}
+	
 	/**
 	 * This method add edge to visual pane
 	 * @param name1 name of the first vertex
@@ -226,17 +222,17 @@ public class VisualPane extends Pane {
 		if (!vertexList.contains(s1) || !vertexList.contains(s2)) {
 			return;
 		}
-		Vertex pn = null;
-		Vertex pn2 = null;
-		
-		for(int i = 0; i < circles.size(); i++) {
-			if(circles.get(i).getName().equals(s1)) {
-				pn = circles.get(i);
-			}
-			if(circles.get(i).getName().equals(s2)) {
-				pn2 = circles.get(i);
-			}
-		}
+//		Vertex pn = null;
+//		Vertex pn2 = null;
+//		
+//		for(int i = 0; i < circles.size(); i++) {
+//			if(circles.get(i).getName().equals(s1)) {
+//				pn = circles.get(i);
+//			}
+//			if(circles.get(i).getName().equals(s2)) {
+//				pn2 = circles.get(i);
+//			}
+//		}
 		for(int j = 0; j < edges.size(); j++) {//find the intended edge and remove
 			if(((edges.get(j).getS1().equals(s1) &&
 					edges.get(j).getS2().equals(s2))) ||
@@ -263,10 +259,10 @@ public class VisualPane extends Pane {
 		if (!vertexList.contains(string)) {
 			return;
 		}
-		Vertex pn = circles.get(vertexList.indexOf(string));//get index
+//		Vertex pn = circles.get(vertexList.indexOf(string));//get index
 		map.remove(string);
 		for (int i = 0; i < numVertex; i++) {
-			Vertex pn2 = circles.get(i);
+//			Vertex pn2 = circles.get(i);
 			
 			for(int j = 0; j < edges.size(); j++) {//find the vertex and remove
 				if((edges.get(j).getS1().equals(string) ||
@@ -322,6 +318,10 @@ public class VisualPane extends Pane {
 		Vertex v1 = circles.get(vertexList.indexOf(name1));
 		Vertex v2 = circles.get(vertexList.indexOf(name2));
 		this.getChildren().clear();
+		if (name1.equals(name2)) {
+			this.getChildren().addAll(v1);
+			return;
+		}
 		this.getChildren().addAll(v1, v2);
 		List<String> mutualList = new ArrayList<String>();
 		for (int i = 0; i < edgeList.get(vertexList.indexOf(name1)).size(); i++) {
@@ -333,10 +333,10 @@ public class VisualPane extends Pane {
 		for (int i = 0; i < edgeList.get(vertexList.indexOf(name2)).size(); i++) {
 			if (edgeList.get(vertexList.indexOf(name2)).get(i)) {
 				if (mutualList.contains(circles.get(i).getName())) {
-					if (i == vertexList.indexOf(name1) ||
-						i == vertexList.indexOf(name2)) {
-						continue;
-					}
+//					if (i == vertexList.indexOf(name1) ||
+//						i == vertexList.indexOf(name2)) {
+//						continue;
+//					}
 					Vertex tmpVertex = circles.get(i);
 					this.getChildren().add(tmpVertex);//when mutual friends found, add to pane
 					this.getChildren().add(new Edge(v2.getX(), v2.getY(), tmpVertex.getX(),
@@ -364,6 +364,10 @@ public class VisualPane extends Pane {
 		Vertex v2 = circles.get(vertexList.indexOf(name2));
 		Vertex tmpVertex = null;
 		this.getChildren().clear();
+		if (name1.equals(name2)) {
+			this.getChildren().addAll(v1);
+			return;
+		}
 		this.getChildren().addAll(v1, v2);
 		List<String> list = dfs(name1, name2);
 		if (list.size() == 0) {//warn the user
@@ -401,6 +405,7 @@ public class VisualPane extends Pane {
 		}
 		this.getChildren().add(new Edge(v2.getX(), v2.getY(), tmpVertex.getX(),
 				tmpVertex.getY(), v2.getName(), tmpVertex.getName()));
+		System.out.println(instructions.toString());
 	}
 
 
@@ -502,13 +507,13 @@ public class VisualPane extends Pane {
 	 * Go back to home scene
 	 */
 	public void home() {
-		this.getChildren().clear();//clear the currene scene
+		this.getChildren().clear();//clear the current scene
 		for(int i = 0; i < circles.size(); i++) {
 			this.getChildren().add(circles.get(i));
 		}
 		for(int i = 0; i < edges.size(); i++) {
 			this.getChildren().add(edges.get(i));
-		}//restore cuurent existing vertices and edges
+		}//restore current existing vertices and edges
 	}
 	
 	/**
@@ -552,6 +557,7 @@ public class VisualPane extends Pane {
 		curContext.add(new LinkedList<Node>());
 		
 		for(int i = 0; i < circles.size(); i++) {
+			System.out.println(circles.size());
 			tmpCircles.get(step).add(circles.get(i));
 			tmpVertexList.get(step).add(vertexList.get(i));
 			tmpEdgeList.get(step).add(new ArrayList<Boolean>());
@@ -565,6 +571,7 @@ public class VisualPane extends Pane {
 		String strGroup = menuPane.numGroupsText.getText();
 		lastNumGroup.add(Integer.parseInt(strGroup.substring(1, strGroup.length() - 1)));
 		tmpNumVertex.add(numVertex);
+		totalUser.add(vertexList.size());
 		
 		for(int i = 0; i < this.getChildren().size(); i++) {
 			curContext.get(step).add(this.getChildren().get(i));
@@ -578,41 +585,48 @@ public class VisualPane extends Pane {
 		if(step == -1) {
 			return;
 		}
-		 this.getChildren().clear();
-		if (!curContext.get(step).isEmpty()) {
-			for (int i = 0; i < curContext.get(step).size(); i++) {
-				if (!this.getChildren().contains(curContext.get(step).get(i)))
-					this.getChildren().add(curContext.get(step).get(i));
-			}//save the current step
-		}else {
-			this.getChildren().clear();
+		this.getChildren().clear();
+		if (step != 0) {
+			if (!curContext.get(step - 1).isEmpty()) {
+				for (int i = 0; i < curContext.get(step - 1).size(); i++) {
+					if (!this.getChildren().contains(curContext.get(step - 1).get(i)))
+						this.getChildren().add(curContext.get(step - 1).get(i));
+				}//save the current step
+			} else {
+				this.getChildren().clear();
+			}
 		}
-		 circles = tmpCircles.get(step);
-		 edges = tmpEdges.get(step);
-		 numVertex = tmpNumVertex.get(step);
-		 vertexList = tmpVertexList.get(step);
-		 edgeList = tmpEdgeList.get(step);
-		 
-		 
-		 menuPane.numGroupsText.setText("[" + String.valueOf(lastNumGroup.get(step)) + "]");
-		 //lastNumGroup = Integer.parseInt(menuPane.numGroupsText.getText());
-		 
-		 lastNumGroup.remove(step);
-		 curContext.remove(step);
-		 tmpCircles.remove(step);
-		 tmpEdges.remove(step);
-		 tmpNumVertex.remove(step);
-		 tmpVertexList.remove(step);
-		 tmpEdgeList.remove(step);// remove the current action
-		 step--;
-		 if(instructions.size() != 0) {
-			 instructions.remove(instructions.size() - 1);
-		 }
-		 if(instructions.size() != 0) {
-			 menuPane.lastInstructionText.setText(instructions.get(instructions.size() - 1));
-		 }else {
-			 menuPane.lastInstructionText.setText("NONE");
-		 }
+		circles = tmpCircles.get(step);
+		edges = tmpEdges.get(step);
+		numVertex = tmpNumVertex.get(step);
+		vertexList = tmpVertexList.get(step);
+		edgeList = tmpEdgeList.get(step);
+		
+
+		menuPane.numGroupsText.setText("[" + String.valueOf(lastNumGroup.get(step)) + "]");
+		if (step != 0) {
+			menuPane.totalUser.setText("[" + String.valueOf(totalUser.get(step - 1)) + "]");
+		} else {
+			menuPane.totalUser.setText("[0]");
+		}
+
+		lastNumGroup.remove(step);
+		totalUser.remove(step);
+		curContext.remove(step);
+		tmpCircles.remove(step);
+		tmpEdges.remove(step);
+		tmpNumVertex.remove(step);
+		tmpVertexList.remove(step);
+		tmpEdgeList.remove(step);// remove the current action
+		step--;
+		if (instructions.size() != 0) {
+			instructions.remove(instructions.size() - 1);
+		}
+		if (instructions.size() != 0) {
+			menuPane.lastInstructionText.setText(instructions.get(instructions.size() - 1));
+		} else {
+			menuPane.lastInstructionText.setText("NONE");
+		}
 	}
 	/**
 	 * Save the instructions
